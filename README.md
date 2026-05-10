@@ -1,6 +1,8 @@
-# @rye/rewards-ui
+# rye-rewards-ui
 
 Source-available React components for partners building rewards-program redemption flows on Rye. Designed for credit-card rewards programs, points-based loyalty apps, and corporate gifting.
+
+> Published on public npm as `rye-rewards-ui`, unscoped, matching the `rye-pay` / `checkout-intents` pattern from Rye's existing partner-facing packages.
 
 > Components ship as source via shadcn-style CLI. Partners install, own, and customize the source — no compiled black box, no theme variants to maintain.
 
