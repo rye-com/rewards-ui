@@ -2,5 +2,31 @@
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "rye-rewards-ui",
   "homepage": "https://docs.rye.com/rewards",
-  "items": []
+  "items": [
+    {
+      "name": "product-card",
+      "type": "registry:component",
+      "title": "Product card",
+      "description": "Catalog tile: image, vendor, name, subtitle, cash price + optional points-equivalent. Handles out-of-stock, subscription-only, marketplace-down, and image-failed states. Ships with a matching <ProductCardSkeleton /> for loading.",
+      "registryDependencies": ["https://ui.shadcn.com/r/styles/new-york/utils.json"],
+      "dependencies": ["lucide-react"],
+      "files": [
+        {
+          "path": "registry/default/components/product-card.tsx",
+          "type": "registry:component",
+          "target": "components/rye-rewards/product-card.tsx"
+        },
+        {
+          "path": "registry/default/types/product.ts",
+          "type": "registry:lib",
+          "target": "components/rye-rewards/types/product.ts"
+        },
+        {
+          "path": "registry/default/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "components/rye-rewards/lib/utils.ts"
+        }
+      ]
+    }
+  ]
 }
