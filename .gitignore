@@ -1,0 +1,15 @@
+node_modules
+dist
+build
+.turbo
+coverage
+.DS_Store
+*.log
+.env
+.env.local
+.env.*.local
+.cache
+.eslintcache
+
+# `shadcn build` output. Generated in CI, deployed to GitHub Pages.
+public/r/

@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+/*
+ * Rewards UI design tokens.
+ * Partners override these CSS custom properties to brand the components.
+ * Defaults target a flagship consumer-fintech aesthetic (Apple Pay / Linear / Stripe).
+ */
+@theme {
+  --color-rye-rewards-bg: oklch(99% 0 0);
+  --color-rye-rewards-fg: oklch(15% 0 0);
+  --color-rye-rewards-muted: oklch(60% 0 0);
+  --color-rye-rewards-border: oklch(92% 0 0);
+
+  --color-rye-rewards-primary: oklch(20% 0 0);
+  --color-rye-rewards-primary-fg: oklch(99% 0 0);
+
+  --color-rye-rewards-accent: oklch(60% 0.18 250);
+  --color-rye-rewards-accent-fg: oklch(99% 0 0);
+
+  /* Points balance gets its own token so partners can brand it without touching primary. */
+  --color-rye-rewards-points: oklch(72% 0.16 145);
+  --color-rye-rewards-points-fg: oklch(15% 0 0);
+
+  --color-rye-rewards-danger: oklch(55% 0.22 25);
+  --color-rye-rewards-danger-fg: oklch(99% 0 0);
+
+  --radius-rye-rewards-sm: 6px;
+  --radius-rye-rewards-md: 10px;
+  --radius-rye-rewards-lg: 16px;
+
+  --font-rye-rewards-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-rye-rewards-tabular: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
