@@ -4,6 +4,106 @@
   "homepage": "https://docs.rye.com/rewards",
   "items": [
     {
+      "name": "order-tracking",
+      "type": "registry:component",
+      "title": "Order tracking",
+      "description": "Compound post-purchase tracking layout. Header / StatusCard / InvestigationCard / Timeline / Item / RefundSummary / ActionsCard / InvestigationActions / InvestigationProgress sub-components cover all 8 states (placed, processing, shipped, out-for-delivery, delivered, cancelled, refunded, stuck-under-investigation).",
+      "registryDependencies": ["https://ui.shadcn.com/r/styles/new-york/utils.json"],
+      "dependencies": ["lucide-react"],
+      "files": [
+        {
+          "path": "registry/default/components/order-tracking.tsx",
+          "type": "registry:component",
+          "target": "components/rye-rewards/order-tracking.tsx"
+        },
+        {
+          "path": "registry/default/types/product.ts",
+          "type": "registry:lib",
+          "target": "components/rye-rewards/types/product.ts"
+        },
+        {
+          "path": "registry/default/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "components/rye-rewards/lib/utils.ts"
+        }
+      ]
+    },
+    {
+      "name": "payment-sheet",
+      "type": "registry:component",
+      "title": "Payment sheet",
+      "description": "Compound checkout sheet. Header / Alert / Item / Shipping / Section / MemberBenefit / CostBreakdown / Confirm / Actions / Skeleton sub-components compose to handle all three integration patterns (cash + member benefit, mixed tender, full points) plus 5 error variants.",
+      "registryDependencies": ["https://ui.shadcn.com/r/styles/new-york/utils.json"],
+      "dependencies": ["lucide-react"],
+      "files": [
+        {
+          "path": "registry/default/components/payment-sheet.tsx",
+          "type": "registry:component",
+          "target": "components/rye-rewards/payment-sheet.tsx"
+        },
+        {
+          "path": "registry/default/types/product.ts",
+          "type": "registry:lib",
+          "target": "components/rye-rewards/types/product.ts"
+        },
+        {
+          "path": "registry/default/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "components/rye-rewards/lib/utils.ts"
+        }
+      ]
+    },
+    {
+      "name": "pay-with-points",
+      "type": "registry:component",
+      "title": "Pay with points",
+      "description": "Composable slot for points-as-tender. Slider + balance pill + toggle + after-redemption preview. Handles mixed-tender, full-points, off, and insufficient-balance states.",
+      "registryDependencies": ["https://ui.shadcn.com/r/styles/new-york/utils.json"],
+      "dependencies": ["lucide-react"],
+      "files": [
+        {
+          "path": "registry/default/components/pay-with-points.tsx",
+          "type": "registry:component",
+          "target": "components/rye-rewards/pay-with-points.tsx"
+        },
+        {
+          "path": "registry/default/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "components/rye-rewards/lib/utils.ts"
+        }
+      ]
+    },
+    {
+      "name": "product-details",
+      "type": "registry:component",
+      "title": "Product details (PDP)",
+      "description": "Two-column PDP with image gallery, variant pickers (swatches / grid / cards), inline revalidation alert, and redeem CTA. Ships with <ProductDetailsSkeleton /> for loading.",
+      "registryDependencies": ["https://ui.shadcn.com/r/styles/new-york/utils.json"],
+      "dependencies": ["lucide-react"],
+      "files": [
+        {
+          "path": "registry/default/components/product-details.tsx",
+          "type": "registry:component",
+          "target": "components/rye-rewards/product-details.tsx"
+        },
+        {
+          "path": "registry/default/types/product.ts",
+          "type": "registry:lib",
+          "target": "components/rye-rewards/types/product.ts"
+        },
+        {
+          "path": "registry/default/types/product-details.ts",
+          "type": "registry:lib",
+          "target": "components/rye-rewards/types/product-details.ts"
+        },
+        {
+          "path": "registry/default/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "components/rye-rewards/lib/utils.ts"
+        }
+      ]
+    },
+    {
       "name": "product-card",
       "type": "registry:component",
       "title": "Product card",

@@ -24,6 +24,13 @@
       "@/*": ["./registry/default/*"]
     }
   },
-  "include": ["registry/**/*", "src/**/*", "vitest.config.ts", "eslint.config.mjs"],
+  "include": [
+    "registry/**/*",
+    "src/**/*",
+    "playground/**/*",
+    "vitest.config.ts",
+    "vite.config.ts",
+    "eslint.config.mjs"
+  ],
   "exclude": ["node_modules", "dist"]
 }

@@ -1,0 +1,212 @@
+import type { Product } from "../registry/default/types/product";
+import type { ProductDetailsData } from "../registry/default/types/product-details";
+
+/** Catalog data used across the catalog view. */
+export const products: Product[] = [
+  {
+    id: "aesop-hand-wash",
+    vendor: "Aesop",
+    name: "Resurrection Aromatique Hand Wash",
+    subtitle: "500 mL",
+    image: { url: "https://picsum.photos/seed/aesop-handwash/600/750" },
+    price: { currency: "USD", value: "89.00" },
+    pointsPrice: 8900,
+    availability: { kind: "in-stock" },
+    marketplace: "shopify",
+  },
+  {
+    id: "norse-sweater",
+    vendor: "Norse Projects",
+    name: "Sigfred Merino Crew Sweater",
+    subtitle: "5 colors · XS–XL",
+    image: { url: "https://picsum.photos/seed/norse-sweater/600/750" },
+    price: { currency: "USD", value: "245.00" },
+    pointsPrice: 24500,
+    availability: { kind: "in-stock" },
+    marketplace: "shopify",
+  },
+  {
+    id: "bose-earbuds",
+    vendor: "Bose",
+    name: "QuietComfort Ultra Earbuds",
+    subtitle: "Black",
+    image: { url: "https://picsum.photos/seed/bose-earbuds/600/750" },
+    price: { currency: "USD", value: "299.00" },
+    pointsPrice: 29900,
+    availability: { kind: "in-stock" },
+    marketplace: "amazon",
+  },
+  {
+    id: "acne-beanie",
+    vendor: "Acne Studios",
+    name: "Cashmere Ribbed Beanie",
+    subtitle: "Out of stock",
+    image: { url: "https://picsum.photos/seed/acne-beanie/600/750" },
+    price: { currency: "USD", value: "185.00" },
+    availability: { kind: "out-of-stock" },
+    marketplace: "shopify",
+  },
+  {
+    id: "tekla-throw",
+    vendor: "Tekla",
+    name: "Linen Throw, Sage",
+    subtitle: "130 × 200 cm",
+    image: { url: "https://picsum.photos/seed/tekla-throw/600/750" },
+    price: { currency: "USD", value: "155.00" },
+    pointsPrice: 15500,
+    availability: { kind: "in-stock" },
+    marketplace: "shopify",
+  },
+  {
+    id: "bellroy-sleeve",
+    vendor: "Bellroy",
+    name: "Apex Slim Sleeve, Cognac",
+    subtitle: "Top-grain leather",
+    image: { url: "https://picsum.photos/seed/bellroy-sleeve/600/750" },
+    price: { currency: "USD", value: "135.00" },
+    pointsPrice: 13500,
+    availability: { kind: "in-stock" },
+    marketplace: "shopify",
+  },
+  {
+    id: "ag1-greens",
+    vendor: "Athletic Greens",
+    name: "AG1 Daily Foundational Nutrition",
+    subtitle: "Available on subscription only",
+    image: { url: "https://picsum.photos/seed/ag1-greens/600/750" },
+    price: { currency: "USD", value: "79.00" },
+    availability: { kind: "subscription-only" },
+    marketplace: "shopify",
+  },
+  {
+    id: "frantoio-oil",
+    vendor: "Frantoio Franci",
+    name: "Villa Magra Olive Oil",
+    subtitle: "500 mL · Toscano IGP",
+    image: { url: "https://picsum.photos/seed/frantoio-oil/600/750" },
+    price: { currency: "USD", value: "72.00" },
+    pointsPrice: 7200,
+    availability: { kind: "in-stock" },
+    marketplace: "shopify",
+  },
+];
+
+export const sweaterPDP: ProductDetailsData = {
+  product: {
+    id: "norse-sweater",
+    vendor: "Norse Projects",
+    name: "Sigfred Merino Crew Sweater",
+    description:
+      "Mid-weight crewneck in 100% extra-fine merino wool, knitted in Italy. Ribbed collar, cuffs, and hem. Cut for an everyday fit.",
+    image: { url: "https://picsum.photos/seed/norse-1/600/750" },
+    price: { currency: "USD", value: "245.00" },
+    pointsPrice: 24500,
+    availability: { kind: "in-stock" },
+    marketplace: "shopify",
+  },
+  gallery: [
+    "https://picsum.photos/seed/norse-1/800/1000",
+    "https://picsum.photos/seed/norse-2/400/400",
+    "https://picsum.photos/seed/norse-3/400/400",
+    "https://picsum.photos/seed/norse-4/400/400",
+  ],
+  dimensions: [
+    {
+      id: "color",
+      label: "Color",
+      style: "swatches",
+      options: [
+        { id: "charcoal", label: "Charcoal", swatchColor: "#1F2A33" },
+        { id: "oat", label: "Oat", swatchColor: "#D8C9A6" },
+        { id: "olive", label: "Olive", swatchColor: "#5A6448" },
+        { id: "slate-blue", label: "Slate Blue", swatchColor: "#6B7480" },
+        { id: "ecru", label: "Ecru", swatchColor: "#E8E1D3" },
+      ],
+    },
+    {
+      id: "size",
+      label: "Size",
+      style: "grid",
+      options: [
+        { id: "xs", label: "XS" },
+        { id: "s", label: "S" },
+        { id: "m", label: "M" },
+        { id: "l", label: "L" },
+        { id: "xl", label: "XL", available: false },
+      ],
+    },
+  ],
+  meta: [
+    { icon: "truck", text: "Free standard shipping · 3–5 business days" },
+    { icon: "rotate-ccw", text: "30-day returns · refunded to original points + cash" },
+    { icon: "shield-check", text: "Authentic product, fulfilled by Norse Projects" },
+  ],
+};
+
+export const aesopConfigurator: ProductDetailsData = {
+  product: {
+    id: "aesop-byo",
+    vendor: "Aesop",
+    name: "Build Your Own Discovery Set",
+    description:
+      "Curate a four-piece introduction across our most loved formulations. One price for the set. Pick one item from each category below.",
+    image: { url: "https://picsum.photos/seed/aesop-byo-1/600/750" },
+    price: { currency: "USD", value: "89.00" },
+    pointsPrice: 8900,
+    availability: { kind: "in-stock" },
+    marketplace: "shopify",
+  },
+  gallery: [
+    "https://picsum.photos/seed/aesop-byo-1/800/1000",
+    "https://picsum.photos/seed/aesop-byo-2/400/400",
+    "https://picsum.photos/seed/aesop-byo-3/400/400",
+    "https://picsum.photos/seed/aesop-byo-4/400/400",
+  ],
+  dimensions: [
+    {
+      id: "cleanser",
+      label: "1 · Cleanser",
+      hint: "Pick 1 of 4",
+      style: "cards",
+      options: [
+        { id: "parsley", label: "Parsley Seed Anti-Oxidant", secondary: "Included" },
+        { id: "amazing", label: "Amazing Face Cleanser", secondary: "Included" },
+        { id: "in-two-minds", label: "In Two Minds Facial", secondary: "Included" },
+        { id: "fabulous", label: "Fabulous Face Cleanser", secondary: "Included" },
+      ],
+    },
+    {
+      id: "hand-wash",
+      label: "2 · Hand Wash",
+      hint: "Pick 1 of 3",
+      style: "cards",
+      options: [
+        { id: "resurrection", label: "Resurrection", secondary: "Included" },
+        { id: "reverence", label: "Reverence", secondary: "Included" },
+        { id: "geranium", label: "Geranium Leaf", secondary: "Included" },
+      ],
+    },
+    {
+      id: "hand-balm",
+      label: "3 · Hand Balm",
+      hint: "Pick 1 of 3",
+      style: "cards",
+      options: [
+        { id: "resurrection", label: "Resurrection", secondary: "Included" },
+        { id: "reverence", label: "Reverence", secondary: "Included" },
+        { id: "rind", label: "Rind Concentrate", secondary: "Included" },
+      ],
+    },
+    {
+      id: "bonus",
+      label: "4 · Bonus mini",
+      hint: "Pick 1 of 3",
+      style: "cards",
+      options: [
+        { id: "post-poo", label: "Post-Poo Drops", secondary: "Included" },
+        { id: "aromatique", label: "Aromatique Mist", secondary: "Included" },
+        { id: "lip-balm", label: "Lip Balm", secondary: "Out of stock", available: false },
+      ],
+    },
+  ],
+};

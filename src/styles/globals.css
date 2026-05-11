@@ -26,6 +26,11 @@
   --color-points-soft: #e6f0ea;
 
   --color-error: #b33a3a;
+  --color-error-soft: #fbf2f2;
+
+  --color-amber: #b5860b;
+  --color-amber-soft: #fbf4dc;
+  --color-amber-line: #f0e3b0;
 
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
