@@ -8,7 +8,7 @@ Source-available React components for partners building rewards-program redempti
 
 ## Status
 
-Pre-1.0. Phase 0 scaffold is up; first component lands in Phase 1.
+Pre-1.0 (v0.x). All five v1 components have landed: `<ProductCard />`, `<ProductDetails />` (compound), `<PayWithPoints />`, `<PaymentSheet />` (compound), `<OrderTracking />`. Registry builds via `pnpm registry:build`. Hosting + npm publish are the remaining v0.1 gates.
 
 ## Install
 
