@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import { Info, Sparkles } from "lucide-react";
 
@@ -273,10 +275,7 @@ function Slider({
       className="relative flex h-5 w-full cursor-pointer items-center pt-2 pb-1"
     >
       <span className="bg-line-strong relative h-[3px] flex-1 overflow-hidden rounded-full">
-        <span
-          className="bg-points absolute top-0 left-0 h-full transition-[width] duration-75"
-          style={{ width: `${pct}%` }}
-        />
+        <span className="bg-points absolute top-0 left-0 h-full" style={{ width: `${pct}%` }} />
       </span>
       <span
         role="slider"

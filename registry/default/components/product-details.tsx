@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import { AlertCircle, ChevronRight, RotateCcw, ShieldCheck, Truck, X } from "lucide-react";
 
@@ -31,8 +33,21 @@ export interface ProductDetailsProps extends Omit<
    * "Pick another size to continue" / "Pick a bonus mini to continue" states.
    */
   redeemDisabledReason?: string;
-  /** Breadcrumb trail. The last item renders as plain text, others as links. */
-  breadcrumbs?: string[];
+  /**
+   * Breadcrumb trail. The last item always renders as plain text. Earlier
+   * items render as anchors — pass `{ label, href }` to link them, or plain
+   * strings to render non-linked text.
+   */
+  breadcrumbs?: Array<string | { label: string; href: string }>;
+  /** Current quantity to redeem. When set with `onQuantityChange`, renders a stepper above the CTA. */
+  quantity?: number;
+  onQuantityChange?: (next: number) => void;
+  quantityMin?: number;
+  quantityMax?: number;
+  /** Override the primary CTA copy. Defaults to "Redeem with points". */
+  redeemLabel?: string;
+  /** Override the CTA's secondary "· $X" suffix. Defaults to formatted product price. */
+  redeemSecondary?: string;
   /** Override how the cash price renders. */
   formatPrice?: (price: Product["price"]) => string;
   /** Override how points render. */
@@ -62,6 +77,12 @@ export function ProductDetails({
   onRedeem,
   redeemDisabledReason,
   breadcrumbs,
+  quantity,
+  onQuantityChange,
+  quantityMin = 1,
+  quantityMax = 10,
+  redeemLabel = "Redeem with points",
+  redeemSecondary,
   formatPrice = defaultFormatPrice,
   formatPoints = defaultFormatPoints,
   className,
@@ -69,6 +90,7 @@ export function ProductDetails({
 }: ProductDetailsProps) {
   const { product, gallery, dimensions, meta } = data;
   const isDisabled = redeemDisabledReason !== undefined;
+  const showQuantity = quantity !== undefined && onQuantityChange !== undefined;
 
   return (
     <div className={cn("mx-auto max-w-[1200px]", className)} {...rest}>
@@ -79,13 +101,15 @@ export function ProductDetails({
         >
           {breadcrumbs.map((crumb, i) => {
             const isLast = i === breadcrumbs.length - 1;
+            const label = typeof crumb === "string" ? crumb : crumb.label;
+            const href = typeof crumb === "string" ? null : crumb.href;
             return (
-              <React.Fragment key={`${i}-${crumb}`}>
-                {isLast ? (
-                  <span className="text-ink-2">{crumb}</span>
+              <React.Fragment key={`${i}-${label}`}>
+                {isLast || !href ? (
+                  <span className={isLast ? "text-ink-2" : ""}>{label}</span>
                 ) : (
-                  <a href="#" className="hover:text-ink-1 transition">
-                    {crumb}
+                  <a href={href} className="hover:text-ink-1 transition">
+                    {label}
                   </a>
                 )}
                 {!isLast && <ChevronRight size={12} strokeWidth={2} />}
@@ -142,6 +166,15 @@ export function ProductDetails({
             />
           ))}
 
+          {showQuantity && (
+            <QuantityStepper
+              value={quantity}
+              min={quantityMin}
+              max={quantityMax}
+              onChange={onQuantityChange}
+            />
+          )}
+
           <button
             type="button"
             disabled={isDisabled}
@@ -157,9 +190,11 @@ export function ProductDetails({
               redeemDisabledReason
             ) : (
               <>
-                <span>Redeem with points</span>
+                <span>{redeemLabel}</span>
                 <span className="text-white/50">·</span>
-                <span className="tabular-nums">{formatPrice(product.price)}</span>
+                <span className="tabular-nums">
+                  {redeemSecondary ?? formatPrice(product.price)}
+                </span>
               </>
             )}
           </button>
@@ -234,6 +269,63 @@ function Gallery({
             <img src={src} alt={`${altBase} ${i + 1}`} className="h-full w-full object-cover" />
           </button>
         ))}
+      </div>
+    </div>
+  );
+}
+
+function QuantityStepper({
+  value,
+  min,
+  max,
+  onChange,
+}: {
+  value: number;
+  min: number;
+  max: number;
+  onChange: (next: number) => void;
+}) {
+  const decrement = () => onChange(Math.max(min, value - 1));
+  const increment = () => onChange(Math.min(max, value + 1));
+  const atMin = value <= min;
+  const atMax = value >= max;
+  return (
+    <div className="mt-8 flex items-center justify-between">
+      <div className="flex flex-col">
+        <span className="text-ink-1 text-[14px] font-medium -tracking-[0.02em]">Quantity</span>
+        <span className="text-ink-3 mt-0.5 text-[12px]">Max {max} per redemption</span>
+      </div>
+      <div className="border-line bg-card flex items-center rounded-xl border">
+        <button
+          type="button"
+          onClick={decrement}
+          disabled={atMin}
+          aria-label="Decrease quantity"
+          className={cn(
+            "px-3.5 py-2 text-[16px] leading-none font-medium transition",
+            atMin ? "text-ink-3 cursor-not-allowed" : "text-ink-1 hover:bg-inset",
+          )}
+        >
+          −
+        </button>
+        <span
+          aria-live="polite"
+          className="text-ink-1 min-w-[28px] text-center text-[14px] font-medium tabular-nums"
+        >
+          {value}
+        </span>
+        <button
+          type="button"
+          onClick={increment}
+          disabled={atMax}
+          aria-label="Increase quantity"
+          className={cn(
+            "px-3.5 py-2 text-[16px] leading-none font-medium transition",
+            atMax ? "text-ink-3 cursor-not-allowed" : "text-ink-1 hover:bg-inset",
+          )}
+        >
+          +
+        </button>
       </div>
     </div>
   );

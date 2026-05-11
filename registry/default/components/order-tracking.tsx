@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import { AlertCircle, ArrowRight, Check, Clock, Info, RotateCcw, Truck, X } from "lucide-react";
 
