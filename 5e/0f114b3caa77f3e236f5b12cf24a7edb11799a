@@ -1,0 +1,29 @@
+registry/default/index.ts
+  s_03356607026e4d::t_ae6805c678a9fd 1-29
+registry.json
+  s_03356607026e4d::t_dfdf846a01c106 3
+playground/main.tsx
+  s_03356607026e4d::t_8516816e22147d 4
+.oxlintrc.json
+  s_03356607026e4d::t_52ecf72c912837 1-42
+package.json
+  s_03356607026e4d::t_dd154ab889248b 18-21
+playground/App.tsx
+  s_03356607026e4d::t_94259d44b2f6be 1-24
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "5e0f114b3caa77f3e236f5b12cf24a7edb11799a",
+  "prompts": {},
+  "sessions": {
+    "s_03356607026e4d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4d635d87-429e-4c94-9dbb-62c77bc87272",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": null
+    }
+  }
+}
