@@ -10,6 +10,8 @@ export { VariantSelector, type VariantSelectorProps } from "./components/variant
 
 export { PayWithPoints, type PayWithPointsProps } from "./components/pay-with-points";
 
+export { PaymentSheet, type CostLine, type PaymentSheetProps } from "./components/payment-sheet";
+
 export type {
   ApiMoney,
   Marketplace,
