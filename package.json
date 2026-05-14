@@ -1,57 +1,57 @@
 {
-  "name": "rye-rewards-ui",
+  "name": "@rye-api/rewards-ui",
   "version": "0.0.1",
-  "description": "Source-available React components for partners building rewards-program redemption flows on Rye.",
-  "license": "MIT",
-  "type": "module",
   "private": false,
-  "publishConfig": {
-    "access": "public"
-  },
+  "description": "Source-available React components for partners building rewards-program redemption flows on Rye.",
+  "homepage": "https://docs.rye.com/rewards",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/rye-com/rewards-ui.git"
   },
-  "homepage": "https://docs.rye.com/rewards",
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier --write \"**/*.{ts,tsx,css,md,json}\"",
-    "check-format": "prettier --check \"**/*.{ts,tsx,css,md,json}\"",
+    "dev": "vite",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "format": "oxfmt",
+    "check-format": "oxfmt --check",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "registry:build": "shadcn build"
-  },
-  "peerDependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "registry:build": "shadcn build",
+    "check": "pnpm typecheck && pnpm lint && pnpm check-format && pnpm test"
   },
   "devDependencies": {
     "@base-ui-components/react": "^1.0.0-beta.0",
-    "@eslint/js": "^9.18.0",
+    "@tailwindcss/vite": "^4.0.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
     "@types/node": "^22.10.5",
     "@types/react": "^19.0.7",
     "@types/react-dom": "^19.0.3",
-    "@typescript-eslint/eslint-plugin": "^8.20.0",
-    "@typescript-eslint/parser": "^8.20.0",
-    "eslint": "^9.18.0",
-    "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-react": "^7.37.4",
-    "eslint-plugin-react-hooks": "^5.1.0",
-    "globals": "^15.14.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "clsx": "^2.1.1",
     "happy-dom": "^16.5.3",
     "lucide-react": "^0.469.0",
-    "prettier": "^3.4.2",
-    "prettier-plugin-tailwindcss": "^0.6.9",
+    "oxfmt": "^0.49.0",
+    "oxlint": "^1.64.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "shadcn": "^4.7.0",
+    "tailwind-merge": "^3.6.0",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.7.3",
+    "vite": "^5.4.11",
     "vitest": "^2.1.8"
+  },
+  "peerDependencies": {
+    "checkout-intents": "^0.27.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "engines": {
     "node": ">=22.0.0",

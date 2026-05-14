@@ -9,8 +9,9 @@ export default defineConfig({
     passWithNoTests: true,
   },
   resolve: {
-    alias: {
-      "@": new URL("./registry/default", import.meta.url).pathname,
-    },
+    alias: [
+      { find: /^@\/lib\/(.*)$/, replacement: new URL("./lib", import.meta.url).pathname + "/$1" },
+      { find: "@", replacement: new URL("./registry/default", import.meta.url).pathname },
+    ],
   },
 });
