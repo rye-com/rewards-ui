@@ -1,0 +1,61 @@
+lib/utils.ts
+  s_03356607026e4d::t_b36a342235d4eb 1-6
+tsconfig.json
+  s_03356607026e4d::t_a6ca5cc346f0cf 24,28-31
+registry/default/index.ts
+  s_03356607026e4d::t_35306d9dbe3fed 2
+  s_03356607026e4d::t_ae6805c678a9fd 1,3-16
+CHANGELOG.md
+  s_03356607026e4d::t_5a145e0e7492eb 3-15
+  s_03356607026e4d::t_302faaa36acad8 19
+registry/default/types/product.ts
+  s_03356607026e4d::t_86d13b4d833b18 4-5
+  s_03356607026e4d::t_5aba5b95f46853 3,6,23-24
+  s_03356607026e4d::t_a61615eb688aa7 2,7-22,25-32
+  s_03356607026e4d::t_051d81f9f0701b 1
+package.json
+  s_03356607026e4d::t_dd154ab889248b 18-21
+src/styles/globals.css
+  s_03356607026e4d::t_7ad78eb51f097d 4-7
+  s_03356607026e4d::t_a8b2892f12caa5 34
+playground/App.tsx
+  s_03356607026e4d::t_6e1bc10f1ff309 4-10,12
+  s_03356607026e4d::t_94259d44b2f6be 1-3,11,13-16
+README.md
+  s_03356607026e4d::t_c8a2591e7b509e 11
+  s_03356607026e4d::t_6fbde0c51a5710 79,81
+  s_03356607026e4d::t_8bd23d667673a0 62
+vite.config.ts
+  s_03356607026e4d::t_7b0bf7f83c59c1 10-13
+  s_03356607026e4d::t_aa6bf1e01bd787 5-6
+  s_03356607026e4d::t_29777de368233c 9,14
+registry.json
+  s_03356607026e4d::t_dfdf846a01c106 3
+.oxlintrc.json
+  s_03356607026e4d::t_a69f0afad537a6 10
+  s_03356607026e4d::t_f657cae986cdf2 22,29
+  s_03356607026e4d::t_06460a5a2fe1ce 23,30
+  s_03356607026e4d::t_52ecf72c912837 1-9,11-21,24-28,31-45
+playground/main.tsx
+  s_03356607026e4d::t_8516816e22147d 4
+registry/default/types/product-details.ts
+  s_03356607026e4d::t_4b3fa791891d44 3-41
+vitest.config.ts
+  s_03356607026e4d::t_997e24cfcfa2a6 12-15
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "a35c5a3c95b847d4c59bf7e97b0ca7db86ee597a",
+  "prompts": {},
+  "sessions": {
+    "s_03356607026e4d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4d635d87-429e-4c94-9dbb-62c77bc87272",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": null
+    }
+  }
+}
