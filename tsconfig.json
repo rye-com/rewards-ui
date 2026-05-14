@@ -21,9 +21,18 @@
     "types": ["vitest/globals", "@testing-library/jest-dom"],
     "baseUrl": ".",
     "paths": {
+      "@/lib/*": ["./lib/*"],
       "@/*": ["./registry/default/*"]
     }
   },
-  "include": ["registry/**/*", "src/**/*", "vitest.config.ts", "eslint.config.mjs"],
+  "include": [
+    "registry/**/*",
+    "src/**/*",
+    "lib/**/*",
+    "playground/**/*",
+    "vitest.config.ts",
+    "vite.config.ts",
+    "eslint.config.mjs"
+  ],
   "exclude": ["node_modules", "dist"]
 }

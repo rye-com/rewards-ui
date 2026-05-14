@@ -1,14 +1,14 @@
-# rye-rewards-ui
+# @rye-api/rewards-ui
 
 Source-available React components for partners building rewards-program redemption flows on Rye. Designed for credit-card rewards programs, points-based loyalty apps, and corporate gifting.
 
-> Published on public npm as `rye-rewards-ui`, unscoped, matching the `rye-pay` / `checkout-intents` pattern from Rye's existing partner-facing packages.
+> Published on public npm as `@rye-api/rewards-ui`, joining the rest of the `@rye-api` family (`@rye-api/rye-pay`, `@rye-api/rye-sdk`, `@rye-api/idempotency-redis`).
 
 > Components ship as source via shadcn-style CLI. Partners install, own, and customize the source — no compiled black box, no theme variants to maintain.
 
 ## Status
 
-Pre-1.0. Phase 0 scaffold is up; first component lands in Phase 1.
+Pre-1.0 (v0.x). All five v1 components have landed: `<ProductCard />`, `<ProductDetails />` (compound), `<PayWithPoints />`, `<PaymentSheet />` (compound), `<OrderTracking />`. Registry builds via `pnpm registry:build`. Hosting + npm publish are the remaining v0.1 gates.
 
 ## Install
 
@@ -27,7 +27,7 @@ Add a namespace to your project's `components.json`:
 ```json
 {
   "registries": {
-    "@rye": "https://rewards-ui.rye.com/r/{name}.json"
+    "@rye-api": "https://rewards-ui.rye.com/r/{name}.json"
   }
 }
 ```
@@ -35,7 +35,7 @@ Add a namespace to your project's `components.json`:
 Then:
 
 ```bash
-pnpm dlx shadcn@latest add @rye/product-card
+pnpm dlx shadcn@latest add @rye-api/product-card
 ```
 
 Either way, source files copy into `components/rye-rewards/` (configurable). You commit them and own the source from there.
@@ -59,7 +59,7 @@ Listed in `registry.json`. v1 ships:
 
 ## Architecture invariants
 
-1. **No API client dependency.** This package does not import `checkout-intents` or any other Rye API client. Components receive data via props and emit callbacks; the partner's backend is the only thing that talks to Rye's API. Enforced by an ESLint rule.
+1. **No API client at runtime.** This package does not import `checkout-intents` (or any other Rye API client) at runtime. Type imports are allowed and encouraged: components reference `checkout-intents` for its public type definitions so partners can pass API responses straight through without remapping. Components receive data via props and emit callbacks; the partner's backend is the only thing that talks to Rye's API. Enforced by an oxlint `no-restricted-imports` rule with `allowTypeImports: true`.
 2. **Partner is merchant of record.** Components never see a Rye API key. User auth is partner-owned; the SDK is a dumb pipe between partner-supplied user state and partner-supplied callbacks.
 
 See the design doc for full context.
@@ -76,12 +76,9 @@ pnpm registry:build   # generates public/r/*.json
 
 ## Hosting
 
-**TBD.** The `shadcn build` step emits `public/r/*.json` files that need to be served at a stable HTTPS URL. Candidates under discussion:
+Publishing to shadcn's official registry (`ui.shadcn.com`). Partners install via `shadcn@latest add @rye-api/<component>` once we're listed there, no Rye-side hosting infra to operate.
 
-- An existing Rye-controlled host (`rye-api` infra, `docs.rye.com`), so registry URLs live on `rye.com` natively.
-- GitHub Pages from this repo, CNAMEd to `rewards-ui.rye.com`.
-
-Decision blocks shipping the partner-facing install command in this README. Tracked separately.
+Until the listing lands, the `shadcn build` step emits `public/r/*.json` files that can be served from any HTTPS URL for testing. The install commands above will resolve to the official registry once published.
 
 ## License
 

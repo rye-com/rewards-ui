@@ -1,6 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "rye-rewards-ui",
+  "name": "rewards-ui",
   "homepage": "https://docs.rye.com/rewards",
   "items": []
 }
