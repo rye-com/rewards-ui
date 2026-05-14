@@ -20,7 +20,6 @@ export type Marketplace = "amazon" | "shopify" | "bestbuy";
 export type ProductAvailability =
   | { kind: "in-stock" }
   | { kind: "out-of-stock" }
-  | { kind: "subscription-only"; cadence?: string }
   | { kind: "marketplace-down"; marketplace: Marketplace; reason?: string };
 
 export type Product = {
