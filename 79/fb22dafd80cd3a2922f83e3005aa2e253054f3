@@ -1,0 +1,25 @@
+registry/default/components/order-tracking.tsx
+  s_03356607026e4d::t_ca45b241561394 27
+registry.json
+  s_03356607026e4d::t_0c255576a9c182 7-25
+registry/default/index.ts
+  s_03356607026e4d::t_947200b10407ef 13-33
+registry/default/components/order-tracking.test.tsx
+  s_03356607026e4d::t_b5079e8dcc0c6a 193
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "79fb22dafd80cd3a2922f83e3005aa2e253054f3",
+  "prompts": {},
+  "sessions": {
+    "s_03356607026e4d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4d635d87-429e-4c94-9dbb-62c77bc87272",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": null
+    }
+  }
+}
