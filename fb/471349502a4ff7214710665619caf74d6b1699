@@ -1,0 +1,37 @@
+registry.json
+  s_03356607026e4d::t_441237aba0c7cf 5-26
+registry/default/index.ts
+  s_03356607026e4d::t_ae6805c678a9fd 1-2
+registry/default/components/product-card.tsx
+  s_03356607026e4d::t_89b46d87fac35f 6
+  s_03356607026e4d::t_17dd262ee5a68a 130
+  s_03356607026e4d::t_8340ca45c7ed5e 200
+  s_03356607026e4d::t_58daeae0b6d57c 7-129,131-199,201-296,310-371
+  s_03356607026e4d::t_536776c1dcd100 297
+playground/data.ts
+  s_03356607026e4d::t_25f19ecb5a018e 1-67
+playground/App.tsx
+  s_03356607026e4d::t_85ce0592dd7a99 32
+  s_03356607026e4d::t_94259d44b2f6be 75,90-91
+  s_03356607026e4d::t_71de82a7f81497 82,86
+  s_03356607026e4d::t_84e967c4da54c6 1-2
+  s_03356607026e4d::t_3a9c1d26b2c4e5 4,6-12
+  s_03356607026e4d::t_9791a1011695dc 69
+  s_03356607026e4d::t_6e1bc10f1ff309 3,5,17-31,33-45,50-68,70-74,76-81,83-85,87-89
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "fb471349502a4ff7214710665619caf74d6b1699",
+  "prompts": {},
+  "sessions": {
+    "s_03356607026e4d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4d635d87-429e-4c94-9dbb-62c77bc87272",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": null
+    }
+  }
+}
