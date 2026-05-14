@@ -45,8 +45,8 @@ export default [
         "error",
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
-      // Architecture Invariant #1 — `@rye/rewards-ui` must not depend on
-      // the `checkout-intents` API client. Components are presentation only;
+      // Architecture Invariant #1: `@rye-api/rewards-ui` must not depend on
+      // the `checkout-intents` API client. Components are presentation only,
       // every API interaction goes through partner-supplied callbacks.
       "no-restricted-imports": [
         "error",
@@ -55,14 +55,14 @@ export default [
             {
               name: "checkout-intents",
               message:
-                "@rye/rewards-ui must not import the checkout-intents API client. Components receive data via props and emit callbacks; the partner's backend is the only thing that talks to Rye's API. (See Architecture Invariant #1 in the design doc.)",
+                "@rye-api/rewards-ui must not import the checkout-intents API client. Components receive data via props and emit callbacks; the partner's backend is the only thing that talks to Rye's API. (See Architecture Invariant #1 in the design doc.)",
             },
           ],
           patterns: [
             {
               group: ["checkout-intents/*"],
               message:
-                "@rye/rewards-ui must not import the checkout-intents API client. (See Architecture Invariant #1.)",
+                "@rye-api/rewards-ui must not import the checkout-intents API client. (See Architecture Invariant #1.)",
             },
           ],
         },

@@ -1,5 +1,5 @@
 {
-  "name": "rye-rewards-ui",
+  "name": "@rye-api/rewards-ui",
   "version": "0.0.1",
   "description": "Source-available React components for partners building rewards-program redemption flows on Rye.",
   "license": "MIT",

@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to `rye-rewards-ui` will be documented here. Components are versioned together: a single semver release covers the full registry snapshot. Once installed, partners own their copy of the source — upgrade by running `npx @rye/rewards-ui diff <component>` to see what changed before merging.
+All notable changes to `@rye-api/rewards-ui` will be documented here. Components are versioned together: a single semver release covers the full registry snapshot. Once installed, partners own their copy of the source — upgrade by running `npx @rye-api/rewards-ui diff <component>` to see what changed before merging.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 

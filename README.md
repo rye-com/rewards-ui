@@ -1,8 +1,8 @@
-# rye-rewards-ui
+# @rye-api/rewards-ui
 
 Source-available React components for partners building rewards-program redemption flows on Rye. Designed for credit-card rewards programs, points-based loyalty apps, and corporate gifting.
 
-> Published on public npm as `rye-rewards-ui`, unscoped, matching the `rye-pay` / `checkout-intents` pattern from Rye's existing partner-facing packages.
+> Published on public npm as `@rye-api/rewards-ui`, joining the rest of the `@rye-api` family (`@rye-api/rye-pay`, `@rye-api/rye-sdk`, `@rye-api/idempotency-redis`).
 
 > Components ship as source via shadcn-style CLI. Partners install, own, and customize the source — no compiled black box, no theme variants to maintain.
 
@@ -27,7 +27,7 @@ Add a namespace to your project's `components.json`:
 ```json
 {
   "registries": {
-    "@rye": "https://rewards-ui.rye.com/r/{name}.json"
+    "@rye-api": "https://rewards-ui.rye.com/r/{name}.json"
   }
 }
 ```
@@ -35,7 +35,7 @@ Add a namespace to your project's `components.json`:
 Then:
 
 ```bash
-pnpm dlx shadcn@latest add @rye/product-card
+pnpm dlx shadcn@latest add @rye-api/product-card
 ```
 
 Either way, source files copy into `components/rye-rewards/` (configurable). You commit them and own the source from there.
