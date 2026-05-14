@@ -1,3 +1,5 @@
+export { ProductCard, ProductCardSkeleton, type ProductCardProps } from "./components/product-card";
+
 export type {
   ApiMoney,
   Marketplace,
