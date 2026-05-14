@@ -1,5 +1,11 @@
 export { ProductCard, ProductCardSkeleton, type ProductCardProps } from "./components/product-card";
 
+export {
+  ProductDetails,
+  ProductDetailsSkeleton,
+  type ProductDetailsProps,
+} from "./components/product-details";
+
 export type {
   ApiMoney,
   Marketplace,
