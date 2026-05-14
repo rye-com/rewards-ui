@@ -1,0 +1,21 @@
+registry/default/index.ts
+  s_03356607026e4d::t_ed60c62943feea 18-19
+registry.json
+  s_03356607026e4d::t_636def97d1791c 7-25
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "bf7888b7413ff3d6a14c0572cf1e6f8fbb180572",
+  "prompts": {},
+  "sessions": {
+    "s_03356607026e4d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4d635d87-429e-4c94-9dbb-62c77bc87272",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Victor Tsyan <victor@rye.com>"
+    }
+  }
+}
