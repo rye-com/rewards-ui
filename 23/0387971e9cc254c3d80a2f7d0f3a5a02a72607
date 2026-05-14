@@ -1,0 +1,46 @@
+registry/default/components/payment-sheet.tsx
+  s_03356607026e4d::t_a7d7a16ab66611 39,42,44,48
+  s_03356607026e4d::t_cef3f8de0c51c8 85-86,92-93
+  s_03356607026e4d::t_b66d86d49168e0 127,133,137-139,141,143
+  s_03356607026e4d::t_38adab73ae861c 169
+  s_03356607026e4d::t_a2c509bbef5f66 196
+  s_03356607026e4d::t_6c62ba4e2c38b1 224,229-230,236
+  s_03356607026e4d::t_dd73317df0a1cb 293-301,307
+  s_03356607026e4d::t_3c030e012278ac 326,329,339
+  s_03356607026e4d::t_9da9766d26df67 374,379,386
+  s_03356607026e4d::t_741546bc0116a0 449,455,457,461-468
+  s_03356607026e4d::t_cd8cea0a2198d7 509,515
+registry/default/components/payment-sheet.test.tsx
+  s_03356607026e4d::t_ac7bd9d303fe72 85,91
+CHANGELOG.md
+  s_03356607026e4d::t_5a145e0e7492eb 3-15,21-23
+registry/default/components/order-tracking.tsx
+  s_03356607026e4d::t_bd762ef9d15449 366
+  s_03356607026e4d::t_429ac3f6e76546 380
+  s_03356607026e4d::t_23ef37909f7661 770
+registry/default/index.ts
+  s_03356607026e4d::t_ae6805c678a9fd 1-2,8
+  s_03356607026e4d::t_78379c73c9264b 3-7
+  s_03356607026e4d::t_ed60c62943feea 9-10
+  s_03356607026e4d::t_38e1ce5ceece24 11-26
+  s_03356607026e4d::t_d668530c15c154 27
+  s_03356607026e4d::t_947200b10407ef 28-48
+README.md
+  s_03356607026e4d::t_c8a2591e7b509e 7,11-14,48-54,56,60-62,69,77-79,82-83
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "230387971e9cc254c3d80a2f7d0f3a5a02a72607",
+  "prompts": {},
+  "sessions": {
+    "s_03356607026e4d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4d635d87-429e-4c94-9dbb-62c77bc87272",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Victor Tsyan <victor@rye.com>"
+    }
+  }
+}
