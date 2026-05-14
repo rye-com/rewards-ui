@@ -1,0 +1,30 @@
+registry/default/components/pay-with-points.tsx
+  s_03356607026e4d::t_d64a04430c0ef5 6
+  s_03356607026e4d::t_708c274145c65e 76-78
+registry/default/index.ts
+  s_03356607026e4d::t_ae6805c678a9fd 1-2,8,10-26
+  s_03356607026e4d::t_947200b10407ef 3
+  s_03356607026e4d::t_78379c73c9264b 4-7
+  s_03356607026e4d::t_ed60c62943feea 9
+registry.json
+  s_03356607026e4d::t_dfdf846a01c106 3
+  s_03356607026e4d::t_441237aba0c7cf 5-6,8,11-14,16,18-19,21,23,26-29,31,33-39,41,43-44,46-66
+  s_03356607026e4d::t_636def97d1791c 7,9-10,15,17
+  s_03356607026e4d::t_4db6b56b0d3607 20,22,24-25,30,32,40,42,45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "5b67c420a7a97917cccd69c5deddf87a2653b2a9",
+  "prompts": {},
+  "sessions": {
+    "s_03356607026e4d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4d635d87-429e-4c94-9dbb-62c77bc87272",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": null
+    }
+  }
+}
