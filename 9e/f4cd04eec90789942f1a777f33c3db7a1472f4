@@ -9,11 +9,11 @@ playground/data.ts
 registry.json
   s_03356607026e4d::t_dfdf846a01c106 3
   s_03356607026e4d::t_441237aba0c7cf 5,7-26
+registry/default/index.ts
+  s_03356607026e4d::t_ae6805c678a9fd 1,3,5-18
+  s_03356607026e4d::t_35306d9dbe3fed 2,4
 registry/default/components/product-card.tsx
   s_03356607026e4d::t_89b46d87fac35f 6
-registry/default/index.ts
-  s_03356607026e4d::t_ae6805c678a9fd 1,3-18
-  s_03356607026e4d::t_35306d9dbe3fed 2
 ---
 {
   "schema_version": "authorship/3.0.0",
