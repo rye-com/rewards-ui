@@ -1,0 +1,32 @@
+registry/default/index.ts
+  s_03356607026e4d::t_ae6805c678a9fd 1,8,13,15-28
+  s_03356607026e4d::t_35306d9dbe3fed 2,14
+  s_03356607026e4d::t_78379c73c9264b 3-7
+  s_03356607026e4d::t_ed60c62943feea 9-10
+  s_03356607026e4d::t_d668530c15c154 12
+registry/default/components/payment-sheet.tsx
+  s_03356607026e4d::t_13e051bf1af96d 14
+  s_03356607026e4d::t_aa9352e6c25e62 26-27
+registry.json
+  s_03356607026e4d::t_dfdf846a01c106 3
+  s_03356607026e4d::t_441237aba0c7cf 5,26,41,43,46-49,51,53-59,61,63-64,66-86
+  s_03356607026e4d::t_d40c065a1f7c93 7-25
+  s_03356607026e4d::t_636def97d1791c 27-40
+  s_03356607026e4d::t_4db6b56b0d3607 42,44-45,50,52,60,62,65
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "b07f20ee2e2960171ec45320f40ef11e975aae82",
+  "prompts": {},
+  "sessions": {
+    "s_03356607026e4d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4d635d87-429e-4c94-9dbb-62c77bc87272",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": null
+    }
+  }
+}
