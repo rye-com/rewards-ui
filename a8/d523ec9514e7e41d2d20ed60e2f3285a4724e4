@@ -1,0 +1,28 @@
+CHANGELOG.md
+  s_03356607026e4d::t_4f1b6c1414b903 3
+README.md
+  s_03356607026e4d::t_a89b852a6ac003 30,38
+  s_03356607026e4d::t_a0896801746412 1,5
+package.json
+  s_03356607026e4d::t_f287286eaaf37b 2
+registry.json
+  s_03356607026e4d::t_cbc3b528d1e7ab 3
+eslint.config.mjs
+  s_03356607026e4d::t_f6a02705ec3599 48-49,58,65
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "a8d523ec9514e7e41d2d20ed60e2f3285a4724e4",
+  "prompts": {},
+  "sessions": {
+    "s_03356607026e4d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4d635d87-429e-4c94-9dbb-62c77bc87272",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Victor Tsyan <victor@rye.com>"
+    }
+  }
+}
