@@ -1,0 +1,23 @@
+registry.json
+  s_03356607026e4d::t_d40c065a1f7c93 7-30
+registry/default/index.ts
+  s_03356607026e4d::t_d668530c15c154 12
+registry/default/components/payment-sheet.tsx
+  s_03356607026e4d::t_aa9352e6c25e62 26-27
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "adf45c43dd935976d2952354d027256b02634cc8",
+  "prompts": {},
+  "sessions": {
+    "s_03356607026e4d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4d635d87-429e-4c94-9dbb-62c77bc87272",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": null
+    }
+  }
+}
