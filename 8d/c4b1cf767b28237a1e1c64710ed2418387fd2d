@@ -1,0 +1,23 @@
+registry/default/components/pay-with-points.tsx
+  s_03356607026e4d::t_708c274145c65e 76-78
+registry.json
+  s_03356607026e4d::t_636def97d1791c 7-25
+registry/default/index.ts
+  s_03356607026e4d::t_ed60c62943feea 9-10
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "8dc4b1cf767b28237a1e1c64710ed2418387fd2d",
+  "prompts": {},
+  "sessions": {
+    "s_03356607026e4d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4d635d87-429e-4c94-9dbb-62c77bc87272",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": null
+    }
+  }
+}
