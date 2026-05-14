@@ -22,7 +22,8 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "registry:build": "shadcn build"
+    "registry:build": "shadcn build",
+    "check": "pnpm typecheck && pnpm lint && pnpm check-format && pnpm test"
   },
   "peerDependencies": {
     "react": "^19.0.0",

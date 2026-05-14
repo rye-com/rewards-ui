@@ -460,7 +460,7 @@ function Confirm({ label, secondary, onClick, disabled, loading, footerNote }: C
           "flex w-full items-center justify-center gap-2 rounded-xl py-[15px] text-[14.5px] font-medium -tracking-[0.02em] transition",
           isInactive
             ? "bg-line text-ink-3 cursor-not-allowed"
-            : "bg-ink-1 text-white hover:bg-[#000]",
+            : "bg-ink-1 text-page hover:opacity-90",
         )}
       >
         {loading ? (
@@ -473,7 +473,7 @@ function Confirm({ label, secondary, onClick, disabled, loading, footerNote }: C
             <span>{label}</span>
             {secondary && (
               <>
-                <span className={cn(disabled ? "text-ink-3" : "text-white/50")}>·</span>
+                <span className={cn(disabled ? "text-ink-3" : "text-page/50")}>·</span>
                 <span className="tabular-nums">{secondary}</span>
               </>
             )}
@@ -514,7 +514,7 @@ function Actions({ primary, secondary }: ActionsProps) {
       <button
         type="button"
         onClick={primary.onClick}
-        className="bg-ink-1 flex h-12 items-center justify-center gap-2 rounded-xl text-[13.5px] font-medium text-white transition hover:bg-[#000]"
+        className="bg-ink-1 text-page flex h-12 items-center justify-center gap-2 rounded-xl text-[13.5px] font-medium transition hover:opacity-90"
       >
         {primary.icon === "rotate-ccw" && <RotateCcw size={13} strokeWidth={2.25} />}
         <span>{primary.label}</span>

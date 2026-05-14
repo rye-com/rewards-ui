@@ -151,7 +151,9 @@ export function ProductDetails({
           </div>
 
           {product.description && (
-            <p className="text-ink-2 mt-6 text-[14px] leading-relaxed">{product.description}</p>
+            <p className="text-ink-2 mt-6 line-clamp-4 text-[14px] leading-relaxed whitespace-pre-line">
+              {product.description}
+            </p>
           )}
 
           {revalidationError && <RevalidationAlert error={revalidationError} />}
@@ -183,7 +185,7 @@ export function ProductDetails({
               "mt-8 flex w-full items-center justify-center gap-2 rounded-xl py-[15px] text-[14.5px] font-medium -tracking-[0.02em] transition",
               isDisabled
                 ? "bg-line text-ink-3 cursor-not-allowed"
-                : "bg-ink-1 text-white hover:bg-[#000]",
+                : "bg-ink-1 text-page hover:opacity-90",
             )}
           >
             {isDisabled ? (
@@ -191,7 +193,7 @@ export function ProductDetails({
             ) : (
               <>
                 <span>{redeemLabel}</span>
-                <span className="text-white/50">·</span>
+                <span className="text-page/50">·</span>
                 <span className="tabular-nums">
                   {redeemSecondary ?? formatPrice(product.price)}
                 </span>
@@ -227,6 +229,8 @@ export function ProductDetails({
 // Private helpers
 // -------------------------------------------------------------------------
 
+const GALLERY_THUMBNAIL_CAP = 8;
+
 function Gallery({
   images,
   selectedIndex,
@@ -239,6 +243,17 @@ function Gallery({
   altBase: string;
 }) {
   const heroImage = images[selectedIndex] ?? images[0];
+  // Brooklinen-style listings include 100+ per-variant images. Cap the
+  // thumbnail row so the gallery doesn't take over the page. If the active
+  // index sits past the cap, show it instead of the last one so partners
+  // can still navigate back.
+  const cappedImages =
+    images.length <= GALLERY_THUMBNAIL_CAP
+      ? images
+      : selectedIndex < GALLERY_THUMBNAIL_CAP
+        ? images.slice(0, GALLERY_THUMBNAIL_CAP)
+        : [...images.slice(0, GALLERY_THUMBNAIL_CAP - 1), images[selectedIndex] as string];
+  const hiddenCount = Math.max(0, images.length - cappedImages.length);
 
   return (
     <div>
@@ -253,23 +268,38 @@ function Gallery({
         )}
       </div>
       <div className="grid grid-cols-4 gap-3">
-        {images.map((src, i) => (
-          <button
-            key={`${i}-${src}`}
-            type="button"
-            onClick={() => onSelect?.(i)}
-            aria-label={`View image ${i + 1}${i === selectedIndex ? ", currently selected" : ""}`}
-            className={cn(
-              "bg-line aspect-square overflow-hidden rounded-lg",
-              i === selectedIndex
-                ? "ring-ink-1 ring-offset-page ring-2 ring-offset-2"
-                : "transition hover:opacity-90",
-            )}
-          >
-            <img src={src} alt={`${altBase} ${i + 1}`} className="h-full w-full object-cover" />
-          </button>
-        ))}
+        {cappedImages.map((src, i) => {
+          const imageIndex =
+            i === GALLERY_THUMBNAIL_CAP - 1 && selectedIndex >= GALLERY_THUMBNAIL_CAP
+              ? selectedIndex
+              : i;
+          return (
+            <button
+              key={`${imageIndex}-${src}`}
+              type="button"
+              onClick={() => onSelect?.(imageIndex)}
+              aria-label={`View image ${imageIndex + 1}${imageIndex === selectedIndex ? ", currently selected" : ""}`}
+              className={cn(
+                "bg-line aspect-square overflow-hidden rounded-lg",
+                imageIndex === selectedIndex
+                  ? "ring-ink-1 ring-offset-page ring-2 ring-offset-2"
+                  : "transition hover:opacity-90",
+              )}
+            >
+              <img
+                src={src}
+                alt={`${altBase} ${imageIndex + 1}`}
+                className="h-full w-full object-cover"
+              />
+            </button>
+          );
+        })}
       </div>
+      {hiddenCount > 0 && (
+        <div className="text-ink-3 mt-2 text-center text-[11px]">
+          +{hiddenCount} more variant photos
+        </div>
+      )}
     </div>
   );
 }
@@ -469,8 +499,12 @@ function GridOptions({
   onChange: (optionId: string) => void;
   revalidating: boolean;
 }) {
+  // Adapt column count to the longest label so long color names
+  // ("Tandem Stripe in Fresh Moss") don't overflow narrow buttons.
+  const maxLabel = options.reduce((m, o) => Math.max(m, o.label.length), 0);
+  const colsClass = maxLabel > 16 ? "grid-cols-3" : maxLabel > 10 ? "grid-cols-4" : "grid-cols-5";
   return (
-    <div className="grid grid-cols-5 gap-2">
+    <div className={cn("grid gap-2", colsClass)}>
       {options.map((opt) => {
         const isSelected = opt.id === selectedId;
         const isUnavailableSelected = isSelected && revalidating && opt.justBecameUnavailable;
@@ -484,8 +518,8 @@ function GridOptions({
             disabled={isUnavailable}
             onClick={() => onChange(opt.id)}
             className={cn(
-              "h-11 rounded-lg text-[13px] font-medium tabular-nums transition",
-              isSelected && !isUnavailableSelected && "bg-ink-1 text-white",
+              "flex min-h-11 items-center justify-center rounded-lg px-3 py-2 text-center text-[12.5px] leading-tight font-medium break-words whitespace-normal tabular-nums transition",
+              isSelected && !isUnavailableSelected && "bg-ink-1 text-page",
               isUnavailableSelected && "bg-error-soft border-error text-error border-2",
               !isSelected &&
                 !isUnavailable &&

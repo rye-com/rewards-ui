@@ -57,6 +57,15 @@ export const ProductCard = React.forwardRef<HTMLAnchorElement, ProductCardProps>
     ref,
   ) {
     const [imageFailed, setImageFailed] = React.useState(false);
+    const [imageLoaded, setImageLoaded] = React.useState(false);
+    const imgRef = React.useRef<HTMLImageElement>(null);
+
+    // If the image was already in the browser cache when this component
+    // mounted, the `onLoad` listener attaches after the load event fires
+    // and never runs. Check `.complete` on mount to catch that race.
+    React.useEffect(() => {
+      if (imgRef.current?.complete) setImageLoaded(true);
+    }, []);
 
     const isBuyable = product.availability.kind === "in-stock";
     const isMarketplaceDown = product.availability.kind === "marketplace-down";
@@ -88,14 +97,17 @@ export const ProductCard = React.forwardRef<HTMLAnchorElement, ProductCardProps>
             <ImageFailedFallback />
           ) : (
             <img
+              ref={imgRef}
               src={product.image.thumbnailUrl ?? product.image.url}
               alt={product.image.alt ?? product.name}
               loading="lazy"
               onError={() => setImageFailed(true)}
+              onLoad={() => setImageLoaded(true)}
               className={cn(
-                "absolute inset-0 h-full w-full object-cover transition-transform duration-500",
+                "absolute inset-0 h-full w-full object-cover transition-[transform,opacity] duration-500",
+                imageLoaded ? "opacity-100" : "opacity-0",
                 isBuyable && "group-hover:scale-[1.03]",
-                (isOutOfStock || isMarketplaceDown) && "opacity-50 grayscale",
+                imageLoaded && (isOutOfStock || isMarketplaceDown) && "opacity-50 grayscale",
               )}
             />
           )}
@@ -192,6 +204,8 @@ export const ProductCard = React.forwardRef<HTMLAnchorElement, ProductCardProps>
   },
 );
 
+ProductCard.displayName = "ProductCard";
+
 // -------------------------------------------------------------------------
 // Internal helpers (kept in the same file for shadcn-style copy-paste)
 // -------------------------------------------------------------------------
@@ -207,7 +221,7 @@ function AvailabilityBadge({
 }) {
   return (
     <div className="absolute top-3 left-3">
-      <div className="inline-flex items-center gap-1.5 rounded-full bg-white/95 px-2.5 py-1 backdrop-blur">
+      <div className="bg-card/95 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 backdrop-blur">
         <span className={cn(tone === "points" ? "text-points" : "text-ink-3")}>{icon}</span>
         <span
           className={cn(
@@ -233,7 +247,7 @@ function MarketplaceDownPanel({
     availability.reason ??
     `Ordering temporarily paused on ${marketplaceLabel[availability.marketplace]}`;
   return (
-    <div className="absolute inset-x-3 bottom-3 flex items-start gap-2.5 rounded-lg bg-white/95 px-3.5 py-3 backdrop-blur">
+    <div className="bg-card/95 absolute inset-x-3 bottom-3 flex items-start gap-2.5 rounded-lg px-3.5 py-3 backdrop-blur">
       <PauseCircle size={14} strokeWidth={2} className="text-ink-3 mt-0.5 flex-shrink-0" />
       <div className="flex-1">
         <div className="text-ink-1 text-[11.5px] font-medium -tracking-[0.02em]">{headline}</div>

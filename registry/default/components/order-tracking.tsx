@@ -1,5 +1,26 @@
 "use client";
 
+/**
+ * `<OrderTracking />` is a compound component covering every state in the
+ * post-purchase lifecycle: `placed`, `processing`, `shipped`, `out-for-delivery`,
+ * `delivered`, `cancelled`, `refunded`, and `stuck-under-investigation`.
+ *
+ * Partners compose the root with the sub-components they need per state:
+ *
+ * ```tsx
+ * <OrderTracking>
+ *   <OrderTracking.Header orderId="#RW-123" pill={...} />
+ *   <OrderTracking.StatusCard ... />
+ *   <OrderTracking.Timeline steps={...} />
+ *   <OrderTracking.Item ... />
+ *   <OrderTracking.ActionsCard ... />
+ * </OrderTracking>
+ * ```
+ *
+ * All state-machine logic, fetching, and persistence is the partner's; this
+ * component is presentation-only.
+ */
+
 import * as React from "react";
 import { AlertCircle, ArrowRight, Check, Clock, Info, RotateCcw, Truck, X } from "lucide-react";
 
@@ -10,7 +31,9 @@ import type { Money } from "../types/product";
 // Root
 // -------------------------------------------------------------------------
 
-function OrderTracking({ children, className, ...rest }: React.HTMLAttributes<HTMLDivElement>) {
+export type OrderTrackingRootProps = React.HTMLAttributes<HTMLDivElement>;
+
+function OrderTracking({ children, className, ...rest }: OrderTrackingRootProps) {
   return (
     <div className={cn("mx-auto max-w-[720px]", className)} {...rest}>
       <div className="space-y-5">{children}</div>
@@ -24,13 +47,25 @@ function OrderTracking({ children, className, ...rest }: React.HTMLAttributes<HT
 
 export type StatusPillTone = "active" | "complete" | "cancelled" | "amber";
 
-interface HeaderProps {
-  orderId: string;
-  placedLabel?: string;
-  pill: { label: string; tone: StatusPillTone; pulse?: boolean; icon?: "check" | "x" };
+export interface StatusPill {
+  label: string;
+  tone: StatusPillTone;
+  /** Animated dot — use on in-flight states like `processing`, `shipped`. */
+  pulse?: boolean;
+  /** Static icon — use on terminal states like `delivered`, `cancelled`. */
+  icon?: "check" | "x";
 }
 
-function Header({ orderId, placedLabel, pill }: HeaderProps) {
+export interface OrderTrackingHeaderProps {
+  /** Order identifier, e.g. "#RW-3CCF7768". */
+  orderId: string;
+  /** Human-readable timestamp shown next to the ID, e.g. "Placed May 8, 2:14 PM". */
+  placedLabel?: string;
+  /** Status pill shown top-right. State machine usually drives `tone` + `label`. */
+  pill: StatusPill;
+}
+
+function Header({ orderId, placedLabel, pill }: OrderTrackingHeaderProps) {
   return (
     <div className="flex items-start justify-between">
       <div>
@@ -44,22 +79,26 @@ function Header({ orderId, placedLabel, pill }: HeaderProps) {
           {placedLabel && <span className="text-ink-2 text-[13px]">{placedLabel}</span>}
         </div>
       </div>
-      <StatusPill {...pill} />
+      <StatusPillView {...pill} />
     </div>
   );
 }
 
-function StatusPill({ label, tone, pulse, icon }: HeaderProps["pill"]) {
+function StatusPillView({ label, tone, pulse, icon }: StatusPill) {
   const styles =
     tone === "active" || tone === "complete"
       ? "bg-points-soft text-points"
       : tone === "amber"
         ? "bg-amber-soft text-amber border border-amber-line"
-        : "bg-[#F0E8E8] text-ink-2";
+        : "bg-line text-ink-2";
   return (
-    <div className={cn("inline-flex items-center gap-2 rounded-full px-3 py-1.5", styles)}>
+    <div
+      className={cn("inline-flex items-center gap-2 rounded-full px-3 py-1.5", styles)}
+      role="status"
+      aria-label={`Order status: ${label}`}
+    >
       {pulse ? (
-        <span className="relative flex h-2 w-2">
+        <span className="relative flex h-2 w-2" aria-hidden="true">
           <span
             className={cn(
               "absolute inline-flex h-full w-full animate-ping rounded-full opacity-50",
@@ -74,9 +113,9 @@ function StatusPill({ label, tone, pulse, icon }: HeaderProps["pill"]) {
           />
         </span>
       ) : icon === "check" ? (
-        <Check size={13} strokeWidth={2.5} />
+        <Check size={13} strokeWidth={2.5} aria-hidden="true" />
       ) : icon === "x" ? (
-        <X size={11} strokeWidth={2.5} />
+        <X size={11} strokeWidth={2.5} aria-hidden="true" />
       ) : null}
       <span className="text-[12px] font-semibold -tracking-[0.02em]">{label}</span>
     </div>
@@ -91,11 +130,8 @@ function Card({
   children,
   className,
   tone,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  tone?: "amber";
-}) {
+  ...rest
+}: React.HTMLAttributes<HTMLDivElement> & { tone?: "amber" }) {
   return (
     <div
       className={cn(
@@ -103,6 +139,7 @@ function Card({
         tone === "amber" ? "border-amber-line border" : "border-line border",
         className,
       )}
+      {...rest}
     >
       {children}
     </div>
@@ -113,13 +150,20 @@ function Card({
 // StatusCard — primary status block for most states
 // -------------------------------------------------------------------------
 
-interface StatusCardProps {
+export interface OrderTrackingStatusCardProps {
+  /** Small uppercase label above the title, e.g. "Order placed", "Arriving today". */
   eyebrow: string;
+  /** Primary headline for the current state. */
   title: string;
+  /** Supporting copy below the title. */
   description?: string;
+  /** Inline status rows shown below the description (carrier, ETA, etc.). */
   meta?: Array<{ icon?: "clock" | "truck"; text: React.ReactNode }>;
+  /** Optional product thumbnail rendered top-right. */
   image?: { url?: string; alt?: string };
+  /** Item count caption rendered under the thumbnail. */
   itemCount?: number;
+  /** Apply the amber/warning border style for stuck or delayed states. */
   tone?: "default" | "amber";
 }
 
@@ -131,7 +175,7 @@ function StatusCard({
   image,
   itemCount,
   tone,
-}: StatusCardProps) {
+}: OrderTrackingStatusCardProps) {
   return (
     <Card {...(tone === "amber" ? { tone: "amber" as const } : {})}>
       <div className="flex items-start justify-between gap-6">
@@ -188,11 +232,16 @@ function StatusCard({
 // InvestigationCard — special status block for stuck state
 // -------------------------------------------------------------------------
 
-interface InvestigationCardProps {
+export interface OrderTrackingInvestigationCardProps {
+  /** Small uppercase label, typically "Under investigation". */
   eyebrow: string;
+  /** Reassuring headline like "We're looking into your order". */
   title: string;
+  /** Plain-language explanation of why the package is stuck. */
   description: string;
+  /** Last carrier scan we have on file. */
   lastSeen: { location: string; timestamp: string };
+  /** Original ETA + an optional "X days past due" callout. */
   originalEta: { date: string; pastDue?: string };
 }
 
@@ -202,11 +251,13 @@ function InvestigationCard({
   description,
   lastSeen,
   originalEta,
-}: InvestigationCardProps) {
+}: OrderTrackingInvestigationCardProps) {
   return (
     <Card
       tone="amber"
       className="shadow-[0_1px_2px_rgba(15,15,15,0.04),_0_8px_32px_-12px_rgba(181,134,11,0.10)]"
+      role="status"
+      aria-live="polite"
     >
       <div className="flex items-start gap-4">
         <div className="bg-amber-soft flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full">
@@ -251,37 +302,45 @@ function InvestigationCard({
 export type TimelineStepStatus = "complete" | "current" | "pending" | "cancelled" | "tracking-gap";
 
 export interface TimelineStep {
+  /** Human-readable step name, e.g. "Order placed", "Shipped". */
   label: string;
+  /** Where this step is in its lifecycle. Drives icon + color. */
   status: TimelineStepStatus;
+  /** Optional pill rendered next to the label, e.g. "Now", "Late". */
   badge?: string;
+  /** Plain-language detail shown under the label, e.g. "Confirmation sent to your email". */
   description?: string;
+  /** Right-aligned timestamp for completed steps. */
   timestamp?: string;
+  /** Inset row shown below the step row with the latest carrier update. */
   lastUpdate?: string;
 }
 
-interface TimelineProps {
+export interface OrderTrackingTimelineProps {
+  /** Ordered list of timeline steps from earliest to latest. */
   steps: TimelineStep[];
-  /** Render the connector line in ink-1 (used on the delivered/refunded states). */
+  /** Render the connector line in `ink-1` (used on the delivered/refunded states). */
   emphasized?: boolean;
 }
 
-function Timeline({ steps, emphasized }: TimelineProps) {
+function Timeline({ steps, emphasized }: OrderTrackingTimelineProps) {
   return (
     <Card>
       <div className="text-ink-3 mb-5 text-[12px] font-medium tracking-[0.12em] uppercase">
         Timeline
       </div>
-      <div className="relative">
+      <ol className="relative" aria-label="Order timeline">
         <div
           className={cn(
             "absolute top-3 bottom-3 left-[11px] w-px",
             emphasized ? "bg-ink-1" : "bg-line-strong",
           )}
+          aria-hidden="true"
         />
         {steps.map((step, i) => (
           <TimelineStepRow key={i} step={step} isLast={i === steps.length - 1} />
         ))}
-      </div>
+      </ol>
     </Card>
   );
 }
@@ -297,8 +356,11 @@ function TimelineStepRow({ step, isLast }: { step: TimelineStep; isLast: boolean
   if (isStuck) badgeTone = "amber";
 
   return (
-    <div className={cn("relative flex items-start gap-4", !isLast && "pb-6")}>
-      <div className="relative z-10 flex-shrink-0">
+    <li
+      className={cn("relative flex items-start gap-4", !isLast && "pb-6")}
+      aria-current={isCurrent ? "step" : undefined}
+    >
+      <div className="relative z-10 flex-shrink-0" aria-hidden="true">
         {isComplete && (
           <div className="bg-ink-1 flex h-[22px] w-[22px] items-center justify-center rounded-full">
             <Check size={12} strokeWidth={3} className="text-white" />
@@ -370,7 +432,7 @@ function TimelineStepRow({ step, isLast }: { step: TimelineStep; isLast: boolean
           </div>
         )}
       </div>
-    </div>
+    </li>
   );
 }
 
@@ -378,17 +440,24 @@ function TimelineStepRow({ step, isLast }: { step: TimelineStep; isLast: boolean
 // Item summary
 // -------------------------------------------------------------------------
 
-interface ItemProps {
+export interface OrderTrackingItemProps {
+  /** Section heading rendered above the row. Defaults to "In this order". */
   sectionLabel?: string;
+  /** Brand / vendor name shown above the product name. */
   vendor?: string;
   name: string;
   subtitle?: string;
   imageUrl?: string;
   price?: Money;
+  /** Render "−X applied" line under the price. */
   pointsApplied?: number;
+  /** Render "+X" line for points returned on cancel/refund. */
   pointsRefunded?: number;
+  /** When set, replaces the price with a green "−$X" line for refunded states. */
   refundedAmount?: Money;
+  /** Apply muted styles (grayscale image, gray text) for cancelled / dead variants. */
   dimmed?: boolean;
+  /** Strike through the price + name. Used with `dimmed` for unavailable items. */
   strikePrice?: boolean;
   formatPrice?: (price: Money) => string;
   formatPoints?: (points: number) => string;
@@ -421,7 +490,7 @@ function Item({
   strikePrice,
   formatPrice = defaultFormatPrice,
   formatPoints = defaultFormatPoints,
-}: ItemProps) {
+}: OrderTrackingItemProps) {
   return (
     <Card>
       <div className="text-ink-3 mb-4 text-[12px] font-medium tracking-[0.12em] uppercase">
@@ -500,10 +569,14 @@ function Item({
 // RefundSummary
 // -------------------------------------------------------------------------
 
-interface RefundSummaryProps {
+export interface OrderTrackingRefundSummaryProps {
+  /** `compact` renders a card with two rows; `detailed` renders two side-by-side tiles. */
   variant?: "compact" | "detailed";
+  /** Cash refund line (back to card). */
   card: { amount: Money; postedLabel?: string };
+  /** Points refund line (back to balance). */
   points: { amount: number; postedLabel?: string };
+  /** Optional success note rendered at the bottom of the compact variant. */
   note?: string;
   sectionLabel?: string;
   formatPrice?: (price: Money) => string;
@@ -518,7 +591,7 @@ function RefundSummary({
   sectionLabel = "Refund · complete",
   formatPrice = defaultFormatPrice,
   formatPoints = defaultFormatPoints,
-}: RefundSummaryProps) {
+}: OrderTrackingRefundSummaryProps) {
   if (variant === "detailed") {
     return (
       <div className="grid grid-cols-2 gap-4">
@@ -581,14 +654,15 @@ function RefundSummary({
 // ActionsCard — generic cancel / contact / reorder / etc.
 // -------------------------------------------------------------------------
 
-interface CalloutProps {
+export interface OrderTrackingCallout {
+  /** Visual tone — drives background and icon color. */
   tone: "points" | "inset" | "amber";
   icon?: "clock" | "info" | "check";
   title: string;
   description?: string;
 }
 
-interface ActionProps {
+export interface OrderTrackingAction {
   label: string;
   onClick?: () => void;
   variant?: "primary" | "secondary";
@@ -596,16 +670,25 @@ interface ActionProps {
   icon?: "arrow-right" | "rotate-ccw" | "truck";
 }
 
-interface ActionsCardProps {
+export interface OrderTrackingActionsCardProps {
+  /** Small uppercase heading above the callout/actions. */
   title?: string;
-  callout?: CalloutProps;
-  actions: ActionProps[];
-  /** When more than 2 actions, render in 3-column grid. */
+  /** Optional informational callout above the button row. */
+  callout?: OrderTrackingCallout;
+  /** Button row — typically a primary action + one or two secondary. */
+  actions: OrderTrackingAction[];
+  /** When more than 2 actions, pass `columns: 3` to render in a 3-column grid. */
   columns?: 2 | 3;
   footer?: React.ReactNode;
 }
 
-function ActionsCard({ title, callout, actions, columns = 2, footer }: ActionsCardProps) {
+function ActionsCard({
+  title,
+  callout,
+  actions,
+  columns = 2,
+  footer,
+}: OrderTrackingActionsCardProps) {
   return (
     <Card>
       {title && (
@@ -634,7 +717,7 @@ function ActionsCard({ title, callout, actions, columns = 2, footer }: ActionsCa
   );
 }
 
-function Callout({ tone, icon, title, description }: CalloutProps) {
+function Callout({ tone, icon, title, description }: OrderTrackingCallout) {
   const styles =
     tone === "points"
       ? "bg-points-soft border border-points/15"
@@ -666,7 +749,13 @@ function Callout({ tone, icon, title, description }: CalloutProps) {
   );
 }
 
-function ActionButton({ label, onClick, variant = "secondary", disabled, icon }: ActionProps) {
+function ActionButton({
+  label,
+  onClick,
+  variant = "secondary",
+  disabled,
+  icon,
+}: OrderTrackingAction) {
   const isPrimary = variant === "primary";
   return (
     <button
@@ -697,16 +786,21 @@ function ActionButton({ label, onClick, variant = "secondary", disabled, icon }:
 export interface InvestigationOption {
   label: string;
   description: string;
+  /** Optional pill rendered on the right, e.g. "Recommended". */
   badge?: string;
   onClick?: () => void;
 }
 
-interface InvestigationActionsProps {
+export interface OrderTrackingInvestigationActionsProps {
+  /** Section heading. Defaults to "What you can do". */
   title?: string;
   options: InvestigationOption[];
 }
 
-function InvestigationActions({ title = "What you can do", options }: InvestigationActionsProps) {
+function InvestigationActions({
+  title = "What you can do",
+  options,
+}: OrderTrackingInvestigationActionsProps) {
   return (
     <Card>
       <div className="text-ink-3 mb-4 text-[12px] font-medium tracking-[0.12em] uppercase">
@@ -752,16 +846,20 @@ export interface InvestigationStep {
   status: "complete" | "current";
   title: string;
   detail: string;
+  /** Use `amber` on the active step to draw attention to in-flight work. */
   detailTone?: "muted" | "amber";
+}
+
+export interface OrderTrackingInvestigationProgressProps {
+  /** Section heading. Defaults to "What we're doing". */
+  title?: string;
+  steps: InvestigationStep[];
 }
 
 function InvestigationProgress({
   title = "What we're doing",
   steps,
-}: {
-  title?: string;
-  steps: InvestigationStep[];
-}) {
+}: OrderTrackingInvestigationProgressProps) {
   return (
     <Card>
       <div className="text-ink-3 mb-5 text-[12px] font-medium tracking-[0.12em] uppercase">
