@@ -1,0 +1,26 @@
+playground/data.ts
+  s_03356607026e4d::t_25f19ecb5a018e 1-72
+registry.json
+  s_03356607026e4d::t_441237aba0c7cf 5-31
+playground/App.tsx
+  s_03356607026e4d::t_6e1bc10f1ff309 3-5,7-8,10-11,16-67,69-73,75-80,82-84,86-88,92-105
+  s_03356607026e4d::t_71de82a7f81497 81,85
+  s_03356607026e4d::t_9791a1011695dc 68
+  s_03356607026e4d::t_84e967c4da54c6 1-2
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "12eb57c7396eb81e21ed9b66c43a68d14d35a663",
+  "prompts": {},
+  "sessions": {
+    "s_03356607026e4d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4d635d87-429e-4c94-9dbb-62c77bc87272",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Victor Tsyan <victor@rye.com>"
+    }
+  }
+}
