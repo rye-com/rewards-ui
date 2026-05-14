@@ -1,18 +1,18 @@
-registry/default/index.ts
-  s_03356607026e4d::t_ae6805c678a9fd 1-18
-playground/data.ts
-  s_03356607026e4d::t_25f19ecb5a018e 1-67
-registry.json
-  s_03356607026e4d::t_dfdf846a01c106 3
-  s_03356607026e4d::t_441237aba0c7cf 5,7-26
 playground/App.tsx
   s_03356607026e4d::t_84e967c4da54c6 1-2
   s_03356607026e4d::t_6e1bc10f1ff309 3-5,9-37,42-60,62-66,68-73,75-77,79-81,85-98
   s_03356607026e4d::t_94259d44b2f6be 6-8,38-41,67,82-84
   s_03356607026e4d::t_9791a1011695dc 61
   s_03356607026e4d::t_71de82a7f81497 74,78
+playground/data.ts
+  s_03356607026e4d::t_25f19ecb5a018e 1-67
+registry.json
+  s_03356607026e4d::t_dfdf846a01c106 3
+  s_03356607026e4d::t_441237aba0c7cf 5,7-26
 registry/default/components/product-card.tsx
   s_03356607026e4d::t_89b46d87fac35f 6
+registry/default/index.ts
+  s_03356607026e4d::t_ae6805c678a9fd 1-18
 ---
 {
   "schema_version": "authorship/3.0.0",

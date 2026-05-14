@@ -1,22 +1,24 @@
 registry/default/components/payment-sheet.tsx
   s_03356607026e4d::t_13e051bf1af96d 14
   s_03356607026e4d::t_aa9352e6c25e62 26-27
+CHANGELOG.md
+  s_03356607026e4d::t_5a145e0e7492eb 4-10
+  s_03356607026e4d::t_302faaa36acad8 19
+README.md
+  s_03356607026e4d::t_8bd23d667673a0 67
+  s_03356607026e4d::t_6fbde0c51a5710 86,88
 registry/default/index.ts
-  s_03356607026e4d::t_ae6805c678a9fd 1-2,13-28,8,10,12
-  s_03356607026e4d::t_947200b10407ef 3
+  s_03356607026e4d::t_ae6805c678a9fd 1-2,50-65,8,10,27,49
+  s_03356607026e4d::t_947200b10407ef 3,28-48,11
   s_03356607026e4d::t_78379c73c9264b 4-7
   s_03356607026e4d::t_ed60c62943feea 9
-registry.json
-  s_03356607026e4d::t_dfdf846a01c106 3
-  s_03356607026e4d::t_441237aba0c7cf 5,67-86,43,46-49,51,53-59,61,63-64,26,28,31-34,36,38-39,6,8,11-14,16,18-24
-  s_03356607026e4d::t_4db6b56b0d3607 42,44-45,50,52,60,62,65,40,25
-  s_03356607026e4d::t_636def97d1791c 27,29-30,35,37
-  s_03356607026e4d::t_d40c065a1f7c93 7,9-10,15,17
+registry/default/components/order-tracking.tsx
+  s_03356607026e4d::t_ca45b241561394 27
 ---
 {
   "schema_version": "authorship/3.0.0",
   "git_ai_version": "1.4.8",
-  "base_commit_sha": "5c2333dde58435cddfdc0ca3dcc90260c2287d67",
+  "base_commit_sha": "4f412e7c26ef932dcab1264582a5602f591aa1ad",
   "prompts": {},
   "sessions": {
     "s_03356607026e4d": {
