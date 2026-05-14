@@ -1,0 +1,26 @@
+registry/default/index.ts
+  s_03356607026e4d::t_ae6805c678a9fd 1-2,8,11-28
+  s_03356607026e4d::t_78379c73c9264b 3-7
+  s_03356607026e4d::t_ed60c62943feea 9-10
+registry.json
+  s_03356607026e4d::t_dfdf846a01c106 3
+  s_03356607026e4d::t_441237aba0c7cf 5,26,56-81
+  s_03356607026e4d::t_636def97d1791c 7-25
+  s_03356607026e4d::t_4db6b56b0d3607 27-55
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "263316e6ca0e86a7b26a5238db618068571fb70f",
+  "prompts": {},
+  "sessions": {
+    "s_03356607026e4d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4d635d87-429e-4c94-9dbb-62c77bc87272",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": null
+    }
+  }
+}
