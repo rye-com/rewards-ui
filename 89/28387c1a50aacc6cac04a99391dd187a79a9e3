@@ -1,0 +1,33 @@
+registry/default/index.ts
+  s_03356607026e4d::t_ae6805c678a9fd 1-2,8,10-12,34-50
+  s_03356607026e4d::t_947200b10407ef 3,13-33
+  s_03356607026e4d::t_78379c73c9264b 4-7
+  s_03356607026e4d::t_ed60c62943feea 9
+registry/default/components/order-tracking.test.tsx
+  s_03356607026e4d::t_b5079e8dcc0c6a 193
+registry.json
+  s_03356607026e4d::t_dfdf846a01c106 3
+  s_03356607026e4d::t_441237aba0c7cf 5-6,8,11-14,16,18-24,26,28,31-34,36,38-44,46,48,51-54,56,58-59,61,63,66-69,71,73-79,81,83-84,86-106
+  s_03356607026e4d::t_0c255576a9c182 7,9-10,15,17
+  s_03356607026e4d::t_4db6b56b0d3607 25,45,60,62,64-65,70,72,80,82,85
+  s_03356607026e4d::t_d40c065a1f7c93 27,29-30,35,37
+  s_03356607026e4d::t_636def97d1791c 47,49-50,55,57
+registry/default/components/order-tracking.tsx
+  s_03356607026e4d::t_ca45b241561394 27
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "8928387c1a50aacc6cac04a99391dd187a79a9e3",
+  "prompts": {},
+  "sessions": {
+    "s_03356607026e4d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4d635d87-429e-4c94-9dbb-62c77bc87272",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": null
+    }
+  }
+}
