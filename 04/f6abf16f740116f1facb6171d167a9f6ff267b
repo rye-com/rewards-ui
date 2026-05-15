@@ -1,0 +1,30 @@
+registry/default/components/pay-with-points.tsx
+  s_03356607026e4d::t_d64a04430c0ef5 6
+  s_03356607026e4d::t_53fe898490c64e 8-434
+registry/default/index.ts
+  s_03356607026e4d::t_ae6805c678a9fd 10
+  s_03356607026e4d::t_ed60c62943feea 9
+registry/default/components/pay-with-points.test.tsx
+  s_03356607026e4d::t_e45a3abf849bf5 107-108,124-125
+  s_03356607026e4d::t_101f19626d6a2f 6-106,109-123,126-156
+registry.json
+  s_03356607026e4d::t_441237aba0c7cf 6,8,11-14,16,18-19
+  s_03356607026e4d::t_636def97d1791c 7,9-10,15,17
+  s_03356607026e4d::t_4db6b56b0d3607 20
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "04f6abf16f740116f1facb6171d167a9f6ff267b",
+  "prompts": {},
+  "sessions": {
+    "s_03356607026e4d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4d635d87-429e-4c94-9dbb-62c77bc87272",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": null
+    }
+  }
+}
