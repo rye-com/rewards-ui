@@ -1,0 +1,41 @@
+registry/default/components/order-tracking.test.tsx
+  s_03356607026e4d::t_66f6d9e5ac9830 164-182
+  s_03356607026e4d::t_b5079e8dcc0c6a 193
+  s_03356607026e4d::t_7a6948a8e9ace7 198
+registry/default/components/order-tracking.tsx
+  s_03356607026e4d::t_543955d793c44c 212,410,542-547
+  s_03356607026e4d::t_065fbee55ebd37 450-469
+  s_03356607026e4d::t_aa5d2bc31a3230 605
+  s_03356607026e4d::t_03b7a508db520b 268,273,317,488-502,589,598,614,681,790,804-845
+  s_03356607026e4d::t_6f982dbf83ce32 270,278,404,414,514,630,696,867
+  s_03356607026e4d::t_b9bdc0084975a9 74,116,180,262,385,506,525-532,592,601,620,624,727,800,864
+  s_03356607026e4d::t_eaac3792fcb434 187,729,801
+  s_03356607026e4d::t_ca45b241561394 27
+  s_03356607026e4d::t_0c313d14eb8828 75,182,263,750
+  s_03356607026e4d::t_6d5bfe8eb3866e 393
+  s_03356607026e4d::t_6f11a8e4ba5f2d 72,179,259
+  s_03356607026e4d::t_5686774b93d2ab 269,276,618,622
+registry/default/index.ts
+  s_03356607026e4d::t_ae6805c678a9fd 34
+  s_03356607026e4d::t_947200b10407ef 13-33
+registry.json
+  s_03356607026e4d::t_0c255576a9c182 7,9-10,15,17
+  s_03356607026e4d::t_4db6b56b0d3607 25
+  s_03356607026e4d::t_441237aba0c7cf 6,8,11-14,16,18-24
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "7fe02fcd1cbdc13384b875674ac25d6e39f546ca",
+  "prompts": {},
+  "sessions": {
+    "s_03356607026e4d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4d635d87-429e-4c94-9dbb-62c77bc87272",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": null
+    }
+  }
+}
