@@ -49,7 +49,7 @@ export interface PaymentSheetProps extends React.HTMLAttributes<HTMLDivElement> 
  */
 function PaymentSheetRoot({ children, className, ...rest }: PaymentSheetProps) {
   return (
-    <div className={cn("w-full max-w-[520px]", className)} {...rest}>
+    <div className={cn("w-full max-w-lg", className)} {...rest}>
       <div className="bg-card border-line overflow-hidden rounded-2xl border shadow-[0_1px_2px_rgba(15,15,15,0.04),_0_8px_32px_-12px_rgba(15,15,15,0.08)]">
         {children}
       </div>
@@ -176,7 +176,7 @@ function PaymentSheetItem({
       <div className="flex gap-4">
         <div
           className={cn(
-            "bg-line h-[72px] w-[72px] flex-shrink-0 overflow-hidden rounded-lg",
+            "bg-line h-18 w-18 flex-shrink-0 overflow-hidden rounded-lg",
             dimmed && "grayscale",
           )}
         >
@@ -620,7 +620,7 @@ function PaymentSheetSkeleton({
       </div>
       <div className="px-7 py-6">
         <div className="flex gap-4">
-          <div className="bg-line skeleton h-[72px] w-[72px] rounded-lg" />
+          <div className="bg-line skeleton h-18 w-18 rounded-lg" />
           <div className="min-w-0 flex-1 space-y-2">
             <div className="bg-line skeleton h-2.5 w-16 rounded" style={SKELETON_ITEM_DELAYS[0]} />
             <div
@@ -665,7 +665,7 @@ function PaymentSheetSkeleton({
           />
         </div>
         <div
-          className="bg-line skeleton h-[3px] rounded-full"
+          className="bg-line skeleton h-0.75 rounded-full"
           style={{ animationDelay: "0.75s" }}
         />
       </div>
