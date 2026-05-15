@@ -255,21 +255,9 @@ function PayWithPointsSlider({
     isMaxed,
   } = usePayWithPointsContext("Slider");
 
-  const [editing, setEditing] = React.useState(false);
-  const [draft, setDraft] = React.useState("");
-
-  const startEdit = () => {
-    setDraft(String(applied));
-    setEditing(true);
-  };
-  const commitEdit = () => {
-    setEditing(false);
-    const parsed = Number.parseInt(draft.replace(/[^\d]/g, ""), 10);
-    if (Number.isFinite(parsed)) {
-      onAppliedChange(Math.max(0, Math.min(effectiveMax, parsed)));
-    }
-  };
-  const cancelEdit = () => setEditing(false);
+  const appliedLabel = enabled
+    ? `${formatPoints(applied)} ${isMaxed && isInsufficient ? maxedSuffix : appliedSuffix}`
+    : `0 ${appliedSuffix}`;
 
   return (
     <div className={cn(!enabled && "pointer-events-none opacity-40")}>
@@ -281,42 +269,14 @@ function PayWithPointsSlider({
       />
       <div className="text-ink-3 mt-3.5 flex items-center justify-between text-xs tabular-nums">
         <span>0 pts</span>
-        {enabled ? (
-          editing ? (
-            <input
-              type="text"
-              inputMode="numeric"
-              autoFocus
-              value={draft}
-              onChange={(e) => setDraft(e.target.value)}
-              onBlur={commitEdit}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") commitEdit();
-                else if (e.key === "Escape") cancelEdit();
-              }}
-              aria-label="Points to apply"
-              className="bg-card border-points text-points w-24 rounded-md border px-2 py-0.5 text-center text-xs font-semibold tabular-nums focus-visible:outline-none"
-            />
-          ) : (
-            <button
-              type="button"
-              onClick={startEdit}
-              aria-label="Enter an exact points amount"
-              className={cn(
-                "rounded-md px-1.5 py-0.5 text-xs font-semibold transition hover:bg-points-soft/60 focus-visible:outline-points focus-visible:outline-2 focus-visible:outline-offset-2",
-                isMaxed && isInsufficient
-                  ? "text-points"
-                  : applied > 0
-                    ? "text-points"
-                    : "text-ink-3",
-              )}
-            >
-              {formatPoints(applied)} {isMaxed && isInsufficient ? maxedSuffix : appliedSuffix}
-            </button>
-          )
-        ) : (
-          <span className="text-ink-3 text-xs">0 {appliedSuffix}</span>
-        )}
+        <span
+          className={cn(
+            "text-xs font-semibold",
+            enabled && applied > 0 ? "text-points" : "text-ink-3",
+          )}
+        >
+          {appliedLabel}
+        </span>
         <button
           type="button"
           onClick={() => onAppliedChange(effectiveMax)}
@@ -540,11 +500,9 @@ function SliderControl({ value, max, onChange, ariaLabel }: SliderControlProps) 
         aria-valuemax={max}
         aria-valuenow={value}
         onKeyDown={onKeyDown}
-        className="border-points focus-visible:ring-points absolute top-1/2 flex h-[22px] w-[22px] -translate-x-1/2 -translate-y-1/2 cursor-grab items-center justify-center rounded-full border-[1.5px] bg-white shadow-[0_2px_4px_rgba(15,15,15,0.08)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none active:cursor-grabbing"
+        className="focus-visible:ring-points absolute top-1/2 h-[22px] w-[22px] -translate-x-1/2 -translate-y-1/2 cursor-grab rounded-full bg-white shadow-[0_1px_3px_rgba(15,15,15,0.18),_0_3px_8px_rgba(15,15,15,0.08)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none active:cursor-grabbing"
         style={{ left: `${pct}%` }}
-      >
-        <span className="bg-points h-[6px] w-[6px] rounded-full" />
-      </span>
+      />
     </span>
   );
 }
