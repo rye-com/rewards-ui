@@ -1,0 +1,23 @@
+registry/default/components/product-card.tsx
+  s_03356607026e4d::t_c2dd99e3d3a09a 184,188,193,197-198,201,213-218
+registry/default/components/product-details.tsx
+  s_03356607026e4d::t_5a5516ff56afd3 297-302
+registry/default/types/product.ts
+  s_03356607026e4d::t_bfdd7e4f8d2cc2 33-34
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "e5e2be877dc6617d42586620f36873f49aa9fa5b",
+  "prompts": {},
+  "sessions": {
+    "s_03356607026e4d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4d635d87-429e-4c94-9dbb-62c77bc87272",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Victor Tsyan <victor@rye.com>"
+    }
+  }
+}
