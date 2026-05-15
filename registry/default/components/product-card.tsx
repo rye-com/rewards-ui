@@ -181,21 +181,24 @@ export type ProductCardInfoProps = React.HTMLAttributes<HTMLDivElement>;
 
 function ProductCardInfo({ className, ...rest }: ProductCardInfoProps) {
   const { product, onNotify, formatPrice, formatPoints } = useProductCardContext("Info");
-  const { availability, vendor, name, subtitle, price, pointsPrice } = product;
+  const { availability, vendor, name, subtitle, price, compareAtPrice, pointsPrice } = product;
   const isBuyable = availability.kind === "in-stock";
   const isOutOfStock = availability.kind === "out-of-stock";
   const isMarketplaceDown = availability.kind === "marketplace-down";
+  const isDiscounted = isBuyable && compareAtPrice !== undefined;
 
   const handleNotify = onNotify ? () => onNotify(product) : undefined;
 
   return (
-    <div className={cn("pt-4", className)} {...rest}>
+    <div className={cn("flex flex-col pt-4", className)} {...rest}>
       {vendor && (
         <div className="text-ink-3 text-xs font-medium tracking-widest uppercase">{vendor}</div>
       )}
+      {/* Reserve 2 lines of vertical space so prices line up across tiles when
+          some names wrap and others don't. */}
       <div
         className={cn(
-          "mt-1 text-sm leading-snug font-medium",
+          "mt-1 line-clamp-2 min-h-[2.5em] text-sm leading-snug font-medium",
           isBuyable ? "text-ink-1" : "text-ink-2",
         )}
       >
@@ -207,7 +210,12 @@ function ProductCardInfo({ className, ...rest }: ProductCardInfoProps) {
         </div>
       )}
 
-      <div className="mt-3 flex items-baseline gap-2">
+      <div className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+        {isDiscounted && (
+          <span className="text-ink-3 text-sm tabular-nums line-through">
+            {formatPrice(compareAtPrice)}
+          </span>
+        )}
         <span
           className={cn(
             "text-sm tabular-nums",

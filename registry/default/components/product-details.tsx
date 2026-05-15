@@ -294,7 +294,12 @@ function ProductDetailsHeader({
       <Heading className="text-ink-1 mt-2 text-3xl leading-tight font-semibold">
         {product.name}
       </Heading>
-      <div className="mt-4 flex items-baseline gap-3">
+      <div className="mt-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        {product.compareAtPrice && (
+          <span className="text-ink-3 text-lg tabular-nums line-through">
+            {formatPrice(product.compareAtPrice)}
+          </span>
+        )}
         <span className="text-ink-1 text-2xl font-semibold tabular-nums">
           {formatPrice(product.price)}
         </span>
