@@ -1,0 +1,24 @@
+registry/default/components/pay-with-points.tsx
+  s_03356607026e4d::t_3e152174ac8a23 503,505
+  s_03356607026e4d::t_7d69ee98f5092b 258-260,272-279
+registry/default/components/product-card.tsx
+  s_03356607026e4d::t_aba9dc84cb67b5 222
+registry/default/components/product-details.tsx
+  s_03356607026e4d::t_5d04840dd39e62 303
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "5caf7b52977774f130823cf2023b8ec6bf25ec69",
+  "prompts": {},
+  "sessions": {
+    "s_03356607026e4d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4d635d87-429e-4c94-9dbb-62c77bc87272",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Victor Tsyan <victor@rye.com>"
+    }
+  }
+}
