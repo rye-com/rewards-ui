@@ -129,7 +129,7 @@ const ProductDetailsRoot = React.forwardRef<HTMLDivElement, ProductDetailsProps>
 
     return (
       <ProductDetailsContext.Provider value={value}>
-        <div ref={ref} className={cn("mx-auto max-w-[1200px]", className)} {...rest}>
+        <div ref={ref} className={cn("mx-auto max-w-7xl", className)} {...rest}>
           {children}
         </div>
       </ProductDetailsContext.Provider>
@@ -145,14 +145,29 @@ ProductDetailsRoot.displayName = "ProductDetails";
 
 export interface ProductDetailsBreadcrumbsProps extends React.HTMLAttributes<HTMLElement> {
   /**
-   * Breadcrumb trail. The last item always renders as plain text. Earlier
-   * items render as anchors. Pass `{ label, href }` to link them, or plain
-   * strings to render non-linked text.
+   * Breadcrumb trail. The last item always renders as plain text with
+   * `aria-current="page"`. Earlier items render as plain spans by default;
+   * pass `renderItem` to wrap each one with your framework's link component
+   * (e.g. Next.js `<Link>`).
    */
   items: BreadcrumbItem[];
+  /**
+   * Custom renderer for each crumb. Receives the resolved `{ label, href? }`
+   * and a `isLast` flag. Default returns a `<span>{label}</span>`.
+   */
+  renderItem?: (
+    item: { label: string; href?: string },
+    index: number,
+    isLast: boolean,
+  ) => React.ReactNode;
 }
 
-function ProductDetailsBreadcrumbs({ items, className, ...rest }: ProductDetailsBreadcrumbsProps) {
+function ProductDetailsBreadcrumbs({
+  items,
+  renderItem,
+  className,
+  ...rest
+}: ProductDetailsBreadcrumbsProps) {
   if (items.length === 0) return null;
   return (
     <nav
@@ -162,22 +177,20 @@ function ProductDetailsBreadcrumbs({ items, className, ...rest }: ProductDetails
     >
       {items.map((crumb, i) => {
         const isLast = i === items.length - 1;
-        const label = typeof crumb === "string" ? crumb : crumb.label;
-        const href = typeof crumb === "string" ? null : crumb.href;
+        const resolved = typeof crumb === "string" ? { label: crumb } : crumb;
+        const content = renderItem ? (
+          renderItem(resolved, i, isLast)
+        ) : (
+          <span
+            className={isLast ? "text-ink-2" : ""}
+            {...(isLast ? { "aria-current": "page" as const } : {})}
+          >
+            {resolved.label}
+          </span>
+        );
         return (
-          <React.Fragment key={`${i}-${label}`}>
-            {isLast || !href ? (
-              <span
-                className={isLast ? "text-ink-2" : ""}
-                {...(isLast ? { "aria-current": "page" as const } : {})}
-              >
-                {label}
-              </span>
-            ) : (
-              <a href={href} className="hover:text-ink-1 transition">
-                {label}
-              </a>
-            )}
+          <React.Fragment key={`${i}-${resolved.label}`}>
+            {content}
             {!isLast && <ChevronRight size={12} strokeWidth={2} />}
           </React.Fragment>
         );
@@ -774,7 +787,7 @@ export function ProductDetailsSkeleton({
   ...rest
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cn("mx-auto max-w-[1200px]", className)} aria-hidden="true" {...rest}>
+    <div className={cn("mx-auto max-w-7xl", className)} aria-hidden="true" {...rest}>
       <div className="mb-8 flex items-center gap-2">
         <div
           className="bg-line skeleton h-2.5 w-16 rounded"
