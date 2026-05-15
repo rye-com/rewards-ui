@@ -423,7 +423,7 @@ function Toggle({
       <span
         className={cn(
           "inline-block h-5 w-5 transform rounded-full bg-white shadow-[0_1px_2px_rgba(15,15,15,0.15)] transition",
-          checked ? "translate-x-[22px]" : "translate-x-0.5",
+          checked ? "translate-x-5.5" : "translate-x-0.5",
         )}
       />
     </button>
@@ -487,9 +487,9 @@ function SliderControl({ value, max, onChange, ariaLabel }: SliderControlProps) 
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerUp}
-      className="relative flex h-[22px] w-full cursor-pointer items-center"
+      className="relative flex h-5.5 w-full cursor-pointer items-center"
     >
-      <span className="bg-line-strong relative h-[3px] flex-1 overflow-hidden rounded-full">
+      <span className="bg-line-strong relative h-0.75 flex-1 overflow-hidden rounded-full">
         <span className="bg-points absolute top-0 left-0 h-full" style={{ width: `${pct}%` }} />
       </span>
       <span
@@ -500,7 +500,7 @@ function SliderControl({ value, max, onChange, ariaLabel }: SliderControlProps) 
         aria-valuemax={max}
         aria-valuenow={value}
         onKeyDown={onKeyDown}
-        className="focus-visible:ring-points absolute top-1/2 h-[22px] w-[22px] -translate-x-1/2 -translate-y-1/2 cursor-grab rounded-full bg-white shadow-[0_1px_3px_rgba(15,15,15,0.18),_0_3px_8px_rgba(15,15,15,0.08)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none active:cursor-grabbing"
+        className="focus-visible:ring-points absolute top-1/2 h-5.5 w-5.5 -translate-x-1/2 -translate-y-1/2 cursor-grab rounded-full bg-white shadow-[0_1px_3px_rgba(15,15,15,0.18),_0_3px_8px_rgba(15,15,15,0.08)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none active:cursor-grabbing"
         style={{ left: `${pct}%` }}
       />
     </span>
