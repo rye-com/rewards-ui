@@ -35,7 +35,7 @@ export type OrderTrackingRootProps = React.HTMLAttributes<HTMLDivElement>;
 
 function OrderTracking({ children, className, ...rest }: OrderTrackingRootProps) {
   return (
-    <div className={cn("mx-auto max-w-[720px]", className)} {...rest}>
+    <div className={cn("mx-auto max-w-3xl", className)} {...rest}>
       <div className="space-y-5">{children}</div>
     </div>
   );
@@ -320,7 +320,7 @@ function Timeline({ steps, emphasized }: OrderTrackingTimelineProps) {
       <ol className="relative" aria-label="Order timeline">
         <div
           className={cn(
-            "absolute top-3 bottom-3 left-[11px] w-px",
+            "absolute top-3 bottom-3 left-2.75 w-px",
             emphasized ? "bg-ink-1" : "bg-line-strong",
           )}
           aria-hidden="true"
@@ -350,12 +350,12 @@ function TimelineStepRow({ step, isLast }: { step: TimelineStep; isLast: boolean
     >
       <div className="relative z-10 flex-shrink-0" aria-hidden="true">
         {isComplete && (
-          <div className="bg-ink-1 flex h-[22px] w-[22px] items-center justify-center rounded-full">
+          <div className="bg-ink-1 flex h-5.5 w-5.5 items-center justify-center rounded-full">
             <Check size={12} strokeWidth={3} className="text-page" />
           </div>
         )}
         {isCurrent && (
-          <div className="bg-points flex h-[22px] w-[22px] items-center justify-center rounded-full shadow-[0_0_0_4px_rgba(26,110,72,0.15)]">
+          <div className="bg-points flex h-5.5 w-5.5 items-center justify-center rounded-full shadow-[0_0_0_4px_rgba(26,110,72,0.15)]">
             {(isLast && step.label === "Delivered") || (step.timestamp && isLast && isComplete) ? (
               <Check size={12} strokeWidth={3} className="text-white" />
             ) : (
@@ -364,17 +364,17 @@ function TimelineStepRow({ step, isLast }: { step: TimelineStep; isLast: boolean
           </div>
         )}
         {isCancelled && (
-          <div className="bg-ink-2 flex h-[22px] w-[22px] items-center justify-center rounded-full">
+          <div className="bg-ink-2 flex h-5.5 w-5.5 items-center justify-center rounded-full">
             <X size={11} strokeWidth={3} className="text-page" />
           </div>
         )}
         {isStuck && (
-          <div className="bg-amber flex h-[22px] w-[22px] items-center justify-center rounded-full shadow-[0_0_0_4px_rgba(181,134,11,0.15)]">
+          <div className="bg-amber flex h-5.5 w-5.5 items-center justify-center rounded-full shadow-[0_0_0_4px_rgba(181,134,11,0.15)]">
             <AlertCircle size={11} strokeWidth={2.5} className="text-white" />
           </div>
         )}
         {isPending && (
-          <div className="bg-card border-line-strong flex h-[22px] w-[22px] items-center justify-center rounded-full border-[1.5px]">
+          <div className="bg-card border-line-strong flex h-5.5 w-5.5 items-center justify-center rounded-full border-2">
             <span className="bg-line-strong h-1.5 w-1.5 rounded-full" />
           </div>
         )}
@@ -493,7 +493,7 @@ function Item({
       <div className={cn("flex gap-4", dimmed && "opacity-60")}>
         <div
           className={cn(
-            "bg-line h-[60px] w-[60px] flex-shrink-0 overflow-hidden rounded-lg",
+            "bg-line h-15 w-15 flex-shrink-0 overflow-hidden rounded-lg",
             dimmed && "grayscale",
           )}
         >
