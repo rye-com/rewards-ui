@@ -23,7 +23,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "registry:build": "shadcn build",
-    "check": "pnpm typecheck && pnpm lint && pnpm check-format && pnpm test"
+    "check-tw": "node scripts/check-tw-arbitrary-sizes.mjs",
+    "check": "pnpm typecheck && pnpm lint && pnpm check-format && pnpm check-tw && pnpm test"
   },
   "devDependencies": {
     "@base-ui-components/react": "^1.0.0-beta.0",
