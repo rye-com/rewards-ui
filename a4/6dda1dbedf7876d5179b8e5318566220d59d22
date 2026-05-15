@@ -1,0 +1,22 @@
+README.md
+  s_03356607026e4d::t_ad6de480187730 50
+CHANGELOG.md
+  s_03356607026e4d::t_727c32bb19e4fd 22
+  s_03356607026e4d::t_dea18e77265732 11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "a46dda1dbedf7876d5179b8e5318566220d59d22",
+  "prompts": {},
+  "sessions": {
+    "s_03356607026e4d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4d635d87-429e-4c94-9dbb-62c77bc87272",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Victor Tsyan <victor@rye.com>"
+    }
+  }
+}
