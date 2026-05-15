@@ -50,9 +50,9 @@ export type StatusPillTone = "active" | "complete" | "cancelled" | "amber";
 export interface StatusPill {
   label: string;
   tone: StatusPillTone;
-  /** Animated dot — use on in-flight states like `processing`, `shipped`. */
+  /** Animated dot. Use on in-flight states like `processing`, `shipped`. */
   pulse?: boolean;
-  /** Static icon — use on terminal states like `delivered`, `cancelled`. */
+  /** Static icon. Use on terminal states like `delivered`, `cancelled`. */
   icon?: "check" | "x";
 }
 
@@ -67,15 +67,17 @@ export interface OrderTrackingHeaderProps {
 
 function Header({ orderId, placedLabel, pill }: OrderTrackingHeaderProps) {
   return (
-    <div className="flex items-start justify-between">
-      <div>
+    <div className="flex items-start justify-between gap-3">
+      <div className="min-w-0">
         <div className="text-ink-3 text-xs font-medium tracking-widest uppercase">Order</div>
-        <div className="mt-1.5 flex items-baseline gap-3">
+        <div className="mt-1.5 flex flex-col gap-0.5 sm:flex-row sm:flex-wrap sm:items-baseline sm:gap-x-3">
           <span className="text-ink-1 text-xl font-semibold tabular-nums">{orderId}</span>
           {placedLabel && <span className="text-ink-2 text-sm">{placedLabel}</span>}
         </div>
       </div>
-      <StatusPillView {...pill} />
+      <div className="flex-shrink-0">
+        <StatusPillView {...pill} />
+      </div>
     </div>
   );
 }
@@ -143,7 +145,7 @@ function Card({
 }
 
 // -------------------------------------------------------------------------
-// StatusCard — primary status block for most states
+// StatusCard: primary status block for most states
 // -------------------------------------------------------------------------
 
 export interface OrderTrackingStatusCardProps {
@@ -221,7 +223,7 @@ function StatusCard({
 }
 
 // -------------------------------------------------------------------------
-// InvestigationCard — special status block for stuck state
+// InvestigationCard: special status block for stuck state
 // -------------------------------------------------------------------------
 
 export interface OrderTrackingInvestigationCardProps {
@@ -349,7 +351,7 @@ function TimelineStepRow({ step, isLast }: { step: TimelineStep; isLast: boolean
       <div className="relative z-10 flex-shrink-0" aria-hidden="true">
         {isComplete && (
           <div className="bg-ink-1 flex h-[22px] w-[22px] items-center justify-center rounded-full">
-            <Check size={12} strokeWidth={3} className="text-white" />
+            <Check size={12} strokeWidth={3} className="text-page" />
           </div>
         )}
         {isCurrent && (
@@ -363,7 +365,7 @@ function TimelineStepRow({ step, isLast }: { step: TimelineStep; isLast: boolean
         )}
         {isCancelled && (
           <div className="bg-ink-2 flex h-[22px] w-[22px] items-center justify-center rounded-full">
-            <X size={11} strokeWidth={3} className="text-white" />
+            <X size={11} strokeWidth={3} className="text-page" />
           </div>
         )}
         {isStuck && (
@@ -637,11 +639,11 @@ function RefundSummary({
 }
 
 // -------------------------------------------------------------------------
-// ActionsCard — generic cancel / contact / reorder / etc.
+// ActionsCard: generic cancel / contact / reorder / etc.
 // -------------------------------------------------------------------------
 
 export interface OrderTrackingCallout {
-  /** Visual tone — drives background and icon color. */
+  /** Visual tone. Drives background and icon color. */
   tone: "points" | "inset" | "amber";
   icon?: "clock" | "info" | "check";
   title: string;
@@ -661,7 +663,7 @@ export interface OrderTrackingActionsCardProps {
   title?: string;
   /** Optional informational callout above the button row. */
   callout?: OrderTrackingCallout;
-  /** Button row — typically a primary action + one or two secondary. */
+  /** Button row. Typically a primary action + one or two secondary. */
   actions: OrderTrackingAction[];
   /** When more than 2 actions, pass `columns: 3` to render in a 3-column grid. */
   columns?: 2 | 3;
@@ -764,7 +766,7 @@ function ActionButton({
 }
 
 // -------------------------------------------------------------------------
-// InvestigationActions — 3-option list shown in the stuck state
+// InvestigationActions. 3-option list shown in the stuck state
 // -------------------------------------------------------------------------
 
 export interface InvestigationOption {
@@ -819,7 +821,7 @@ function InvestigationActions({
 }
 
 // -------------------------------------------------------------------------
-// InvestigationProgress — "What we're doing" check-list
+// InvestigationProgress. "What we're doing" check-list
 // -------------------------------------------------------------------------
 
 export interface InvestigationStep {
