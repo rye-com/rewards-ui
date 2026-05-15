@@ -1,0 +1,38 @@
+registry/default/components/payment-sheet.test.tsx
+  s_03356607026e4d::t_ccd11daae39139 81-101
+  s_03356607026e4d::t_6e6e5ee9c77b9f 149
+  s_03356607026e4d::t_5fa41571503296 174-175
+  s_03356607026e4d::t_fb13b0aec54c6b 260-275
+registry/default/components/payment-sheet.tsx
+  s_03356607026e4d::t_13e051bf1af96d 14
+  s_03356607026e4d::t_7d249f5ae0510f 17-37,50-499,501-553,555-713
+  s_03356607026e4d::t_aa9352e6c25e62 47-48
+  s_03356607026e4d::t_096407d3e83912 500
+  s_03356607026e4d::t_5995382c5b2908 554
+registry.json
+  s_03356607026e4d::t_441237aba0c7cf 6,8,11-14,16,18-24,26,28,31-34,36,38-39,41-44,46,48-49
+  s_03356607026e4d::t_d40c065a1f7c93 7,9-10,15,17
+  s_03356607026e4d::t_4db6b56b0d3607 25,40,45,47,50
+  s_03356607026e4d::t_636def97d1791c 27,29-30,35,37
+registry/default/index.ts
+  s_03356607026e4d::t_947200b10407ef 3
+  s_03356607026e4d::t_78379c73c9264b 4-7
+  s_03356607026e4d::t_ae6805c678a9fd 8,10,12
+  s_03356607026e4d::t_ed60c62943feea 9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "b3c11623fbfff465e567ffe0ee88301b73cc3cfd",
+  "prompts": {},
+  "sessions": {
+    "s_03356607026e4d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4d635d87-429e-4c94-9dbb-62c77bc87272",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": null
+    }
+  }
+}
