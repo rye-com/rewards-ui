@@ -1,0 +1,19 @@
+registry.json
+  s_7408ddb1134fd1::t_9fc711b4955772 83
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.11",
+  "base_commit_sha": "8d9fdf53876299627bd1bb4079d01a2bdd0f7b11",
+  "prompts": {},
+  "sessions": {
+    "s_7408ddb1134fd1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2ff07c0a-b5f6-4f11-b457-cb773ddc6f0b",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Victor Tsyan <victor@rye.com>"
+    }
+  }
+}
