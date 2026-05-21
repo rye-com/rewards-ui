@@ -1,0 +1,33 @@
+registry/default/components/order-tracking.tsx
+  s_7408ddb1134fd1::t_28b7e0b414125c 35
+registry/default/components/product-card.tsx
+  ai_agent 8-12
+tsconfig.json
+  s_7408ddb1134fd1::t_31a9fc06036a40 25-26
+registry/default/components/payment-sheet.tsx
+  s_7408ddb1134fd1::t_28b7e0b414125c 9
+registry/default/components/product-details.test.tsx
+  ai_agent 6
+registry/default/components/product-card.test.tsx
+  ai_agent 4
+registry/default/components/variant-selector.tsx
+  s_7408ddb1134fd1::t_28b7e0b414125c 12
+registry/default/components/product-details.tsx
+  s_7408ddb1134fd1::t_28b7e0b414125c 12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.11",
+  "base_commit_sha": "8441682856e3244a2768a0b9b025ff93ea01fc33",
+  "prompts": {},
+  "sessions": {
+    "s_7408ddb1134fd1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2ff07c0a-b5f6-4f11-b457-cb773ddc6f0b",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Victor Tsyan <victor@rye.com>"
+    }
+  }
+}
