@@ -1,4 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import { RotateCcw, Truck } from "lucide-react";
+import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 
 import type { ProductDetailsData } from "../types/product-details";
@@ -41,11 +43,12 @@ const sweater: ProductDetailsData = {
       ],
     },
   ],
-  meta: [
-    { icon: "truck", text: "Free standard shipping, 3 to 5 business days" },
-    { icon: "rotate-ccw", text: "30-day returns" },
-  ],
 };
+
+const defaultMetaRows = [
+  { icon: <Truck size={14} strokeWidth={2} />, text: "Free standard shipping, 3 to 5 business days" },
+  { icon: <RotateCcw size={14} strokeWidth={2} />, text: "30-day returns" },
+];
 
 interface RenderPDPOptions {
   data?: ProductDetailsData;
@@ -56,7 +59,7 @@ interface RenderPDPOptions {
   revalidationError?: { headline: string; detail?: string };
   redeemDisabledReason?: string;
   breadcrumbs?: Array<string | { label: string; href: string }>;
-  meta?: NonNullable<ProductDetailsData["meta"]>;
+  meta?: Array<{ icon?: ReactNode; text: ReactNode }>;
 }
 
 const renderPDP = (options: RenderPDPOptions = {}) => {
@@ -95,7 +98,7 @@ const renderPDP = (options: RenderPDPOptions = {}) => {
 describe("<ProductDetails />", () => {
   describe("ready state", () => {
     it("renders vendor, name, description, price + points", () => {
-      renderPDP({ meta: sweater.meta ?? [] });
+      renderPDP({ meta: defaultMetaRows });
       expect(screen.getByText("Norse Projects")).toBeInTheDocument();
       expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
         "Sigfred Merino Crew Sweater",

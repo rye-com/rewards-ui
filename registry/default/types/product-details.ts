@@ -38,9 +38,4 @@ export type ProductDetailsData = {
   gallery: string[];
   /** Variant dimensions in render order. */
   dimensions: VariantDimension[];
-  /** Trust / shipping bullets shown below the redeem CTA. */
-  meta?: Array<{
-    icon?: "truck" | "rotate-ccw" | "shield-check";
-    text: string;
-  }>;
 };

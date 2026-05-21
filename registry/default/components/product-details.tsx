@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { AlertCircle, ChevronRight, RotateCcw, ShieldCheck, Truck, X } from "lucide-react";
+import { AlertCircle, ChevronRight, X } from "lucide-react";
 
 import { formatMoney, formatPoints as defaultFormatPoints } from "@/lib/format";
 import { cn } from "@/lib/utils";
@@ -15,8 +15,7 @@ import type {
 } from "../types/product-details";
 
 type BreadcrumbItem = string | { label: string; href: string };
-type MetaIcon = "truck" | "rotate-ccw" | "shield-check";
-type MetaRow = { icon?: MetaIcon; text: React.ReactNode };
+type MetaRow = { icon?: React.ReactNode; text: React.ReactNode };
 
 // -------------------------------------------------------------------------
 // Context
@@ -687,15 +686,6 @@ ProductDetailsRedeem.displayName = "ProductDetails.Redeem";
 // <ProductDetails.Meta />
 // -------------------------------------------------------------------------
 
-const META_ICONS: Record<
-  MetaIcon,
-  React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>
-> = {
-  truck: Truck,
-  "rotate-ccw": RotateCcw,
-  "shield-check": ShieldCheck,
-};
-
 export interface ProductDetailsMetaProps extends React.HTMLAttributes<HTMLDivElement> {
   rows: MetaRow[];
 }
@@ -704,15 +694,12 @@ function ProductDetailsMeta({ rows, className, ...rest }: ProductDetailsMetaProp
   if (rows.length === 0) return null;
   return (
     <div className={cn("border-line mt-6 space-y-3 border-t pt-6 text-sm", className)} {...rest}>
-      {rows.map((row, i) => {
-        const Icon = row.icon ? META_ICONS[row.icon] : null;
-        return (
-          <div key={i} className="text-ink-2 flex items-center gap-2.5">
-            {Icon && <Icon size={14} strokeWidth={2} className="text-ink-3" />}
-            <span>{row.text}</span>
-          </div>
-        );
-      })}
+      {rows.map((row, i) => (
+        <div key={i} className="text-ink-2 flex items-center gap-2.5">
+          {row.icon && <span className="text-ink-3 inline-flex">{row.icon}</span>}
+          <span>{row.text}</span>
+        </div>
+      ))}
     </div>
   );
 }
