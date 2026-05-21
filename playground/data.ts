@@ -9,7 +9,7 @@ export const products: ReadonlyArray<Product> = [
     image: { url: "https://picsum.photos/seed/airbrush-legging/600/750" },
     price: { currency: "USD", value: "118.00" },
     pointsPrice: 11800,
-    availability: { kind: "in-stock" },
+    availability: { kind: "in_stock" },
     marketplace: "shopify",
   },
   {
@@ -20,7 +20,7 @@ export const products: ReadonlyArray<Product> = [
     image: { url: "https://picsum.photos/seed/sigfred-merino/600/750" },
     price: { currency: "USD", value: "245.00" },
     pointsPrice: 24500,
-    availability: { kind: "in-stock" },
+    availability: { kind: "in_stock" },
     marketplace: "shopify",
   },
   {
@@ -30,7 +30,7 @@ export const products: ReadonlyArray<Product> = [
     subtitle: "Black",
     image: { url: "https://picsum.photos/seed/acne-beanie/600/750" },
     price: { currency: "USD", value: "185.00" },
-    availability: { kind: "out-of-stock" },
+    availability: { kind: "out_of_stock" },
     marketplace: "shopify",
   },
   {
@@ -40,7 +40,7 @@ export const products: ReadonlyArray<Product> = [
     subtitle: "Black",
     image: { url: "https://picsum.photos/seed/bose-qc/600/750" },
     price: { currency: "USD", value: "299.00" },
-    availability: { kind: "marketplace-down", marketplace: "amazon" },
+    availability: { kind: "marketplace_down", marketplace: "amazon" },
     marketplace: "amazon",
   },
   {
@@ -51,7 +51,7 @@ export const products: ReadonlyArray<Product> = [
     image: { url: "https://example.invalid/this-does-not-exist.jpg" },
     price: { currency: "USD", value: "135.00" },
     pointsPrice: 13500,
-    availability: { kind: "in-stock" },
+    availability: { kind: "in_stock" },
     marketplace: "shopify",
   },
 ];

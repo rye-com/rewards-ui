@@ -5,9 +5,9 @@ import type { ProductAvailability } from "../registry/default/types/product";
 import { products } from "./data";
 
 const availabilityLabels: Record<ProductAvailability["kind"], string> = {
-  "in-stock": "In stock",
-  "out-of-stock": "Out of stock",
-  "marketplace-down": "Marketplace down",
+  in_stock: "In stock",
+  out_of_stock: "Out of stock",
+  marketplace_down: "Marketplace down",
 };
 
 export default function App() {

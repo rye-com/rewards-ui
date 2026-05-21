@@ -7,7 +7,7 @@ import { formatMoney, formatPoints } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import type { Marketplace, Product, ProductAvailability } from "../types/product";
 
-type MarketplaceDownAvailability = Extract<ProductAvailability, { kind: "marketplace-down" }>;
+type MarketplaceDownAvailability = Extract<ProductAvailability, { kind: "marketplace_down" }>;
 
 const marketplaceLabel: Record<Marketplace, string> = {
   amazon: "Amazon",
@@ -77,9 +77,9 @@ export type ProductCardImageProps = React.HTMLAttributes<HTMLDivElement>;
 function ProductCardImage({ className, ...rest }: ProductCardImageProps) {
   const { product, selected, onNotify } = useProductCardContext("Image");
   const { availability, image, name } = product;
-  const isBuyable = availability.kind === "in-stock";
+  const isBuyable = availability.kind === "in_stock";
   const isDimmable =
-    availability.kind === "out-of-stock" || availability.kind === "marketplace-down";
+    availability.kind === "out_of_stock" || availability.kind === "marketplace_down";
 
   const [imageFailed, setImageFailed] = React.useState(false);
   const [imageLoaded, setImageLoaded] = React.useState(false);
@@ -126,10 +126,10 @@ function ProductCardImage({ className, ...rest }: ProductCardImageProps) {
         />
       )}
 
-      {availability.kind === "out-of-stock" && (
+      {availability.kind === "out_of_stock" && (
         <AvailabilityBadge icon={<AlertCircle size={11} strokeWidth={2} />} label="Unavailable" />
       )}
-      {availability.kind === "marketplace-down" && (
+      {availability.kind === "marketplace_down" && (
         <MarketplaceDownPanel availability={availability} onNotify={handleNotify} />
       )}
     </div>
@@ -147,9 +147,9 @@ export type ProductCardInfoProps = React.HTMLAttributes<HTMLDivElement>;
 function ProductCardInfo({ className, ...rest }: ProductCardInfoProps) {
   const { product, onNotify } = useProductCardContext("Info");
   const { availability, vendor, name, subtitle, price, compareAtPrice, pointsPrice } = product;
-  const isBuyable = availability.kind === "in-stock";
-  const isOutOfStock = availability.kind === "out-of-stock";
-  const isMarketplaceDown = availability.kind === "marketplace-down";
+  const isBuyable = availability.kind === "in_stock";
+  const isOutOfStock = availability.kind === "out_of_stock";
+  const isMarketplaceDown = availability.kind === "marketplace_down";
   const isDiscounted = isBuyable && compareAtPrice !== undefined;
 
   const handleNotify = onNotify ? () => onNotify(product) : undefined;

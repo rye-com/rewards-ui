@@ -12,7 +12,7 @@ const baseProduct: Product = {
   image: { url: "https://example.com/img.jpg" },
   price: { currency: "USD", value: "89.00" },
   pointsPrice: 8900,
-  availability: { kind: "in-stock" },
+  availability: { kind: "in_stock" },
   marketplace: "shopify",
 };
 
@@ -54,7 +54,7 @@ describe("<ProductCard />", () => {
   describe("out-of-stock state", () => {
     const outOfStock: Product = {
       ...baseProduct,
-      availability: { kind: "out-of-stock" },
+      availability: { kind: "out_of_stock" },
     };
 
     it("renders the Unavailable badge", () => {
@@ -76,7 +76,7 @@ describe("<ProductCard />", () => {
   describe("marketplace-down state", () => {
     const marketplaceDown: Product = {
       ...baseProduct,
-      availability: { kind: "marketplace-down", marketplace: "amazon" },
+      availability: { kind: "marketplace_down", marketplace: "amazon" },
     };
 
     it("renders the temporarily-paused panel mentioning the marketplace", () => {
@@ -88,7 +88,7 @@ describe("<ProductCard />", () => {
       renderCard({
         ...marketplaceDown,
         availability: {
-          kind: "marketplace-down",
+          kind: "marketplace_down",
           marketplace: "amazon",
           reason: "Maintenance window",
         },

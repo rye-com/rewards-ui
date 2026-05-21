@@ -18,9 +18,9 @@ export type ProductImage = {
 export type Marketplace = "amazon" | "shopify" | "bestbuy";
 
 export type ProductAvailability =
-  | { kind: "in-stock" }
-  | { kind: "out-of-stock" }
-  | { kind: "marketplace-down"; marketplace: Marketplace; reason?: string };
+  | { kind: "in_stock" }
+  | { kind: "out_of_stock" }
+  | { kind: "marketplace_down"; marketplace: Marketplace; reason?: string };
 
 export type Product = {
   id: string;
