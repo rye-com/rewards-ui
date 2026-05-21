@@ -4,6 +4,21 @@
   "homepage": "https://docs.rye.com/rewards",
   "items": [
     {
+      "name": "address-form",
+      "type": "registry:component",
+      "title": "Address form",
+      "description": "Compound form for collecting a buyer's shipping/billing address. Renders the canonical `Buyer` shape from `checkout-intents` so the result drops straight into <PaymentSheet.Shipping /> or a checkout intent. Validation is consumer-owned — pass `fieldErrors` and the component handles aria-invalid + error rendering.",
+      "registryDependencies": ["https://ui.shadcn.com/r/styles/new-york/utils.json"],
+      "dependencies": ["checkout-intents"],
+      "files": [
+        {
+          "path": "registry/default/components/address-form.tsx",
+          "type": "registry:component",
+          "target": "components/rye-rewards/address-form.tsx"
+        }
+      ]
+    },
+    {
       "name": "order-tracking",
       "type": "registry:component",
       "title": "Order tracking",
