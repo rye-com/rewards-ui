@@ -8,10 +8,9 @@ Source-available React components for partners building rewards-program redempti
 
 ## Status
 
-v0.1.0 (pre-1.0). All five components from the design doc have landed and pass the full check pipeline (typecheck, lint, format, 71 vitest assertions, shadcn registry build). Remaining gates for the public install command:
+v0.1.0 (pre-1.0). All five components from the design doc have landed and pass the full check pipeline (typecheck, lint, format, 74 vitest assertions, shadcn registry build). Plus a sixth (`<VariantSelector />`, extracted from the PDP per review feedback) and a write-side companion to `<PaymentSheet.Shipping />` (`<AddressForm />`) in flight.
 
-- Registry hosting decision (see [Hosting](#hosting) below).
-- npm publish of the `@rye-api/rewards-ui` CLI helper.
+Registry is hosted at [registry.rye.com](https://registry.rye.com/r/registry.json) (Vercel) and consumed via the shadcn CLI — see [Install](#install).
 
 ## Install
 
@@ -20,7 +19,7 @@ Two equivalent ways for partners to add a component to their app.
 ### Full URL (no setup)
 
 ```bash
-pnpm dlx shadcn@latest add https://rewards-ui.rye.com/r/product-card.json
+pnpm dlx shadcn@latest add https://registry.rye.com/r/product-card.json
 ```
 
 ### Namespace shortcut (one-time setup)
@@ -30,7 +29,7 @@ Add a namespace to your project's `components.json`:
 ```json
 {
   "registries": {
-    "@rye-api": "https://rewards-ui.rye.com/r/{name}.json"
+    "@rye-api": "https://registry.rye.com/r/{name}.json"
   }
 }
 ```
@@ -45,13 +44,14 @@ Either way, source files copy into `components/rye-rewards/` (configurable). You
 
 ## Components
 
-| Component            | Surface                     | States covered                                                                                                                                                                                              |
-| -------------------- | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `<ProductCard />`    | Catalog tile                | in-stock, out-of-stock, marketplace-down, image-failed, plus a matching `<ProductCardSkeleton />`                                                                                                           |
-| `<ProductDetails />` | Compound PDP                | gallery, variant pickers (swatches / grid / cards), revalidation alert, quantity stepper, redeem CTA, plus `<ProductDetailsSkeleton />`                                                                     |
-| `<PayWithPoints />`  | Composable slot             | balance pill, slider, enable toggle, after-redemption preview, insufficient-balance partial-coverage card                                                                                                   |
-| `<PaymentSheet />`   | Compound checkout sheet     | Header / Alert / Item / Shipping / Section / MemberBenefit / CostBreakdown / Confirm / Actions / Skeleton subcomponents covering cash + member benefit, mixed tender, full points, plus five error variants |
-| `<OrderTracking />`  | Compound post-purchase view | Header / StatusCard / InvestigationCard / Timeline / Item / RefundSummary / ActionsCard / InvestigationActions / InvestigationProgress subcomponents covering all 8 lifecycle states                        |
+| Component             | Surface                     | States covered                                                                                                                                                                                              |
+| --------------------- | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `<ProductCard />`     | Catalog tile                | in_stock, out_of_stock, marketplace_down, image-failed, plus a matching `<ProductCardSkeleton />`                                                                                                           |
+| `<ProductDetails />`  | Compound PDP                | gallery, variant pickers (swatches / grid / cards), revalidation alert, quantity stepper, redeem CTA, plus `<ProductDetailsSkeleton />`                                                                     |
+| `<VariantSelector />` | Standalone variant picker   | swatches / grid / cards styles with a revalidation-error state. Used inside `<ProductDetails.Variants />` or standalone in a `<PaymentSheet />` flow.                                                       |
+| `<PayWithPoints />`   | Composable slot             | balance pill, slider, after-redemption preview, insufficient-balance partial-coverage card                                                                                                                  |
+| `<PaymentSheet />`    | Compound checkout sheet     | Header / Alert / Item / Shipping / Section / MemberBenefit / CostBreakdown / Confirm / Actions / Skeleton subcomponents covering cash + member benefit, mixed tender, full points, plus five error variants |
+| `<OrderTracking />`   | Compound post-purchase view | Header / StatusCard / InvestigationCard / Timeline / Item / RefundSummary / ActionsCard / InvestigationActions / InvestigationProgress subcomponents covering all 8 lifecycle states                        |
 
 Full registry shape lives in `registry.json`.
 
