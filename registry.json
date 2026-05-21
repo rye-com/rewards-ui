@@ -80,7 +80,7 @@
       "description": "Two-column PDP with image gallery, variant pickers (swatches / grid / cards), inline revalidation alert, and redeem CTA. Ships with <ProductDetailsSkeleton /> for loading.",
       "registryDependencies": [
         "https://ui.shadcn.com/r/styles/new-york/utils.json",
-        "variant-selector"
+        "https://registry.rye.com/r/variant-selector.json"
       ],
       "dependencies": ["lucide-react"],
       "files": [
