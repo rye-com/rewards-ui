@@ -342,7 +342,9 @@ function TimelineStepRow({ step, isLast }: { step: TimelineStep; isLast: boolean
   const isPending = step.status === "pending";
 
   let badgeTone: "points" | "amber" = "points";
-  if (isStuck) badgeTone = "amber";
+  if (isStuck) {
+    badgeTone = "amber";
+  }
 
   return (
     <li
