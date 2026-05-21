@@ -1,0 +1,27 @@
+registry/default/components/payment-sheet.tsx
+  s_7408ddb1134fd1::t_06476572f59ea5 4
+  s_7408ddb1134fd1::t_ee980270de54ff 198-202,213,219-235,247,256,260,268
+  s_7408ddb1134fd1::t_1e70cd7e036fdd 495,521
+  s_7408ddb1134fd1::t_11d6f8b6ed785d 5
+registry/default/components/payment-sheet.test.tsx
+  s_7408ddb1134fd1::t_9deb2c21929993 2,15-25
+  s_7408ddb1134fd1::t_d8babd9a9d413c 257-261
+  s_7408ddb1134fd1::t_29814853e54752 119
+  s_7408ddb1134fd1::t_bf7d2baac18ea8 132
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.11",
+  "base_commit_sha": "e0d60dd50be9c98ae43cde5f2ae707fb683316de",
+  "prompts": {},
+  "sessions": {
+    "s_7408ddb1134fd1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2ff07c0a-b5f6-4f11-b457-cb773ddc6f0b",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Victor Tsyan <victor@rye.com>"
+    }
+  }
+}
