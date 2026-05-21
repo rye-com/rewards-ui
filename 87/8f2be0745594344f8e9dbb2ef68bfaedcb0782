@@ -1,0 +1,32 @@
+registry/default/components/order-tracking.tsx
+  s_7408ddb1134fd1::t_a6564a276feef9 120-121
+  s_7408ddb1134fd1::t_255ee1a51a5bf7 191,195,200
+  s_7408ddb1134fd1::t_e8ea92a7b254b6 621,631-634
+  s_7408ddb1134fd1::t_f4c414764f8a0d 292,340
+  s_7408ddb1134fd1::t_c4643e701239b3 5-12
+  s_7408ddb1134fd1::t_6f12df0e5c5872 164
+  s_7408ddb1134fd1::t_a247b085f390cb 713-714,731,733
+  s_7408ddb1134fd1::t_83362937ef3d4b 63
+  s_7408ddb1134fd1::t_c5dcb11c1f1dce 31
+  s_7408ddb1134fd1::t_c93f4024a13042 695-697
+registry/default/components/order-tracking.test.tsx
+  s_7408ddb1134fd1::t_31168e5ee89257 118
+  s_7408ddb1134fd1::t_9c7535943fb113 255,257-261
+  s_7408ddb1134fd1::t_dfc9eb3e66a1e4 2
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.11",
+  "base_commit_sha": "878f2be0745594344f8e9dbb2ef68bfaedcb0782",
+  "prompts": {},
+  "sessions": {
+    "s_7408ddb1134fd1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2ff07c0a-b5f6-4f11-b457-cb773ddc6f0b",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Victor Tsyan <victor@rye.com>"
+    }
+  }
+}
