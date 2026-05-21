@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import { RotateCcw } from "lucide-react";
 import { describe, expect, it, vi } from "vitest";
 
 import { PaymentSheet } from "./payment-sheet";
@@ -11,9 +12,17 @@ const item = {
   pointsPrice: 8900,
 };
 
-const address = {
-  name: "Nathan Pegram",
-  lines: ["350 Mission St, Apt 4C", "San Francisco, CA 94105"],
+const buyer = {
+  firstName: "Nathan",
+  lastName: "Pegram",
+  address1: "350 Mission St",
+  address2: "Apt 4C",
+  city: "San Francisco",
+  province: "CA",
+  postalCode: "94105",
+  country: "US",
+  email: "nathan@example.com",
+  phone: "+1-415-555-0100",
 };
 
 describe("<PaymentSheet />", () => {
@@ -107,7 +116,7 @@ describe("<PaymentSheet />", () => {
       const onEdit = vi.fn();
       render(
         <PaymentSheet>
-          <PaymentSheet.Shipping address={address} onEdit={onEdit} />
+          <PaymentSheet.Shipping buyer={buyer} onEdit={onEdit} />
         </PaymentSheet>,
       );
       expect(screen.getByText(/Ship to/)).toBeInTheDocument();
@@ -120,7 +129,7 @@ describe("<PaymentSheet />", () => {
       render(
         <PaymentSheet>
           <PaymentSheet.Shipping
-            address={address}
+            buyer={buyer}
             shipError={{
               headline: "Can't ship to this address",
               detail: "Aesop doesn't ship to this destination.",
@@ -245,7 +254,11 @@ describe("<PaymentSheet />", () => {
       render(
         <PaymentSheet>
           <PaymentSheet.Actions
-            primary={{ label: "Try again", onClick: onPrimary, icon: "rotate-ccw" }}
+            primary={{
+              label: "Try again",
+              onClick: onPrimary,
+              icon: <RotateCcw size={13} strokeWidth={2.25} />,
+            }}
             secondary={{ label: "Confirm", onClick: onSecondary, disabled: true }}
           />
         </PaymentSheet>,

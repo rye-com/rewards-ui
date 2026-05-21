@@ -1,15 +1,8 @@
 "use client";
 
 import * as React from "react";
-import {
-  AlertCircle,
-  ChevronLeft,
-  Loader2,
-  PauseCircle,
-  RotateCcw,
-  Sparkles,
-  X,
-} from "lucide-react";
+import { AlertCircle, ChevronLeft, Loader2, PauseCircle, Sparkles, X } from "lucide-react";
+import type { Buyer } from "checkout-intents/resources";
 
 import { formatMoney, formatPoints } from "@/lib/format";
 import { cn } from "@/lib/utils";
@@ -201,13 +194,12 @@ PaymentSheetItem.displayName = "PaymentSheet.Item";
 // Shipping
 // -------------------------------------------------------------------------
 
-export interface PaymentSheetShippingAddress {
-  name: string;
-  lines: string[];
-}
-
 export interface PaymentSheetShippingProps {
-  address: PaymentSheetShippingAddress;
+  /**
+   * Recipient + address. Uses the `Buyer` shape from `checkout-intents`
+   * directly so partners pass intent responses through without remapping.
+   */
+  buyer: Buyer;
   /** Label rendered above the address. Defaults to "Ship to". */
   label?: React.ReactNode;
   /** Edit-button copy. Defaults to "Edit". */
@@ -218,12 +210,29 @@ export interface PaymentSheetShippingProps {
 }
 
 function PaymentSheetShipping({
-  address,
+  buyer,
   label = "Ship to",
   editLabel = "Edit",
   onEdit,
   shipError,
 }: PaymentSheetShippingProps) {
+  const addressBlock = (
+    <>
+      {buyer.firstName} {buyer.lastName}
+      <br />
+      {buyer.address1}
+      {buyer.address2 ? (
+        <>
+          <br />
+          {buyer.address2}
+        </>
+      ) : null}
+      <br />
+      {buyer.city}, {buyer.province} {buyer.postalCode}
+      <br />
+      {buyer.country}
+    </>
+  );
   return (
     <div className="border-line border-t px-7 py-5">
       <div className="flex items-start justify-between gap-4">
@@ -235,13 +244,7 @@ function PaymentSheetShipping({
                 <span>{shipError.headline}</span>
               </div>
               <div className="text-ink-1 mt-2 text-sm leading-relaxed line-through opacity-60">
-                {address.name}
-                {address.lines.map((l, i) => (
-                  <React.Fragment key={i}>
-                    <br />
-                    {l}
-                  </React.Fragment>
-                ))}
+                {addressBlock}
               </div>
               <div className="text-ink-2 mt-2 text-xs leading-relaxed">{shipError.detail}</div>
             </>
@@ -250,19 +253,11 @@ function PaymentSheetShipping({
               <div className="text-ink-3 text-xs font-medium tracking-widest uppercase">
                 {label}
               </div>
-              <div className="text-ink-1 mt-1.5 text-sm leading-relaxed">
-                {address.name}
-                {address.lines.map((l, i) => (
-                  <React.Fragment key={i}>
-                    <br />
-                    {l}
-                  </React.Fragment>
-                ))}
-              </div>
+              <div className="text-ink-1 mt-1.5 text-sm leading-relaxed">{addressBlock}</div>
             </>
           )}
         </div>
-        {onEdit && (
+        {onEdit ? (
           <button
             type="button"
             onClick={onEdit}
@@ -270,7 +265,7 @@ function PaymentSheetShipping({
           >
             {editLabel}
           </button>
-        )}
+        ) : null}
       </div>
     </div>
   );
@@ -497,7 +492,7 @@ function PaymentSheetConfirm({
 PaymentSheetConfirm.displayName = "PaymentSheet.Confirm";
 
 export interface PaymentSheetActionsProps {
-  primary: { label: string; onClick?: () => void; icon?: "rotate-ccw" | "arrow-right" };
+  primary: { label: string; onClick?: () => void; icon?: React.ReactNode };
   secondary: { label: string; onClick?: () => void; disabled?: boolean };
 }
 
@@ -523,7 +518,7 @@ function PaymentSheetActions({ primary, secondary }: PaymentSheetActionsProps) {
         onClick={primary.onClick}
         className="bg-cta text-cta-fg flex h-12 items-center justify-center gap-2 rounded-xl text-sm font-medium transition hover:opacity-90"
       >
-        {primary.icon === "rotate-ccw" && <RotateCcw size={13} strokeWidth={2.25} />}
+        {primary.icon}
         <span>{primary.label}</span>
       </button>
     </div>
