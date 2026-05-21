@@ -25,6 +25,11 @@
           "path": "registry/default/types/product-details.ts",
           "type": "registry:lib",
           "target": "components/rye-rewards/types/product-details.ts"
+        },
+        {
+          "path": "lib/format.ts",
+          "type": "registry:lib",
+          "target": "lib/format.ts"
         }
       ]
     },
@@ -45,6 +50,11 @@
           "path": "registry/default/types/product.ts",
           "type": "registry:lib",
           "target": "components/rye-rewards/types/product.ts"
+        },
+        {
+          "path": "lib/format.ts",
+          "type": "registry:lib",
+          "target": "lib/format.ts"
         }
       ]
     }

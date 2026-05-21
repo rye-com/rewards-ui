@@ -3,6 +3,7 @@
 import * as React from "react";
 import { AlertCircle, ImageOff, PauseCircle } from "lucide-react";
 
+import { formatMoney, formatPoints as defaultFormatPoints } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import type { Marketplace, Money, Product, ProductAvailability } from "../types/product";
 
@@ -13,29 +14,6 @@ const marketplaceLabel: Record<Marketplace, string> = {
   shopify: "Shopify",
   bestbuy: "Best Buy",
 };
-
-// Reuse Intl.NumberFormat per currency. Creating a formatter is ~3 orders
-// of magnitude slower than calling `.format()` on an existing one, and
-// catalog grids re-render the same currency dozens of times.
-const currencyFormatters = new Map<string, Intl.NumberFormat>();
-const getCurrencyFormatter = (currency: string): Intl.NumberFormat => {
-  let formatter = currencyFormatters.get(currency);
-  if (!formatter) {
-    formatter = new Intl.NumberFormat(undefined, { style: "currency", currency });
-    currencyFormatters.set(currency, formatter);
-  }
-  return formatter;
-};
-
-const defaultFormatPrice = (price: Money): string => {
-  try {
-    return getCurrencyFormatter(price.currency).format(Number(price.value));
-  } catch {
-    return `${price.currency} ${price.value}`;
-  }
-};
-
-const defaultFormatPoints = (points: number): string => `${points.toLocaleString()} pts`;
 
 // -------------------------------------------------------------------------
 // Context
@@ -81,7 +59,7 @@ const ProductCardRoot = React.forwardRef<HTMLDivElement, ProductCardProps>(funct
     product,
     selected = false,
     onNotify,
-    formatPrice = defaultFormatPrice,
+    formatPrice = formatMoney,
     formatPoints = defaultFormatPoints,
     className,
     children,

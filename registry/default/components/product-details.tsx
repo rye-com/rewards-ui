@@ -3,6 +3,7 @@
 import * as React from "react";
 import { AlertCircle, ChevronRight, RotateCcw, ShieldCheck, Truck, X } from "lucide-react";
 
+import { formatMoney, formatPoints as defaultFormatPoints } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import type { Money } from "../types/product";
 import type {
@@ -16,27 +17,6 @@ import type {
 type BreadcrumbItem = string | { label: string; href: string };
 type MetaIcon = "truck" | "rotate-ccw" | "shield-check";
 type MetaRow = { icon?: MetaIcon; text: React.ReactNode };
-
-// Reuse Intl.NumberFormat per currency. See product-card.tsx for context.
-const currencyFormatters = new Map<string, Intl.NumberFormat>();
-const getCurrencyFormatter = (currency: string): Intl.NumberFormat => {
-  let formatter = currencyFormatters.get(currency);
-  if (!formatter) {
-    formatter = new Intl.NumberFormat(undefined, { style: "currency", currency });
-    currencyFormatters.set(currency, formatter);
-  }
-  return formatter;
-};
-
-const defaultFormatPrice = (price: Money): string => {
-  try {
-    return getCurrencyFormatter(price.currency).format(Number(price.value));
-  } catch {
-    return `${price.currency} ${price.value}`;
-  }
-};
-
-const defaultFormatPoints = (points: number): string => `${points.toLocaleString()} pts`;
 
 // -------------------------------------------------------------------------
 // Context
@@ -96,7 +76,7 @@ const ProductDetailsRoot = React.forwardRef<HTMLDivElement, ProductDetailsProps>
       selectedImageIndex = 0,
       onImageSelect,
       revalidationError,
-      formatPrice = defaultFormatPrice,
+      formatPrice = formatMoney,
       formatPoints = defaultFormatPoints,
       className,
       children,
