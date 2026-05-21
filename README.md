@@ -6,7 +6,7 @@ Source-available React components for partners building rewards-program redempti
 
 ## Status
 
-v0.1.0 (pre-1.0). All five components from the design doc have landed and pass the full check pipeline (typecheck, lint, format, 74 vitest assertions, shadcn registry build). Plus a sixth (`<VariantSelector />`, extracted from the PDP per review feedback) and a write-side companion to `<PaymentSheet.Shipping />` (`<AddressForm />`) in flight.
+v1.0.0. Seven components covering the full catalog → PDP → checkout → post-purchase lifecycle (`<ProductCard />`, `<ProductDetails />`, `<VariantSelector />`, `<PayWithPoints />`, `<PaymentSheet />`, `<OrderTracking />`, `<AddressForm />`) — all pass the full check pipeline (typecheck, lint, format, 83 vitest assertions, shadcn registry build).
 
 Registry is hosted at [registry.rye.com](https://registry.rye.com/r/registry.json) (Vercel) and consumed via the shadcn CLI — see [Install](#install).
 

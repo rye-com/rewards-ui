@@ -4,7 +4,7 @@ All notable changes to `@rye-api/rewards-ui` will be documented here. Components
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [0.1.0]
+## [1.0.0]
 
 First public release. Seven components covering the catalog → PDP → checkout → post-purchase lifecycle, plus a write-side address form.
 
