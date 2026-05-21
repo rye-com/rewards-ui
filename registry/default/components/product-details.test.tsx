@@ -110,8 +110,7 @@ describe("<ProductDetails />", () => {
         "Sigfred Merino Crew Sweater",
       );
       expect(screen.getByText(/Mid-weight crewneck/)).toBeInTheDocument();
-      // Price appears twice: in Header AND inside the Redeem CTA
-      expect(screen.getAllByText(/245\.00/)).toHaveLength(2);
+      expect(screen.getByText(/245\.00/)).toBeInTheDocument();
       expect(screen.getByText("or 24,500 pts")).toBeInTheDocument();
     });
 

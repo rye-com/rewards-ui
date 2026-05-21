@@ -3,9 +3,9 @@
 import * as React from "react";
 import { AlertCircle, ImageOff, PauseCircle } from "lucide-react";
 
-import { formatMoney, formatPoints as defaultFormatPoints } from "@/lib/format";
+import { formatMoney, formatPoints } from "@/lib/format";
 import { cn } from "@/lib/utils";
-import type { Marketplace, Money, Product, ProductAvailability } from "../types/product";
+import type { Marketplace, Product, ProductAvailability } from "../types/product";
 
 type MarketplaceDownAvailability = Extract<ProductAvailability, { kind: "marketplace-down" }>;
 
@@ -23,8 +23,6 @@ interface ProductCardContextValue {
   product: Product;
   selected: boolean;
   onNotify: ((product: Product) => void) | undefined;
-  formatPrice: (price: Money) => string;
-  formatPoints: (points: number) => string;
 }
 
 const ProductCardContext = React.createContext<ProductCardContextValue | null>(null);
@@ -47,29 +45,16 @@ export interface ProductCardProps extends React.HTMLAttributes<HTMLDivElement> {
   selected?: boolean;
   /** Optional callback when the marketplace-down "Notify me" link is clicked. */
   onNotify?: (product: Product) => void;
-  /** Override how the cash price renders. Defaults to Intl.NumberFormat currency. */
-  formatPrice?: (price: Money) => string;
-  /** Override how points render. Defaults to "X,XXX pts". */
-  formatPoints?: (points: number) => string;
   children: React.ReactNode;
 }
 
 const ProductCardRoot = React.forwardRef<HTMLDivElement, ProductCardProps>(function ProductCardRoot(
-  {
-    product,
-    selected = false,
-    onNotify,
-    formatPrice = formatMoney,
-    formatPoints = defaultFormatPoints,
-    className,
-    children,
-    ...rest
-  },
+  { product, selected = false, onNotify, className, children, ...rest },
   ref,
 ) {
   const value = React.useMemo<ProductCardContextValue>(
-    () => ({ product, selected, onNotify, formatPrice, formatPoints }),
-    [product, selected, onNotify, formatPrice, formatPoints],
+    () => ({ product, selected, onNotify }),
+    [product, selected, onNotify],
   );
 
   return (
@@ -158,7 +143,7 @@ ProductCardImage.displayName = "ProductCard.Image";
 export type ProductCardInfoProps = React.HTMLAttributes<HTMLDivElement>;
 
 function ProductCardInfo({ className, ...rest }: ProductCardInfoProps) {
-  const { product, onNotify, formatPrice, formatPoints } = useProductCardContext("Info");
+  const { product, onNotify } = useProductCardContext("Info");
   const { availability, vendor, name, subtitle, price, compareAtPrice, pointsPrice } = product;
   const isBuyable = availability.kind === "in-stock";
   const isOutOfStock = availability.kind === "out-of-stock";
@@ -191,7 +176,7 @@ function ProductCardInfo({ className, ...rest }: ProductCardInfoProps) {
       <div className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1">
         {isDiscounted && (
           <span className="text-ink-3 text-sm tabular-nums line-through">
-            {formatPrice(compareAtPrice)}
+            {formatMoney(compareAtPrice)}
           </span>
         )}
         <span
@@ -201,7 +186,7 @@ function ProductCardInfo({ className, ...rest }: ProductCardInfoProps) {
             isOutOfStock && "line-through",
           )}
         >
-          {formatPrice(price)}
+          {formatMoney(price)}
         </span>
 
         {isBuyable && pointsPrice !== undefined && (

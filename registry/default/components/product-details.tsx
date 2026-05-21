@@ -3,9 +3,8 @@
 import * as React from "react";
 import { ChevronRight } from "lucide-react";
 
-import { formatMoney, formatPoints as defaultFormatPoints } from "@/lib/format";
+import { formatMoney, formatPoints } from "@/lib/format";
 import { cn } from "@/lib/utils";
-import type { Money } from "../types/product";
 import type {
   ProductDetailsData,
   VariantRevalidationError,
@@ -27,8 +26,6 @@ interface ProductDetailsContextValue {
   selectedImageIndex: number;
   onImageSelect: ((index: number) => void) | undefined;
   revalidationError: VariantRevalidationError | undefined;
-  formatPrice: (price: Money) => string;
-  formatPoints: (points: number) => string;
 }
 
 const ProductDetailsContext = React.createContext<ProductDetailsContextValue | null>(null);
@@ -58,10 +55,6 @@ export interface ProductDetailsProps extends Omit<
   onImageSelect?: (index: number) => void;
   /** Set when a previously-selected variant has just become unavailable. */
   revalidationError?: VariantRevalidationError;
-  /** Override how the cash price renders. */
-  formatPrice?: (price: Money) => string;
-  /** Override how points render. */
-  formatPoints?: (points: number) => string;
   children: React.ReactNode;
 }
 
@@ -74,8 +67,6 @@ const ProductDetailsRoot = React.forwardRef<HTMLDivElement, ProductDetailsProps>
       selectedImageIndex = 0,
       onImageSelect,
       revalidationError,
-      formatPrice = formatMoney,
-      formatPoints = defaultFormatPoints,
       className,
       children,
       ...rest
@@ -90,19 +81,8 @@ const ProductDetailsRoot = React.forwardRef<HTMLDivElement, ProductDetailsProps>
         selectedImageIndex,
         onImageSelect,
         revalidationError,
-        formatPrice,
-        formatPoints,
       }),
-      [
-        data,
-        selection,
-        onSelectionChange,
-        selectedImageIndex,
-        onImageSelect,
-        revalidationError,
-        formatPrice,
-        formatPoints,
-      ],
+      [data, selection, onSelectionChange, selectedImageIndex, onImageSelect, revalidationError],
     );
 
     return (
@@ -273,7 +253,7 @@ function ProductDetailsHeader({
   className,
   ...rest
 }: ProductDetailsHeaderProps) {
-  const { data, formatPrice, formatPoints } = useProductDetailsContext("Header");
+  const { data } = useProductDetailsContext("Header");
   const { product } = data;
   return (
     <div className={className} {...rest}>
@@ -288,11 +268,11 @@ function ProductDetailsHeader({
       <div className="mt-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
         {product.compareAtPrice && (
           <span className="text-ink-3 text-lg tabular-nums line-through">
-            {formatPrice(product.compareAtPrice)}
+            {formatMoney(product.compareAtPrice)}
           </span>
         )}
         <span className="text-ink-1 text-2xl font-semibold tabular-nums">
-          {formatPrice(product.price)}
+          {formatMoney(product.price)}
         </span>
         {product.pointsPrice !== undefined && (
           <>
@@ -424,22 +404,17 @@ function StepperButton({
 // -------------------------------------------------------------------------
 
 export interface ProductDetailsRedeemProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  /** Secondary suffix shown after `children · …`. Defaults to the formatted product price. Omitted when the CTA is disabled. */
-  secondary?: string;
   children: React.ReactNode;
 }
 
 function ProductDetailsRedeem({
-  secondary,
   disabled,
   className,
   type = "button",
   children,
   ...rest
 }: ProductDetailsRedeemProps) {
-  const { data, formatPrice } = useProductDetailsContext("Redeem");
-  const resolvedSecondary = secondary ?? formatPrice(data.product.price);
-
+  useProductDetailsContext("Redeem");
   return (
     <button
       type={type}
@@ -451,15 +426,7 @@ function ProductDetailsRedeem({
       )}
       {...rest}
     >
-      {disabled ? (
-        children
-      ) : (
-        <>
-          <span>{children}</span>
-          <span className="text-page/50">·</span>
-          <span className="tabular-nums">{resolvedSecondary}</span>
-        </>
-      )}
+      {children}
     </button>
   );
 }
