@@ -181,7 +181,26 @@ function PayWithPointsHeader({
           </div>
         </div>
       ) : (
-        <Toggle checked={enabled} onCheckedChange={onEnabledChange ?? (() => undefined)} />
+        // Re-enable affordance: only shown in the disabled state so the user
+        // has a way to flip points back on. There's no inverse "off" switch
+        // in the enabled state — the balance pill replaces it (intentional).
+        <button
+          type="button"
+          role="switch"
+          aria-checked={enabled}
+          onClick={() => (onEnabledChange ?? (() => undefined))(!enabled)}
+          className={cn(
+            "relative inline-flex h-6 w-11 items-center rounded-full transition",
+            enabled ? "bg-points" : "bg-line-strong",
+          )}
+        >
+          <span
+            className={cn(
+              "inline-block h-5 w-5 transform rounded-full bg-white shadow-[0_1px_2px_rgba(15,15,15,0.15)] transition",
+              enabled ? "translate-x-5.5" : "translate-x-0.5",
+            )}
+          />
+        </button>
       )}
     </div>
   );
@@ -198,8 +217,12 @@ function deriveSubtitle({
   isFullPayment: boolean;
   rateLabel: React.ReactNode;
 }): React.ReactNode {
-  if (!enabled) return "Save your points for later";
-  if (isFullPayment) return "Paying with points only";
+  if (!enabled) {
+    return "Save your points for later";
+  }
+  if (isFullPayment) {
+    return "Paying with points only";
+  }
   return rateLabel ?? null;
 }
 
@@ -209,7 +232,7 @@ function deriveSubtitle({
 
 export interface PayWithPointsSliderProps {
   /** Accessible label for the slider thumb. Defaults to "Points to apply". */
-  ariaLabel?: string;
+  "aria-label"?: string;
   /** Suffix on the applied total, e.g. "8,500 applied". */
   appliedSuffix?: string;
   /** Suffix on the max scale, e.g. "8,900 max". */
@@ -219,7 +242,7 @@ export interface PayWithPointsSliderProps {
 }
 
 function PayWithPointsSlider({
-  ariaLabel = "Points to apply",
+  "aria-label": ariaLabel = "Points to apply",
   appliedSuffix = "applied",
   maxSuffix = "max",
   maxedSuffix = "applied · max",
@@ -244,7 +267,7 @@ function PayWithPointsSlider({
         value={enabled ? applied : 0}
         max={effectiveMax}
         onChange={onAppliedChange}
-        ariaLabel={ariaLabel}
+        aria-label={ariaLabel}
       />
       <div className="text-ink-3 mt-3.5 flex items-center justify-between text-xs tabular-nums">
         <span>0 pts</span>
@@ -377,45 +400,17 @@ export const PayWithPoints = Object.assign(PayWithPointsRoot, {
 });
 
 // -------------------------------------------------------------------------
-// Internal helpers (Toggle + SliderControl)
+// SliderControl (custom range thumb so we can theme via Tailwind tokens)
 // -------------------------------------------------------------------------
-
-function Toggle({
-  checked,
-  onCheckedChange,
-}: {
-  checked: boolean;
-  onCheckedChange: (checked: boolean) => void;
-}) {
-  return (
-    <button
-      type="button"
-      role="switch"
-      aria-checked={checked}
-      onClick={() => onCheckedChange(!checked)}
-      className={cn(
-        "relative inline-flex h-6 w-11 items-center rounded-full transition",
-        checked ? "bg-points" : "bg-line-strong",
-      )}
-    >
-      <span
-        className={cn(
-          "inline-block h-5 w-5 transform rounded-full bg-white shadow-[0_1px_2px_rgba(15,15,15,0.15)] transition",
-          checked ? "translate-x-5.5" : "translate-x-0.5",
-        )}
-      />
-    </button>
-  );
-}
 
 interface SliderControlProps {
   value: number;
   max: number;
   onChange: (value: number) => void;
-  ariaLabel: string;
+  "aria-label": string;
 }
 
-function SliderControl({ value, max, onChange, ariaLabel }: SliderControlProps) {
+function SliderControl({ value, max, onChange, "aria-label": ariaLabel }: SliderControlProps) {
   const trackRef = React.useRef<HTMLSpanElement>(null);
   const pct = max > 0 ? Math.min(100, (value / max) * 100) : 0;
   const isDragging = React.useRef(false);
@@ -423,7 +418,9 @@ function SliderControl({ value, max, onChange, ariaLabel }: SliderControlProps) 
   const setFromClientX = React.useCallback(
     (clientX: number) => {
       const track = trackRef.current;
-      if (!track || max <= 0) return;
+      if (!track || max <= 0) {
+        return;
+      }
       const rect = track.getBoundingClientRect();
       const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
       onChange(Math.round(ratio * max));
@@ -437,7 +434,9 @@ function SliderControl({ value, max, onChange, ariaLabel }: SliderControlProps) 
     setFromClientX(e.clientX);
   };
   const onPointerMove = (e: React.PointerEvent<HTMLSpanElement>) => {
-    if (!isDragging.current) return;
+    if (!isDragging.current) {
+      return;
+    }
     setFromClientX(e.clientX);
   };
   const onPointerUp = (e: React.PointerEvent<HTMLSpanElement>) => {
@@ -448,11 +447,17 @@ function SliderControl({ value, max, onChange, ariaLabel }: SliderControlProps) 
   const onKeyDown = (e: React.KeyboardEvent<HTMLSpanElement>) => {
     const step = Math.max(1, Math.round(max / 100));
     let next = value;
-    if (e.key === "ArrowLeft" || e.key === "ArrowDown") next = Math.max(0, value - step);
-    else if (e.key === "ArrowRight" || e.key === "ArrowUp") next = Math.min(max, value + step);
-    else if (e.key === "Home") next = 0;
-    else if (e.key === "End") next = max;
-    else return;
+    if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
+      next = Math.max(0, value - step);
+    } else if (e.key === "ArrowRight" || e.key === "ArrowUp") {
+      next = Math.min(max, value + step);
+    } else if (e.key === "Home") {
+      next = 0;
+    } else if (e.key === "End") {
+      next = max;
+    } else {
+      return;
+    }
     e.preventDefault();
     onChange(next);
   };

@@ -207,11 +207,19 @@ function GridOptions({ options, selectedId, onChange, revalidating }: VariantOpt
 }
 
 function gridColsFor(options: ReadonlyArray<VariantOption>): string {
-  if (options.length === 1) return "grid-cols-1";
-  if (options.length === 2) return "grid-cols-2";
+  if (options.length === 1) {
+    return "grid-cols-1";
+  }
+  if (options.length === 2) {
+    return "grid-cols-2";
+  }
   const maxLabel = options.reduce((m, o) => Math.max(m, o.label.length), 0);
-  if (maxLabel > 16) return "grid-cols-3";
-  if (maxLabel > 10) return "grid-cols-4";
+  if (maxLabel > 16) {
+    return "grid-cols-3";
+  }
+  if (maxLabel > 10) {
+    return "grid-cols-4";
+  }
   return "grid-cols-5";
 }
 

@@ -89,7 +89,9 @@ function ProductCardImage({ className, ...rest }: ProductCardImageProps) {
   // mounted, the `onLoad` listener attaches after the load event fires
   // and never runs. Check `.complete` on mount to catch that race.
   React.useEffect(() => {
-    if (imgRef.current?.complete) setImageLoaded(true);
+    if (imgRef.current?.complete) {
+      setImageLoaded(true);
+    }
   }, []);
 
   const handleNotify = onNotify ? () => onNotify(product) : undefined;

@@ -126,7 +126,9 @@ function ProductDetailsBreadcrumbs({
   className,
   ...rest
 }: ProductDetailsBreadcrumbsProps) {
-  if (items.length === 0) return null;
+  if (items.length === 0) {
+    return null;
+  }
   return (
     <nav
       className={cn("text-ink-3 mb-8 flex items-center gap-2 text-xs", className)}
@@ -442,7 +444,9 @@ export interface ProductDetailsMetaProps extends React.HTMLAttributes<HTMLDivEle
 }
 
 function ProductDetailsMeta({ rows, className, ...rest }: ProductDetailsMetaProps) {
-  if (rows.length === 0) return null;
+  if (rows.length === 0) {
+    return null;
+  }
   return (
     <div className={cn("border-line mt-6 space-y-3 border-t pt-6 text-sm", className)} {...rest}>
       {rows.map((row, i) => (
