@@ -6,6 +6,8 @@ export {
   type ProductDetailsProps,
 } from "./components/product-details";
 
+export { VariantSelector, type VariantSelectorProps } from "./components/variant-selector";
+
 export type {
   ApiMoney,
   Marketplace,
