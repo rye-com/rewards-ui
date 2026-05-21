@@ -4,6 +4,10 @@ Source-available React components for partners building rewards-program redempti
 
 > Components ship as source via the shadcn CLI against our hosted registry at `registry.rye.com`. Partners install, own, and customize the source — no compiled black box, no theme variants to maintain, no npm dep to upgrade.
 
+**📖 Docs:** [docs.rye.com/rewards](https://docs.rye.com/rewards/introduction) — install guide, component reference, integration cookbook.
+**🎁 Demo:** [rewards.rye.com](https://rewards.rye.com) — every component in every state.
+**📦 Registry:** [registry.rye.com](https://registry.rye.com/r/registry.json) — the shadcn-CLI endpoint.
+
 ## Status
 
 v1.0.0. Seven components covering the full catalog → PDP → checkout → post-purchase lifecycle (`<ProductCard />`, `<ProductDetails />`, `<VariantSelector />`, `<PayWithPoints />`, `<PaymentSheet />`, `<OrderTracking />`, `<AddressForm />`) — all pass the full check pipeline (typecheck, lint, format, 83 vitest assertions, shadcn registry build).
