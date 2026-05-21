@@ -20,8 +20,6 @@ interface PayWithPointsContextValue {
   maxApplicable: number;
   applied: number;
   onAppliedChange: (points: number) => void;
-  enabled: boolean;
-  onEnabledChange: ((enabled: boolean) => void) | undefined;
   effectiveMax: number;
   isInsufficient: boolean;
   isMaxed: boolean;
@@ -51,32 +49,18 @@ export interface PayWithPointsProps extends Omit<React.HTMLAttributes<HTMLDivEle
   applied: number;
   /** Fires when the user moves the slider. */
   onAppliedChange: (points: number) => void;
-  /** Is the points-payment toggle enabled? */
-  enabled?: boolean;
-  /** Fires when the toggle flips. */
-  onEnabledChange?: (enabled: boolean) => void;
   children: React.ReactNode;
 }
 
 const PayWithPointsRoot = React.forwardRef<HTMLDivElement, PayWithPointsProps>(
   function PayWithPointsRoot(
-    {
-      balance,
-      maxApplicable,
-      applied,
-      onAppliedChange,
-      enabled = true,
-      onEnabledChange,
-      className,
-      children,
-      ...rest
-    },
+    { balance, maxApplicable, applied, onAppliedChange, className, children, ...rest },
     ref,
   ) {
     const effectiveMax = Math.min(balance, maxApplicable);
     const isInsufficient = balance < maxApplicable;
-    const isMaxed = enabled && applied === effectiveMax && effectiveMax > 0;
-    const isFullPayment = enabled && applied === maxApplicable && maxApplicable > 0;
+    const isMaxed = applied === effectiveMax && effectiveMax > 0;
+    const isFullPayment = applied === maxApplicable && maxApplicable > 0;
 
     const value = React.useMemo<PayWithPointsContextValue>(
       () => ({
@@ -84,8 +68,6 @@ const PayWithPointsRoot = React.forwardRef<HTMLDivElement, PayWithPointsProps>(
         maxApplicable,
         applied,
         onAppliedChange,
-        enabled,
-        onEnabledChange,
         effectiveMax,
         isInsufficient,
         isMaxed,
@@ -96,8 +78,6 @@ const PayWithPointsRoot = React.forwardRef<HTMLDivElement, PayWithPointsProps>(
         maxApplicable,
         applied,
         onAppliedChange,
-        enabled,
-        onEnabledChange,
         effectiveMax,
         isInsufficient,
         isMaxed,
@@ -130,8 +110,8 @@ export interface PayWithPointsHeaderProps {
   label?: React.ReactNode;
   /**
    * Subtitle shown under the label. If omitted, derives from state:
-   * "Save your points for later" when disabled, "Paying with points only"
-   * when maxed, and falls back to `rateLabel` (or nothing) otherwise.
+   * "Paying with points only" when maxed, otherwise falls back to
+   * `rateLabel` (or nothing).
    */
   subtitle?: React.ReactNode;
   /** Used as the default subtitle in the cash + points mixed state. */
@@ -146,17 +126,17 @@ function PayWithPointsHeader({
   rateLabel,
   availableLabel = "Available",
 }: PayWithPointsHeaderProps) {
-  const { balance, enabled, onEnabledChange, isFullPayment } = usePayWithPointsContext("Header");
+  const { balance, isFullPayment } = usePayWithPointsContext("Header");
 
-  const resolvedSubtitle = subtitle ?? deriveSubtitle({ enabled, isFullPayment, rateLabel });
+  const resolvedSubtitle = subtitle ?? (isFullPayment ? "Paying with points only" : rateLabel);
   const subtitleTone: "muted" | "points" =
-    enabled && isFullPayment && subtitle === undefined ? "points" : "muted";
+    isFullPayment && subtitle === undefined ? "points" : "muted";
 
   return (
     <div className="mb-5 flex items-start justify-between">
       <div>
         <div className="text-ink-1 text-sm font-medium">{label}</div>
-        {resolvedSubtitle && (
+        {resolvedSubtitle ? (
           <div
             className={cn(
               "mt-0.5 text-xs",
@@ -165,66 +145,25 @@ function PayWithPointsHeader({
           >
             {resolvedSubtitle}
           </div>
-        )}
+        ) : null}
       </div>
 
-      {enabled ? (
-        <div className="text-right">
-          <div className="bg-points-soft text-points inline-flex items-center gap-1.5 rounded-full px-2.5 py-1">
-            <Sparkles size={11} strokeWidth={2.25} />
-            <span className="text-xs font-semibold tabular-nums">
-              {formatPointsNumber(balance)} pts
-            </span>
-          </div>
-          <div className="text-ink-3 mt-1.5 text-xs font-medium tracking-widest uppercase">
-            {availableLabel}
-          </div>
+      <div className="text-right">
+        <div className="bg-points-soft text-points inline-flex items-center gap-1.5 rounded-full px-2.5 py-1">
+          <Sparkles size={11} strokeWidth={2.25} />
+          <span className="text-xs font-semibold tabular-nums">
+            {formatPointsNumber(balance)} pts
+          </span>
         </div>
-      ) : (
-        // Re-enable affordance: only shown in the disabled state so the user
-        // has a way to flip points back on. There's no inverse "off" switch
-        // in the enabled state — the balance pill replaces it (intentional).
-        <button
-          type="button"
-          role="switch"
-          aria-checked={enabled}
-          onClick={() => (onEnabledChange ?? (() => undefined))(!enabled)}
-          className={cn(
-            "relative inline-flex h-6 w-11 items-center rounded-full transition",
-            enabled ? "bg-points" : "bg-line-strong",
-          )}
-        >
-          <span
-            className={cn(
-              "inline-block h-5 w-5 transform rounded-full bg-white shadow-[0_1px_2px_rgba(15,15,15,0.15)] transition",
-              enabled ? "translate-x-5.5" : "translate-x-0.5",
-            )}
-          />
-        </button>
-      )}
+        <div className="text-ink-3 mt-1.5 text-xs font-medium tracking-widest uppercase">
+          {availableLabel}
+        </div>
+      </div>
     </div>
   );
 }
 
 PayWithPointsHeader.displayName = "PayWithPoints.Header";
-
-function deriveSubtitle({
-  enabled,
-  isFullPayment,
-  rateLabel,
-}: {
-  enabled: boolean;
-  isFullPayment: boolean;
-  rateLabel: React.ReactNode;
-}): React.ReactNode {
-  if (!enabled) {
-    return "Save your points for later";
-  }
-  if (isFullPayment) {
-    return "Paying with points only";
-  }
-  return rateLabel ?? null;
-}
 
 // -------------------------------------------------------------------------
 // <PayWithPoints.Slider />
@@ -247,46 +186,32 @@ function PayWithPointsSlider({
   maxSuffix = "max",
   maxedSuffix = "applied · max",
 }: PayWithPointsSliderProps) {
-  const {
-    applied,
-    maxApplicable,
-    onAppliedChange,
-    enabled,
-    effectiveMax,
-    isInsufficient,
-    isMaxed,
-  } = usePayWithPointsContext("Slider");
+  const { applied, maxApplicable, onAppliedChange, effectiveMax, isInsufficient, isMaxed } =
+    usePayWithPointsContext("Slider");
 
-  const appliedLabel = enabled
-    ? `${formatPointsNumber(applied)} ${isMaxed && isInsufficient ? maxedSuffix : appliedSuffix}`
-    : `0 ${appliedSuffix}`;
+  const appliedLabel = `${formatPointsNumber(applied)} ${isMaxed && isInsufficient ? maxedSuffix : appliedSuffix}`;
 
   return (
-    <div className={cn(!enabled && "pointer-events-none opacity-40")}>
+    <div>
       <SliderControl
-        value={enabled ? applied : 0}
+        value={applied}
         max={effectiveMax}
         onChange={onAppliedChange}
         aria-label={ariaLabel}
       />
       <div className="text-ink-3 mt-3.5 flex items-center justify-between text-xs tabular-nums">
         <span>0 pts</span>
-        <span
-          className={cn(
-            "text-xs font-semibold",
-            enabled && applied > 0 ? "text-points" : "text-ink-3",
-          )}
-        >
+        <span className={cn("text-xs font-semibold", applied > 0 ? "text-points" : "text-ink-3")}>
           {appliedLabel}
         </span>
         <button
           type="button"
           onClick={() => onAppliedChange(effectiveMax)}
-          disabled={!enabled || applied === effectiveMax}
+          disabled={applied === effectiveMax}
           aria-label={`Apply the maximum ${formatPointsNumber(maxApplicable)} points`}
           className={cn(
             "rounded-md px-1.5 py-0.5 transition hover:bg-points-soft/60 focus-visible:outline-points focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-default disabled:hover:bg-transparent",
-            isInsufficient && enabled && "line-through",
+            isInsufficient && "line-through",
           )}
         >
           {formatPointsNumber(maxApplicable)} {maxSuffix}
@@ -317,8 +242,6 @@ export interface PayWithPointsSummaryProps {
   pointsToCash?: (points: number) => number;
   /** Label for the after-redemption line. Defaults to "After redemption". */
   afterLabel?: React.ReactNode;
-  /** Label shown in the disabled state. Defaults to "Balance unchanged". */
-  disabledLabel?: React.ReactNode;
   /** Trailing word after the remaining-points number. Defaults to "pts remaining". */
   remainingSuffix?: React.ReactNode;
   /** Override the partial-coverage copy. */
@@ -331,16 +254,15 @@ function PayWithPointsSummary({
   orderTotal,
   pointsToCash = defaultPointsToCash,
   afterLabel = "After redemption",
-  disabledLabel = "Balance unchanged",
   remainingSuffix = "pts remaining",
   renderRemainder,
 }: PayWithPointsSummaryProps) {
-  const { balance, applied, enabled, isInsufficient } = usePayWithPointsContext("Summary");
+  const { balance, applied, isInsufficient } = usePayWithPointsContext("Summary");
 
-  const remainingAfterRedemption = balance - (enabled ? applied : 0);
+  const remainingAfterRedemption = balance - applied;
 
   const remainderInfo =
-    enabled && isInsufficient && orderTotal
+    isInsufficient && orderTotal
       ? (() => {
           const totalCash = Number(orderTotal.value);
           const covered = pointsToCash(applied);
@@ -376,7 +298,7 @@ function PayWithPointsSummary({
 
   return (
     <div className="border-line mt-5 flex items-baseline justify-between border-t pt-4">
-      <div className="text-ink-2 text-xs">{enabled ? afterLabel : disabledLabel}</div>
+      <div className="text-ink-2 text-xs">{afterLabel}</div>
       <div className="flex items-baseline gap-1.5">
         <span className="text-ink-1 text-sm font-semibold tabular-nums">
           {formatPointsNumber(remainingAfterRedemption)}
@@ -415,18 +337,15 @@ function SliderControl({ value, max, onChange, "aria-label": ariaLabel }: Slider
   const pct = max > 0 ? Math.min(100, (value / max) * 100) : 0;
   const isDragging = React.useRef(false);
 
-  const setFromClientX = React.useCallback(
-    (clientX: number) => {
-      const track = trackRef.current;
-      if (!track || max <= 0) {
-        return;
-      }
-      const rect = track.getBoundingClientRect();
-      const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-      onChange(Math.round(ratio * max));
-    },
-    [max, onChange],
-  );
+  const setFromClientX = (clientX: number) => {
+    const track = trackRef.current;
+    if (!track || max <= 0) {
+      return;
+    }
+    const rect = track.getBoundingClientRect();
+    const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+    onChange(Math.round(ratio * max));
+  };
 
   const onPointerDown = (e: React.PointerEvent<HTMLSpanElement>) => {
     isDragging.current = true;

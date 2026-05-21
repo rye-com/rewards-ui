@@ -8,8 +8,6 @@ interface RenderOptions {
   maxApplicable?: number;
   applied?: number;
   onAppliedChange?: (n: number) => void;
-  enabled?: boolean;
-  onEnabledChange?: (e: boolean) => void;
   rateLabel?: React.ReactNode;
   orderTotal?: { currency: string; value: string };
 }
@@ -20,8 +18,6 @@ const renderPWP = (options: RenderOptions = {}) => {
     maxApplicable = 8900,
     applied = 4500,
     onAppliedChange = vi.fn(),
-    enabled = true,
-    onEnabledChange,
     rateLabel,
     orderTotal,
   } = options;
@@ -32,8 +28,6 @@ const renderPWP = (options: RenderOptions = {}) => {
       maxApplicable={maxApplicable}
       applied={applied}
       onAppliedChange={onAppliedChange}
-      enabled={enabled}
-      {...(onEnabledChange ? { onEnabledChange } : {})}
     >
       <PayWithPoints.Header {...(rateLabel ? { rateLabel } : {})} />
       <PayWithPoints.Slider />
@@ -43,7 +37,7 @@ const renderPWP = (options: RenderOptions = {}) => {
 };
 
 describe("<PayWithPoints />", () => {
-  describe("enabled mixed-tender state", () => {
+  describe("mixed-tender state", () => {
     it("renders the balance pill, applied amount, and after-redemption remainder", () => {
       renderPWP();
       expect(screen.getByText("12,450 pts")).toBeInTheDocument();
@@ -74,24 +68,6 @@ describe("<PayWithPoints />", () => {
     it("shows the Maxed subtitle when applied === maxApplicable", () => {
       renderPWP({ applied: 8900 });
       expect(screen.getByText("Paying with points only")).toBeInTheDocument();
-    });
-  });
-
-  describe("disabled (off) state", () => {
-    it("shows the toggle, dimmed slider, and unchanged balance footer", () => {
-      const onEnabledChange = vi.fn();
-      renderPWP({ applied: 0, enabled: false, onEnabledChange });
-      expect(screen.getByRole("switch")).toBeInTheDocument();
-      expect(screen.getByText("Save your points for later")).toBeInTheDocument();
-      expect(screen.getByText("Balance unchanged")).toBeInTheDocument();
-      expect(screen.getByText("12,450")).toBeInTheDocument();
-    });
-
-    it("fires onEnabledChange when the toggle is clicked", () => {
-      const onEnabledChange = vi.fn();
-      renderPWP({ applied: 0, enabled: false, onEnabledChange });
-      fireEvent.click(screen.getByRole("switch"));
-      expect(onEnabledChange).toHaveBeenCalledWith(true);
     });
   });
 
