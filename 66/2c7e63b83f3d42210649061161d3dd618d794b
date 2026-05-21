@@ -1,0 +1,24 @@
+registry/default/components/order-tracking.tsx
+  s_7408ddb1134fd1::t_2149358215a4d8 504
+  s_7408ddb1134fd1::t_e6de5ace71bb3b 515
+  s_7408ddb1134fd1::t_a3753d7ba60e44 27
+  s_7408ddb1134fd1::t_8dd0af675a6ed8 567,594
+registry.json
+  s_7408ddb1134fd1::t_9483b9166f6bf7 23-27
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.11",
+  "base_commit_sha": "662c7e63b83f3d42210649061161d3dd618d794b",
+  "prompts": {},
+  "sessions": {
+    "s_7408ddb1134fd1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2ff07c0a-b5f6-4f11-b457-cb773ddc6f0b",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Victor Tsyan <victor@rye.com>"
+    }
+  }
+}
