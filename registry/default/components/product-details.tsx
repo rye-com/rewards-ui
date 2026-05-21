@@ -423,43 +423,42 @@ function StepperButton({
 // <ProductDetails.Redeem />
 // -------------------------------------------------------------------------
 
-export interface ProductDetailsRedeemProps {
-  onClick?: () => void;
-  /** Primary CTA copy. Defaults to "Redeem with points". */
-  label?: string;
-  /** Secondary suffix. Defaults to the formatted product price. */
+export interface ProductDetailsRedeemProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  /** Secondary suffix shown after `children · …`. Defaults to the formatted product price. Omitted when the CTA is disabled. */
   secondary?: string;
-  /** When set, the CTA renders disabled with this label. */
-  disabledReason?: string;
+  children: React.ReactNode;
 }
 
 function ProductDetailsRedeem({
-  onClick,
-  label = "Redeem with points",
   secondary,
-  disabledReason,
+  disabled,
+  className,
+  type = "button",
+  children,
+  ...rest
 }: ProductDetailsRedeemProps) {
   const { data, formatPrice } = useProductDetailsContext("Redeem");
-  const isDisabled = disabledReason !== undefined;
   const resolvedSecondary = secondary ?? formatPrice(data.product.price);
 
   return (
     <button
-      type="button"
-      disabled={isDisabled}
-      onClick={onClick}
+      type={type}
+      disabled={disabled}
       className={cn(
         "mt-8 flex w-full items-center justify-center gap-2 rounded-xl py-4 text-sm font-medium transition",
-        isDisabled
+        disabled
           ? "bg-line text-ink-3 cursor-not-allowed"
           : "bg-cta text-cta-fg hover:opacity-90",
+        className,
       )}
+      {...rest}
     >
-      {isDisabled ? (
-        disabledReason
+      {disabled ? (
+        children
       ) : (
         <>
-          <span>{label}</span>
+          <span>{children}</span>
           <span className="text-page/50">·</span>
           <span className="tabular-nums">{resolvedSecondary}</span>
         </>

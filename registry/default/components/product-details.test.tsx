@@ -86,10 +86,13 @@ const renderPDP = (options: RenderPDPOptions = {}) => {
       <ProductDetails.Gallery />
       <ProductDetails.Header />
       <ProductDetails.Variants />
-      <ProductDetails.Redeem
-        {...(onRedeem ? { onClick: onRedeem } : {})}
-        {...(redeemDisabledReason ? { disabledReason: redeemDisabledReason } : {})}
-      />
+      {redeemDisabledReason ? (
+        <ProductDetails.Redeem disabled>{redeemDisabledReason}</ProductDetails.Redeem>
+      ) : (
+        <ProductDetails.Redeem {...(onRedeem ? { onClick: onRedeem } : {})}>
+          Redeem with points
+        </ProductDetails.Redeem>
+      )}
       {meta && <ProductDetails.Meta rows={meta} />}
     </ProductDetails>,
   );
@@ -171,7 +174,7 @@ describe("<ProductDetails />", () => {
       expect(screen.getByText("Stock changed while you were viewing.")).toBeInTheDocument();
     });
 
-    it("disables the CTA with the disabledReason label", () => {
+    it("disables the CTA when `disabled` is set and renders children as the label", () => {
       renderPDP({
         data: sweaterWithRevalidation,
         revalidationError: { headline: "M just sold out" },
