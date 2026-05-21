@@ -1,0 +1,19 @@
+package.json
+  s_7408ddb1134fd1::t_3960abfcdfb078 3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.11",
+  "base_commit_sha": "62ed2e468385cda45447337afc2ad993065bdefd",
+  "prompts": {},
+  "sessions": {
+    "s_7408ddb1134fd1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2ff07c0a-b5f6-4f11-b457-cb773ddc6f0b",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Victor Tsyan <victor@rye.com>"
+    }
+  }
+}
