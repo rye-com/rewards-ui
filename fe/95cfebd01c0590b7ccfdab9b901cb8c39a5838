@@ -1,0 +1,31 @@
+playground/App.tsx
+  s_7408ddb1134fd1::t_1d61c913a0f43c 8-10
+playground/data.ts
+  s_7408ddb1134fd1::t_bd1a7eba6c1525 12,23,33,43,54
+README.md
+  s_7408ddb1134fd1::t_1d61c913a0f43c 50
+registry/default/components/product-card.test.tsx
+  s_7408ddb1134fd1::t_bd1a7eba6c1525 15,57,79,91
+registry/default/components/product-card.tsx
+  s_7408ddb1134fd1::t_bd1a7eba6c1525 10,80,82,129,132,150-152
+registry/default/components/product-details.test.tsx
+  s_7408ddb1134fd1::t_bd1a7eba6c1525 18,199
+registry/default/types/product.ts
+  s_7408ddb1134fd1::t_4afb654fcffbe1 21-23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.11",
+  "base_commit_sha": "fe95cfebd01c0590b7ccfdab9b901cb8c39a5838",
+  "prompts": {},
+  "sessions": {
+    "s_7408ddb1134fd1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2ff07c0a-b5f6-4f11-b457-cb773ddc6f0b",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Victor Tsyan <victor@rye.com>"
+    }
+  }
+}
