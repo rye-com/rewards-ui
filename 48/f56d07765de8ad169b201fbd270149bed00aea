@@ -1,0 +1,34 @@
+registry/default/components/variant-selector.tsx
+  s_7408ddb1134fd1::t_a88454513efe46 210-215,217-222
+registry/default/components/product-card.tsx
+  s_7408ddb1134fd1::t_a88454513efe46 92-94
+registry/default/components/product-details.tsx
+  s_7408ddb1134fd1::t_a88454513efe46 129-131,447-449
+playground/main.tsx
+  s_7408ddb1134fd1::t_a88454513efe46 7-9
+.oxlintrc.json
+  s_7408ddb1134fd1::t_65c3a3490fd0b5 11
+registry/default/components/pay-with-points.tsx
+  s_7408ddb1134fd1::t_263181bc7435da 235,245
+  s_7408ddb1134fd1::t_a88454513efe46 220-225,413,421-423,437-439,450-460
+  s_7408ddb1134fd1::t_a95292b161a48a 184-203
+  s_7408ddb1134fd1::t_572f689b47f8d5 270
+  s_7408ddb1134fd1::t_9196990adb297f 403
+  s_7408ddb1134fd1::t_470e4688a4fbd8 410
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.11",
+  "base_commit_sha": "48f56d07765de8ad169b201fbd270149bed00aea",
+  "prompts": {},
+  "sessions": {
+    "s_7408ddb1134fd1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2ff07c0a-b5f6-4f11-b457-cb773ddc6f0b",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Victor Tsyan <victor@rye.com>"
+    }
+  }
+}
