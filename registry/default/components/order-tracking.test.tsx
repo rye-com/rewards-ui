@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import { ArrowRight, RotateCcw } from "lucide-react";
 import { describe, expect, it, vi } from "vitest";
 
 import { OrderTracking } from "./order-tracking";
@@ -114,7 +115,7 @@ describe("<OrderTracking />", () => {
             steps={[
               {
                 label: "Tracking gap",
-                status: "tracking-gap",
+                status: "tracking_gap",
                 badge: "5 days",
                 description: "No carrier scans since May 7",
               },
@@ -251,9 +252,13 @@ describe("<OrderTracking />", () => {
           <OrderTracking.ActionsCard
             columns={3}
             actions={[
-              { label: "Reorder", icon: "rotate-ccw" },
+              { label: "Reorder", leadingIcon: <RotateCcw size={13} strokeWidth={2} /> },
               { label: "Order details" },
-              { label: "Start a return", variant: "primary", icon: "arrow-right" },
+              {
+                label: "Start a return",
+                variant: "primary",
+                trailingIcon: <ArrowRight size={13} strokeWidth={2.25} />,
+              },
             ]}
           />
         </OrderTracking>,

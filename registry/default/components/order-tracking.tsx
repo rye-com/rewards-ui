@@ -2,8 +2,14 @@
 
 /**
  * `<OrderTracking />` is a compound component covering every state in the
- * post-purchase lifecycle: `placed`, `processing`, `shipped`, `out-for-delivery`,
- * `delivered`, `cancelled`, `refunded`, and `stuck-under-investigation`.
+ * post-purchase lifecycle: `placed`, `processing`, `shipped`, `out_for_delivery`,
+ * `delivered`, `cancelled`, `refunded`, and `stuck_under_investigation`.
+ *
+ * State names align with the canonical Rye API (`checkout-intents` / order
+ * resources) — snake_case throughout. The component itself is presentation-
+ * only; partner code drives state via prop shapes (StatusPill, Timeline,
+ * etc.) rather than a single enum, so these strings live in the JSDoc and
+ * any local types only.
  *
  * Partners compose the root with the sub-components they need per state:
  *
@@ -22,7 +28,7 @@
  */
 
 import * as React from "react";
-import { AlertCircle, ArrowRight, Check, Clock, Info, RotateCcw, Truck, X } from "lucide-react";
+import { AlertCircle, ArrowRight, Check, Clock, X } from "lucide-react";
 
 import { formatMoney, formatPoints } from "@/lib/format";
 import { cn } from "@/lib/utils";
@@ -54,7 +60,7 @@ export interface StatusPill {
   /** Animated dot. Use on in-flight states like `processing`, `shipped`. */
   pulse?: boolean;
   /** Static icon. Use on terminal states like `delivered`, `cancelled`. */
-  icon?: "check" | "x";
+  icon?: React.ReactNode;
 }
 
 export interface OrderTrackingHeaderProps {
@@ -111,10 +117,8 @@ function StatusPillView({ label, tone, pulse, icon }: StatusPill) {
             )}
           />
         </span>
-      ) : icon === "check" ? (
-        <Check size={13} strokeWidth={2.5} aria-hidden="true" />
-      ) : icon === "x" ? (
-        <X size={11} strokeWidth={2.5} aria-hidden="true" />
+      ) : icon ? (
+        <span aria-hidden="true">{icon}</span>
       ) : null}
       <span className="text-xs font-semibold">{label}</span>
     </div>
@@ -157,7 +161,7 @@ export interface OrderTrackingStatusCardProps {
   /** Supporting copy below the title. */
   description?: string;
   /** Inline status rows shown below the description (carrier, ETA, etc.). */
-  meta?: Array<{ icon?: "clock" | "truck"; text: React.ReactNode }>;
+  meta?: Array<{ icon?: React.ReactNode; text: React.ReactNode }>;
   /** Optional product thumbnail rendered top-right. */
   image?: { url?: string; alt?: string };
   /** Item count caption rendered under the thumbnail. */
@@ -184,21 +188,16 @@ function StatusCard({
           {description && (
             <div className="text-ink-2 mt-2 text-sm leading-relaxed">{description}</div>
           )}
-          {meta && meta.length > 0 && (
+          {meta && meta.length > 0 ? (
             <div className="mt-5 space-y-2">
               {meta.map((row, i) => (
                 <div key={i} className="text-ink-2 flex items-center gap-2 text-sm">
-                  {row.icon === "clock" && (
-                    <Clock size={14} strokeWidth={2} className="text-ink-3" />
-                  )}
-                  {row.icon === "truck" && (
-                    <Truck size={14} strokeWidth={2} className="text-ink-3" />
-                  )}
+                  {row.icon ? <span className="text-ink-3 inline-flex">{row.icon}</span> : null}
                   <span>{row.text}</span>
                 </div>
               ))}
             </div>
-          )}
+          ) : null}
         </div>
         {image && (
           <div className="flex-shrink-0 text-right">
@@ -290,7 +289,7 @@ function InvestigationCard({
 // Timeline
 // -------------------------------------------------------------------------
 
-export type TimelineStepStatus = "complete" | "current" | "pending" | "cancelled" | "tracking-gap";
+export type TimelineStepStatus = "complete" | "current" | "pending" | "cancelled" | "tracking_gap";
 
 export interface TimelineStep {
   /** Human-readable step name, e.g. "Order placed", "Shipped". */
@@ -338,7 +337,7 @@ function TimelineStepRow({ step, isLast }: { step: TimelineStep; isLast: boolean
   const isCurrent = step.status === "current";
   const isComplete = step.status === "complete";
   const isCancelled = step.status === "cancelled";
-  const isStuck = step.status === "tracking-gap";
+  const isStuck = step.status === "tracking_gap";
   const isPending = step.status === "pending";
 
   let badgeTone: "points" | "amber" = "points";
@@ -619,7 +618,7 @@ function RefundSummary({
 export interface OrderTrackingCallout {
   /** Visual tone. Drives background and icon color. */
   tone: "points" | "inset" | "amber";
-  icon?: "clock" | "info" | "check";
+  icon?: React.ReactNode;
   title: string;
   description?: string;
 }
@@ -629,7 +628,10 @@ export interface OrderTrackingAction {
   onClick?: () => void;
   variant?: "primary" | "secondary";
   disabled?: boolean;
-  icon?: "arrow-right" | "rotate-ccw" | "truck";
+  /** Icon rendered before the label. */
+  leadingIcon?: React.ReactNode;
+  /** Icon rendered after the label (e.g. an arrow on "Update payment →"). */
+  trailingIcon?: React.ReactNode;
 }
 
 export interface OrderTrackingActionsCardProps {
@@ -690,15 +692,9 @@ function Callout({ tone, icon, title, description }: OrderTrackingCallout) {
     tone === "points" ? "text-points" : tone === "amber" ? "text-amber" : "text-ink-1";
   return (
     <div className={cn("flex items-start gap-3 rounded-lg px-4 py-3.5", styles)}>
-      {icon === "clock" && (
-        <Clock size={16} strokeWidth={2} className={cn("mt-0.5 flex-shrink-0", iconColor)} />
-      )}
-      {icon === "info" && (
-        <Info size={16} strokeWidth={2} className={cn("mt-0.5 flex-shrink-0", iconColor)} />
-      )}
-      {icon === "check" && (
-        <Check size={16} strokeWidth={2} className={cn("mt-0.5 flex-shrink-0", iconColor)} />
-      )}
+      {icon ? (
+        <span className={cn("mt-0.5 inline-flex flex-shrink-0", iconColor)}>{icon}</span>
+      ) : null}
       <div className="flex-1">
         <div className={cn("text-sm font-medium", titleColor)}>{title}</div>
         {description && (
@@ -714,7 +710,8 @@ function ActionButton({
   onClick,
   variant = "secondary",
   disabled,
-  icon,
+  leadingIcon,
+  trailingIcon,
 }: OrderTrackingAction) {
   const isPrimary = variant === "primary";
   return (
@@ -731,10 +728,9 @@ function ActionButton({
             : "border-line-strong text-ink-1 hover:border-ink-1 border",
       )}
     >
-      {icon === "rotate-ccw" && <RotateCcw size={13} strokeWidth={2} />}
-      {icon === "truck" && <Truck size={13} strokeWidth={2} />}
+      {leadingIcon}
       <span>{label}</span>
-      {icon === "arrow-right" && <ArrowRight size={13} strokeWidth={2.25} />}
+      {trailingIcon}
     </button>
   );
 }
