@@ -2,9 +2,7 @@
 
 Source-available React components for partners building rewards-program redemption flows on Rye. Designed for credit-card rewards programs, points-based loyalty apps, and corporate gifting.
 
-> Published on public npm as `@rye-api/rewards-ui`, joining the rest of the `@rye-api` family (`@rye-api/rye-pay`, `@rye-api/rye-sdk`, `@rye-api/idempotency-redis`).
-
-> Components ship as source via shadcn-style CLI. Partners install, own, and customize the source. No compiled black box, no theme variants to maintain.
+> Components ship as source via the shadcn CLI against our hosted registry at `registry.rye.com`. Partners install, own, and customize the source — no compiled black box, no theme variants to maintain, no npm dep to upgrade.
 
 ## Status
 
@@ -83,9 +81,9 @@ Individual scripts (`pnpm typecheck`, `pnpm lint`, `pnpm test`, `pnpm format`) a
 
 ## Hosting
 
-Publishing to shadcn's official registry (`ui.shadcn.com`). Partners install via `shadcn@latest add @rye-api/<component>` once we're listed there, no Rye-side hosting infra to operate.
+The registry is self-hosted at [registry.rye.com](https://registry.rye.com/r/registry.json) — a Vercel project pinned to this repo's `main`. `pnpm registry:build` (run automatically on deploy via `vercel.json`) executes `shadcn build`, which inlines each component's source into `public/r/<name>.json`. Vercel serves those static JSON files; the shadcn CLI fetches them when partners run `shadcn add @rye-api/<name>`.
 
-Until the listing lands, the `shadcn build` step emits `public/r/*.json` files that can be served from any HTTPS URL for testing. The install commands above will resolve to the official registry once published.
+Pushes to `main` trigger a redeploy automatically — there's no manual publish step. Registry updates are atomic with component changes.
 
 ## License
 
