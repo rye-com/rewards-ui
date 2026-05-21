@@ -4,6 +4,31 @@
   "homepage": "https://docs.rye.com/rewards",
   "items": [
     {
+      "name": "payment-sheet",
+      "type": "registry:component",
+      "title": "Payment sheet",
+      "description": "Compound checkout sheet. Header / Alert / Item / Shipping / Section / MemberBenefit / CostBreakdown / Confirm / Actions / Skeleton sub-components compose to handle all three integration patterns (cash + member benefit, mixed tender, full points) plus 5 error variants.",
+      "registryDependencies": ["https://ui.shadcn.com/r/styles/new-york/utils.json"],
+      "dependencies": ["lucide-react"],
+      "files": [
+        {
+          "path": "registry/default/components/payment-sheet.tsx",
+          "type": "registry:component",
+          "target": "components/rye-rewards/payment-sheet.tsx"
+        },
+        {
+          "path": "registry/default/types/product.ts",
+          "type": "registry:lib",
+          "target": "components/rye-rewards/types/product.ts"
+        },
+        {
+          "path": "lib/format.ts",
+          "type": "registry:lib",
+          "target": "lib/format.ts"
+        }
+      ]
+    },
+    {
       "name": "pay-with-points",
       "type": "registry:component",
       "title": "Pay with points",
