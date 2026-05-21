@@ -4,6 +4,26 @@
   "homepage": "https://docs.rye.com/rewards",
   "items": [
     {
+      "name": "pay-with-points",
+      "type": "registry:component",
+      "title": "Pay with points",
+      "description": "Composable slot for points-as-tender. Slider + balance pill + toggle + after-redemption preview. Handles mixed-tender, full-points, off, and insufficient-balance states.",
+      "registryDependencies": ["https://ui.shadcn.com/r/styles/new-york/utils.json"],
+      "dependencies": ["lucide-react"],
+      "files": [
+        {
+          "path": "registry/default/components/pay-with-points.tsx",
+          "type": "registry:component",
+          "target": "components/rye-rewards/pay-with-points.tsx"
+        },
+        {
+          "path": "lib/format.ts",
+          "type": "registry:lib",
+          "target": "lib/format.ts"
+        }
+      ]
+    },
+    {
       "name": "product-details",
       "type": "registry:component",
       "title": "Product details (PDP)",

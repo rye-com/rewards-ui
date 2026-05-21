@@ -8,6 +8,8 @@ export {
 
 export { VariantSelector, type VariantSelectorProps } from "./components/variant-selector";
 
+export { PayWithPoints, type PayWithPointsProps } from "./components/pay-with-points";
+
 export type {
   ApiMoney,
   Marketplace,
