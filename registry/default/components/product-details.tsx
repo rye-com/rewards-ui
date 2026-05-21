@@ -423,8 +423,7 @@ function StepperButton({
 // <ProductDetails.Redeem />
 // -------------------------------------------------------------------------
 
-export interface ProductDetailsRedeemProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ProductDetailsRedeemProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /** Secondary suffix shown after `children · …`. Defaults to the formatted product price. Omitted when the CTA is disabled. */
   secondary?: string;
   children: React.ReactNode;
@@ -447,9 +446,7 @@ function ProductDetailsRedeem({
       disabled={disabled}
       className={cn(
         "mt-8 flex w-full items-center justify-center gap-2 rounded-xl py-4 text-sm font-medium transition",
-        disabled
-          ? "bg-line text-ink-3 cursor-not-allowed"
-          : "bg-cta text-cta-fg hover:opacity-90",
+        disabled ? "bg-line text-ink-3 cursor-not-allowed" : "bg-cta text-cta-fg hover:opacity-90",
         className,
       )}
       {...rest}

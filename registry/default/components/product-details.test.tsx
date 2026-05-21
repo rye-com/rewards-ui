@@ -46,7 +46,10 @@ const sweater: ProductDetailsData = {
 };
 
 const defaultMetaRows = [
-  { icon: <Truck size={14} strokeWidth={2} />, text: "Free standard shipping, 3 to 5 business days" },
+  {
+    icon: <Truck size={14} strokeWidth={2} />,
+    text: "Free standard shipping, 3 to 5 business days",
+  },
   { icon: <RotateCcw size={14} strokeWidth={2} />, text: "30-day returns" },
 ];
 
