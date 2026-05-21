@@ -1,0 +1,26 @@
+registry/default/components/pay-with-points.tsx
+  s_7408ddb1134fd1::t_2785cb8cda27bc 113-114,129,131,133,139,148,151-156,158-161
+  s_7408ddb1134fd1::t_753bb7b3c22763 57,62-63
+  s_7408ddb1134fd1::t_ce961aba07e2a5 204
+  s_7408ddb1134fd1::t_465887698883b1 189-192,195,197,210,214
+  s_7408ddb1134fd1::t_1a4ba698c8e6dc 260,262,265,301
+  s_7408ddb1134fd1::t_fd1f6f93218265 340-348
+registry/default/components/pay-with-points.test.tsx
+  s_7408ddb1134fd1::t_aa5863b1210896 40
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.11",
+  "base_commit_sha": "2ab15bf52d1d78cb285dafda682d9de1ef07e183",
+  "prompts": {},
+  "sessions": {
+    "s_7408ddb1134fd1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2ff07c0a-b5f6-4f11-b457-cb773ddc6f0b",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Victor Tsyan <victor@rye.com>"
+    }
+  }
+}
