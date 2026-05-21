@@ -30,6 +30,8 @@ export type Product = {
   description?: string;
   image: ProductImage;
   price: Money;
+  /** Original price shown struck-through next to `price` when a discount applies. */
+  compareAtPrice?: Money;
   pointsPrice?: number;
   availability: ProductAvailability;
   marketplace: Marketplace;

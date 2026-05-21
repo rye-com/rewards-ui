@@ -3,8 +3,9 @@
 import * as React from "react";
 import { AlertCircle, ImageOff, PauseCircle } from "lucide-react";
 
+import { formatMoney, formatPoints } from "@/lib/format";
 import { cn } from "@/lib/utils";
-import type { Marketplace, Money, Product, ProductAvailability } from "../types/product";
+import type { Marketplace, Product, ProductAvailability } from "../types/product";
 
 type MarketplaceDownAvailability = Extract<ProductAvailability, { kind: "marketplace-down" }>;
 
@@ -14,29 +15,6 @@ const marketplaceLabel: Record<Marketplace, string> = {
   bestbuy: "Best Buy",
 };
 
-// Reuse Intl.NumberFormat per currency. Creating a formatter is ~3 orders
-// of magnitude slower than calling `.format()` on an existing one, and
-// catalog grids re-render the same currency dozens of times.
-const currencyFormatters = new Map<string, Intl.NumberFormat>();
-const getCurrencyFormatter = (currency: string): Intl.NumberFormat => {
-  let formatter = currencyFormatters.get(currency);
-  if (!formatter) {
-    formatter = new Intl.NumberFormat(undefined, { style: "currency", currency });
-    currencyFormatters.set(currency, formatter);
-  }
-  return formatter;
-};
-
-const defaultFormatPrice = (price: Money): string => {
-  try {
-    return getCurrencyFormatter(price.currency).format(Number(price.value));
-  } catch {
-    return `${price.currency} ${price.value}`;
-  }
-};
-
-const defaultFormatPoints = (points: number): string => `${points.toLocaleString()} pts`;
-
 // -------------------------------------------------------------------------
 // Context
 // -------------------------------------------------------------------------
@@ -45,8 +23,6 @@ interface ProductCardContextValue {
   product: Product;
   selected: boolean;
   onNotify: ((product: Product) => void) | undefined;
-  formatPrice: (price: Money) => string;
-  formatPoints: (points: number) => string;
 }
 
 const ProductCardContext = React.createContext<ProductCardContextValue | null>(null);
@@ -69,29 +45,16 @@ export interface ProductCardProps extends React.HTMLAttributes<HTMLDivElement> {
   selected?: boolean;
   /** Optional callback when the marketplace-down "Notify me" link is clicked. */
   onNotify?: (product: Product) => void;
-  /** Override how the cash price renders. Defaults to Intl.NumberFormat currency. */
-  formatPrice?: (price: Money) => string;
-  /** Override how points render. Defaults to "X,XXX pts". */
-  formatPoints?: (points: number) => string;
   children: React.ReactNode;
 }
 
 const ProductCardRoot = React.forwardRef<HTMLDivElement, ProductCardProps>(function ProductCardRoot(
-  {
-    product,
-    selected = false,
-    onNotify,
-    formatPrice = defaultFormatPrice,
-    formatPoints = defaultFormatPoints,
-    className,
-    children,
-    ...rest
-  },
+  { product, selected = false, onNotify, className, children, ...rest },
   ref,
 ) {
   const value = React.useMemo<ProductCardContextValue>(
-    () => ({ product, selected, onNotify, formatPrice, formatPoints }),
-    [product, selected, onNotify, formatPrice, formatPoints],
+    () => ({ product, selected, onNotify }),
+    [product, selected, onNotify],
   );
 
   return (
@@ -180,22 +143,25 @@ ProductCardImage.displayName = "ProductCard.Image";
 export type ProductCardInfoProps = React.HTMLAttributes<HTMLDivElement>;
 
 function ProductCardInfo({ className, ...rest }: ProductCardInfoProps) {
-  const { product, onNotify, formatPrice, formatPoints } = useProductCardContext("Info");
-  const { availability, vendor, name, subtitle, price, pointsPrice } = product;
+  const { product, onNotify } = useProductCardContext("Info");
+  const { availability, vendor, name, subtitle, price, compareAtPrice, pointsPrice } = product;
   const isBuyable = availability.kind === "in-stock";
   const isOutOfStock = availability.kind === "out-of-stock";
   const isMarketplaceDown = availability.kind === "marketplace-down";
+  const isDiscounted = isBuyable && compareAtPrice !== undefined;
 
   const handleNotify = onNotify ? () => onNotify(product) : undefined;
 
   return (
-    <div className={cn("pt-4", className)} {...rest}>
+    <div className={cn("flex flex-col pt-4", className)} {...rest}>
       {vendor && (
         <div className="text-ink-3 text-xs font-medium tracking-widest uppercase">{vendor}</div>
       )}
+      {/* Reserve 2 lines of vertical space so prices line up across tiles when
+          some names wrap and others don't. */}
       <div
         className={cn(
-          "mt-1 text-sm leading-snug font-medium",
+          "mt-1 line-clamp-2 min-h-[2.5em] text-sm leading-snug font-medium",
           isBuyable ? "text-ink-1" : "text-ink-2",
         )}
       >
@@ -207,7 +173,12 @@ function ProductCardInfo({ className, ...rest }: ProductCardInfoProps) {
         </div>
       )}
 
-      <div className="mt-3 flex items-baseline gap-2">
+      <div className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+        {isDiscounted && (
+          <span className="text-ink-3 text-sm tabular-nums line-through">
+            {formatMoney(compareAtPrice)}
+          </span>
+        )}
         <span
           className={cn(
             "text-sm tabular-nums",
@@ -215,7 +186,7 @@ function ProductCardInfo({ className, ...rest }: ProductCardInfoProps) {
             isOutOfStock && "line-through",
           )}
         >
-          {formatPrice(price)}
+          {formatMoney(price)}
         </span>
 
         {isBuyable && pointsPrice !== undefined && (

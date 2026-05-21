@@ -4,6 +4,59 @@
   "homepage": "https://docs.rye.com/rewards",
   "items": [
     {
+      "name": "product-details",
+      "type": "registry:component",
+      "title": "Product details (PDP)",
+      "description": "Two-column PDP with image gallery, variant pickers (swatches / grid / cards), inline revalidation alert, and redeem CTA. Ships with <ProductDetailsSkeleton /> for loading.",
+      "registryDependencies": [
+        "https://ui.shadcn.com/r/styles/new-york/utils.json",
+        "variant-selector"
+      ],
+      "dependencies": ["lucide-react"],
+      "files": [
+        {
+          "path": "registry/default/components/product-details.tsx",
+          "type": "registry:component",
+          "target": "components/rye-rewards/product-details.tsx"
+        },
+        {
+          "path": "registry/default/types/product.ts",
+          "type": "registry:lib",
+          "target": "components/rye-rewards/types/product.ts"
+        },
+        {
+          "path": "registry/default/types/product-details.ts",
+          "type": "registry:lib",
+          "target": "components/rye-rewards/types/product-details.ts"
+        },
+        {
+          "path": "lib/format.ts",
+          "type": "registry:lib",
+          "target": "lib/format.ts"
+        }
+      ]
+    },
+    {
+      "name": "variant-selector",
+      "type": "registry:component",
+      "title": "Variant selector",
+      "description": "Standalone variant picker (swatches / grid / cards) with revalidation-error state. Used inside <ProductDetails.Variants /> and can be dropped into a PaymentSheet or any flow that needs variant selection separate from the PDP.",
+      "registryDependencies": ["https://ui.shadcn.com/r/styles/new-york/utils.json"],
+      "dependencies": ["lucide-react"],
+      "files": [
+        {
+          "path": "registry/default/components/variant-selector.tsx",
+          "type": "registry:component",
+          "target": "components/rye-rewards/variant-selector.tsx"
+        },
+        {
+          "path": "registry/default/types/product-details.ts",
+          "type": "registry:lib",
+          "target": "components/rye-rewards/types/product-details.ts"
+        }
+      ]
+    },
+    {
       "name": "product-card",
       "type": "registry:component",
       "title": "Product card",
@@ -20,6 +73,11 @@
           "path": "registry/default/types/product.ts",
           "type": "registry:lib",
           "target": "components/rye-rewards/types/product.ts"
+        },
+        {
+          "path": "lib/format.ts",
+          "type": "registry:lib",
+          "target": "lib/format.ts"
         }
       ]
     }
