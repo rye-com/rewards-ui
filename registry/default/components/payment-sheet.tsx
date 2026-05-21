@@ -11,29 +11,9 @@ import {
   X,
 } from "lucide-react";
 
+import { formatMoney, formatPoints } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import type { Money } from "../types/product";
-
-// Reuse Intl.NumberFormat per currency. See product-card.tsx for context.
-const currencyFormatters = new Map<string, Intl.NumberFormat>();
-const getCurrencyFormatter = (currency: string): Intl.NumberFormat => {
-  let formatter = currencyFormatters.get(currency);
-  if (!formatter) {
-    formatter = new Intl.NumberFormat(undefined, { style: "currency", currency });
-    currencyFormatters.set(currency, formatter);
-  }
-  return formatter;
-};
-
-const defaultFormatPrice = (price: Money): string => {
-  try {
-    return getCurrencyFormatter(price.currency).format(Number(price.value));
-  } catch {
-    return `${price.currency} ${price.value}`;
-  }
-};
-
-const defaultFormatPoints = (points: number): string => `${points.toLocaleString()} pts`;
 
 // -------------------------------------------------------------------------
 // Root + Header + Alert
@@ -158,8 +138,6 @@ export interface PaymentSheetItemProps {
   unpriceable?: boolean;
   /** Placeholder rendered when `unpriceable` is true. Defaults to "n/a". */
   unpriceableLabel?: React.ReactNode;
-  formatPrice?: (price: Money) => string;
-  formatPoints?: (points: number) => string;
 }
 
 function PaymentSheetItem({
@@ -168,8 +146,6 @@ function PaymentSheetItem({
   strikePrice = false,
   unpriceable = false,
   unpriceableLabel = "n/a",
-  formatPrice = defaultFormatPrice,
-  formatPoints = defaultFormatPoints,
 }: PaymentSheetItemProps) {
   return (
     <div className={cn("px-7 py-6", dimmed && "opacity-50")}>
@@ -204,7 +180,7 @@ function PaymentSheetItem({
                   strikePrice && "line-through",
                 )}
               >
-                {formatPrice(item.price)}
+                {formatMoney(item.price)}
               </div>
               {item.pointsPrice !== undefined && !strikePrice && (
                 <div className="text-ink-3 mt-1 text-xs tabular-nums">
@@ -346,15 +322,9 @@ export interface PaymentSheetMemberBenefitProps {
   description?: string;
   /** The discount amount as a negative `Money`, e.g. `{ currency: "USD", value: "-13.35" }`. */
   amount: Money;
-  formatPrice?: (price: Money) => string;
 }
 
-function PaymentSheetMemberBenefit({
-  title,
-  description,
-  amount,
-  formatPrice = defaultFormatPrice,
-}: PaymentSheetMemberBenefitProps) {
+function PaymentSheetMemberBenefit({ title, description, amount }: PaymentSheetMemberBenefitProps) {
   return (
     <PaymentSheetSection>
       <div className="flex items-start gap-3">
@@ -369,7 +339,7 @@ function PaymentSheetMemberBenefit({
         </div>
         <div className="flex-shrink-0 text-right">
           <div className="text-points text-base font-semibold tabular-nums">
-            {formatPrice(amount)}
+            {formatMoney(amount)}
           </div>
         </div>
       </div>
@@ -664,10 +634,7 @@ function PaymentSheetSkeleton({
             style={{ animationDelay: "0.7s" }}
           />
         </div>
-        <div
-          className="bg-line skeleton h-0.75 rounded-full"
-          style={{ animationDelay: "0.75s" }}
-        />
+        <div className="bg-line skeleton h-0.75 rounded-full" style={{ animationDelay: "0.75s" }} />
       </div>
       <div className="border-line space-y-3 border-t px-7 py-5">
         {SKELETON_COSTS_DELAYS.map((style, i) => (
