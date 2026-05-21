@@ -5,7 +5,11 @@ import { AlertCircle, ImageOff, PauseCircle } from "lucide-react";
 
 import { formatMoney, formatPoints } from "@/lib/format";
 import { cn } from "@/lib/utils";
-import type { Marketplace, Product, ProductAvailability } from "../types/product";
+import type {
+  Marketplace,
+  Product,
+  ProductAvailability,
+} from "@/components/rye-rewards/types/product";
 
 type MarketplaceDownAvailability = Extract<ProductAvailability, { kind: "marketplace_down" }>;
 

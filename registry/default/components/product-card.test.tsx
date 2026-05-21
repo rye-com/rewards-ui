@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import type { Product } from "../types/product";
+import type { Product } from "@/components/rye-rewards/types/product";
 import { ProductCard, ProductCardSkeleton } from "./product-card";
 
 const baseProduct: Product = {

@@ -22,6 +22,8 @@
     "baseUrl": ".",
     "paths": {
       "@/lib/*": ["./lib/*"],
+      "@/components/rye-rewards/types/*": ["./registry/default/types/*"],
+      "@/components/rye-rewards/*": ["./registry/default/components/*"],
       "@/*": ["./registry/default/*"]
     }
   },

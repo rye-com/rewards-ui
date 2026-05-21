@@ -32,7 +32,7 @@ import { AlertCircle, ArrowRight, Check, Clock, X } from "lucide-react";
 
 import { formatMoney, formatPoints } from "@/lib/format";
 import { cn } from "@/lib/utils";
-import type { Money } from "../types/product";
+import type { Money } from "@/components/rye-rewards/types/product";
 
 // -------------------------------------------------------------------------
 // Root
