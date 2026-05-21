@@ -24,6 +24,7 @@
 import * as React from "react";
 import { AlertCircle, ArrowRight, Check, Clock, Info, RotateCcw, Truck, X } from "lucide-react";
 
+import { formatMoney, formatPoints } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import type { Money } from "../types/product";
 
@@ -445,30 +446,7 @@ export interface OrderTrackingItemProps {
   dimmed?: boolean;
   /** Strike through the price + name. Used with `dimmed` for unavailable items. */
   strikePrice?: boolean;
-  formatPrice?: (price: Money) => string;
-  formatPoints?: (points: number) => string;
 }
-
-// Reuse Intl.NumberFormat per currency. See product-card.tsx for context.
-const currencyFormatters = new Map<string, Intl.NumberFormat>();
-const getCurrencyFormatter = (currency: string): Intl.NumberFormat => {
-  let formatter = currencyFormatters.get(currency);
-  if (!formatter) {
-    formatter = new Intl.NumberFormat(undefined, { style: "currency", currency });
-    currencyFormatters.set(currency, formatter);
-  }
-  return formatter;
-};
-
-const defaultFormatPrice = (price: Money): string => {
-  try {
-    return getCurrencyFormatter(price.currency).format(Number(price.value));
-  } catch {
-    return `${price.currency} ${price.value}`;
-  }
-};
-
-const defaultFormatPoints = (points: number): string => `${points.toLocaleString()} pts`;
 
 function Item({
   sectionLabel = "In this order",
@@ -482,8 +460,6 @@ function Item({
   refundedAmount,
   dimmed,
   strikePrice,
-  formatPrice = defaultFormatPrice,
-  formatPoints = defaultFormatPoints,
 }: OrderTrackingItemProps) {
   return (
     <Card>
@@ -525,7 +501,7 @@ function Item({
           <div className="flex-shrink-0 space-y-1 text-right">
             {refundedAmount ? (
               <div className="text-points text-sm font-semibold tabular-nums">
-                −{formatPrice(refundedAmount)}
+                −{formatMoney(refundedAmount)}
               </div>
             ) : (
               price && (
@@ -536,7 +512,7 @@ function Item({
                     dimmed ? "text-ink-3" : "text-ink-1",
                   )}
                 >
-                  {formatPrice(price)}
+                  {formatMoney(price)}
                 </div>
               )
             )}
@@ -571,8 +547,6 @@ export interface OrderTrackingRefundSummaryProps {
   /** Optional success note rendered at the bottom of the compact variant. */
   note?: string;
   sectionLabel?: string;
-  formatPrice?: (price: Money) => string;
-  formatPoints?: (points: number) => string;
 }
 
 function RefundSummary({
@@ -581,8 +555,6 @@ function RefundSummary({
   points,
   note,
   sectionLabel = "Refund · complete",
-  formatPrice = defaultFormatPrice,
-  formatPoints = defaultFormatPoints,
 }: OrderTrackingRefundSummaryProps) {
   if (variant === "detailed") {
     return (
@@ -592,7 +564,7 @@ function RefundSummary({
             Back to card
           </div>
           <div className="text-ink-1 mt-1 text-lg font-semibold tabular-nums">
-            {formatPrice(card.amount)}
+            {formatMoney(card.amount)}
           </div>
           {card.postedLabel && <div className="text-ink-3 mt-0.5 text-xs">{card.postedLabel}</div>}
         </div>
@@ -619,7 +591,7 @@ function RefundSummary({
       <div className="space-y-3">
         <div className="flex items-baseline justify-between text-sm">
           <span className="text-ink-1 font-medium">Back to your card</span>
-          <span className="text-ink-1 font-semibold tabular-nums">{formatPrice(card.amount)}</span>
+          <span className="text-ink-1 font-semibold tabular-nums">{formatMoney(card.amount)}</span>
         </div>
         <div className="flex items-baseline justify-between text-sm">
           <span className="text-points font-medium">Back to your points</span>
