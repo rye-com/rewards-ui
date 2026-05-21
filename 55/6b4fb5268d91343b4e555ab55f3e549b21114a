@@ -1,0 +1,26 @@
+registry/default/index.ts
+  s_7408ddb1134fd1::t_7f19d1f78d15a3 11-20
+registry/default/components/address-form.tsx
+  s_7408ddb1134fd1::t_e99af04acfd524 1-64,69-284,293-412
+  s_7408ddb1134fd1::t_e4d186250b0465 65-68,285-292
+registry.json
+  s_7408ddb1134fd1::t_819d0e17167774 7-20
+registry/default/components/address-form.test.tsx
+  s_7408ddb1134fd1::t_b38a9271ecfd35 1-147
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.11",
+  "base_commit_sha": "556b4fb5268d91343b4e555ab55f3e549b21114a",
+  "prompts": {},
+  "sessions": {
+    "s_7408ddb1134fd1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2ff07c0a-b5f6-4f11-b457-cb773ddc6f0b",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Victor Tsyan <victor@rye.com>"
+    }
+  }
+}
