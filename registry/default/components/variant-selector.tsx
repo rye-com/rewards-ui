@@ -9,7 +9,7 @@ import type {
   VariantOption,
   VariantRevalidationError,
   VariantSelection,
-} from "@/components/rye-rewards/types/product-details";
+} from "@/components/rye-rewards/types/pdp";
 
 export interface VariantSelectorProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Variant dimensions in render order. */

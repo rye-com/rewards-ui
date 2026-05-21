@@ -9,7 +9,7 @@ import type {
   ProductDetailsData,
   VariantRevalidationError,
   VariantSelection,
-} from "@/components/rye-rewards/types/product-details";
+} from "@/components/rye-rewards/types/pdp";
 import { VariantSelector } from "./variant-selector";
 
 type BreadcrumbItem = string | { label: string; href: string };

@@ -63,4 +63,4 @@ export type {
   VariantOption,
   VariantRevalidationError,
   VariantSelection,
-} from "./types/product-details";
+} from "./types/pdp";
