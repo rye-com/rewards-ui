@@ -3,7 +3,7 @@ import { RotateCcw, Truck } from "lucide-react";
 import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 
-import type { ProductDetailsData } from "@/components/rye-rewards/types/product-details";
+import type { ProductDetailsData } from "@/components/rye-rewards/types/pdp";
 import { ProductDetails, ProductDetailsSkeleton } from "./product-details";
 
 const sweater: ProductDetailsData = {

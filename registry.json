@@ -95,9 +95,9 @@
           "target": "components/rye-rewards/types/product.ts"
         },
         {
-          "path": "registry/default/types/product-details.ts",
+          "path": "registry/default/types/pdp.ts",
           "type": "registry:lib",
-          "target": "components/rye-rewards/types/product-details.ts"
+          "target": "components/rye-rewards/types/pdp.ts"
         },
         {
           "path": "lib/format.ts",
@@ -120,9 +120,9 @@
           "target": "components/rye-rewards/variant-selector.tsx"
         },
         {
-          "path": "registry/default/types/product-details.ts",
+          "path": "registry/default/types/pdp.ts",
           "type": "registry:lib",
-          "target": "components/rye-rewards/types/product-details.ts"
+          "target": "components/rye-rewards/types/pdp.ts"
         }
       ]
     },
