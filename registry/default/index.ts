@@ -23,7 +23,6 @@ export {
   type PaymentSheetMemberBenefitProps,
   type PaymentSheetProps,
   type PaymentSheetSectionProps,
-  type PaymentSheetShippingAddress,
   type PaymentSheetShippingProps,
 } from "./components/payment-sheet";
 
