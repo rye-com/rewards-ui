@@ -3,28 +3,13 @@
 import * as React from "react";
 import { Info, Sparkles } from "lucide-react";
 
+import { formatMoney } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
-// Reuse Intl.NumberFormat per currency. See product-card.tsx for context.
-const currencyFormatters = new Map<string, Intl.NumberFormat>();
-const getCurrencyFormatter = (currency: string): Intl.NumberFormat => {
-  let formatter = currencyFormatters.get(currency);
-  if (!formatter) {
-    formatter = new Intl.NumberFormat(undefined, { style: "currency", currency });
-    currencyFormatters.set(currency, formatter);
-  }
-  return formatter;
-};
-
-const formatCurrency = (currency: string, value: number): string => {
-  try {
-    return getCurrencyFormatter(currency).format(value);
-  } catch {
-    return `${currency} ${value.toFixed(2)}`;
-  }
-};
-
-const defaultFormatPoints = (points: number): string => points.toLocaleString();
+// Just the number; suffix ("pts" / "points" / "remaining") is composed
+// at each use site. Distinct from `formatPoints` in lib/format which
+// emits the full "X,XXX pts" string for display in catalog tiles / PDP.
+const formatPointsNumber = (points: number): string => points.toLocaleString("en-US");
 
 // -------------------------------------------------------------------------
 // Context
@@ -37,7 +22,6 @@ interface PayWithPointsContextValue {
   onAppliedChange: (points: number) => void;
   enabled: boolean;
   onEnabledChange: ((enabled: boolean) => void) | undefined;
-  formatPoints: (points: number) => string;
   effectiveMax: number;
   isInsufficient: boolean;
   isMaxed: boolean;
@@ -71,8 +55,6 @@ export interface PayWithPointsProps extends Omit<React.HTMLAttributes<HTMLDivEle
   enabled?: boolean;
   /** Fires when the toggle flips. */
   onEnabledChange?: (enabled: boolean) => void;
-  /** Override how points render. */
-  formatPoints?: (points: number) => string;
   children: React.ReactNode;
 }
 
@@ -85,7 +67,6 @@ const PayWithPointsRoot = React.forwardRef<HTMLDivElement, PayWithPointsProps>(
       onAppliedChange,
       enabled = true,
       onEnabledChange,
-      formatPoints = defaultFormatPoints,
       className,
       children,
       ...rest
@@ -105,7 +86,6 @@ const PayWithPointsRoot = React.forwardRef<HTMLDivElement, PayWithPointsProps>(
         onAppliedChange,
         enabled,
         onEnabledChange,
-        formatPoints,
         effectiveMax,
         isInsufficient,
         isMaxed,
@@ -118,7 +98,6 @@ const PayWithPointsRoot = React.forwardRef<HTMLDivElement, PayWithPointsProps>(
         onAppliedChange,
         enabled,
         onEnabledChange,
-        formatPoints,
         effectiveMax,
         isInsufficient,
         isMaxed,
@@ -167,8 +146,7 @@ function PayWithPointsHeader({
   rateLabel,
   availableLabel = "Available",
 }: PayWithPointsHeaderProps) {
-  const { balance, enabled, onEnabledChange, formatPoints, isFullPayment } =
-    usePayWithPointsContext("Header");
+  const { balance, enabled, onEnabledChange, isFullPayment } = usePayWithPointsContext("Header");
 
   const resolvedSubtitle = subtitle ?? deriveSubtitle({ enabled, isFullPayment, rateLabel });
   const subtitleTone: "muted" | "points" =
@@ -194,7 +172,9 @@ function PayWithPointsHeader({
         <div className="text-right">
           <div className="bg-points-soft text-points inline-flex items-center gap-1.5 rounded-full px-2.5 py-1">
             <Sparkles size={11} strokeWidth={2.25} />
-            <span className="text-xs font-semibold tabular-nums">{formatPoints(balance)} pts</span>
+            <span className="text-xs font-semibold tabular-nums">
+              {formatPointsNumber(balance)} pts
+            </span>
           </div>
           <div className="text-ink-3 mt-1.5 text-xs font-medium tracking-widest uppercase">
             {availableLabel}
@@ -249,14 +229,13 @@ function PayWithPointsSlider({
     maxApplicable,
     onAppliedChange,
     enabled,
-    formatPoints,
     effectiveMax,
     isInsufficient,
     isMaxed,
   } = usePayWithPointsContext("Slider");
 
   const appliedLabel = enabled
-    ? `${formatPoints(applied)} ${isMaxed && isInsufficient ? maxedSuffix : appliedSuffix}`
+    ? `${formatPointsNumber(applied)} ${isMaxed && isInsufficient ? maxedSuffix : appliedSuffix}`
     : `0 ${appliedSuffix}`;
 
   return (
@@ -281,13 +260,13 @@ function PayWithPointsSlider({
           type="button"
           onClick={() => onAppliedChange(effectiveMax)}
           disabled={!enabled || applied === effectiveMax}
-          aria-label={`Apply the maximum ${formatPoints(maxApplicable)} points`}
+          aria-label={`Apply the maximum ${formatPointsNumber(maxApplicable)} points`}
           className={cn(
             "rounded-md px-1.5 py-0.5 transition hover:bg-points-soft/60 focus-visible:outline-points focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-default disabled:hover:bg-transparent",
             isInsufficient && enabled && "line-through",
           )}
         >
-          {formatPoints(maxApplicable)} {maxSuffix}
+          {formatPointsNumber(maxApplicable)} {maxSuffix}
         </button>
       </div>
     </div>
@@ -333,8 +312,7 @@ function PayWithPointsSummary({
   remainingSuffix = "pts remaining",
   renderRemainder,
 }: PayWithPointsSummaryProps) {
-  const { balance, applied, enabled, formatPoints, isInsufficient } =
-    usePayWithPointsContext("Summary");
+  const { balance, applied, enabled, isInsufficient } = usePayWithPointsContext("Summary");
 
   const remainingAfterRedemption = balance - (enabled ? applied : 0);
 
@@ -345,8 +323,8 @@ function PayWithPointsSummary({
           const covered = pointsToCash(applied);
           const remaining = totalCash - covered;
           return {
-            covered: formatCurrency(orderTotal.currency, covered),
-            remaining: formatCurrency(orderTotal.currency, remaining),
+            covered: formatMoney({ currency: orderTotal.currency, value: covered.toFixed(2) }),
+            remaining: formatMoney({ currency: orderTotal.currency, value: remaining.toFixed(2) }),
           };
         })()
       : null;
@@ -378,7 +356,7 @@ function PayWithPointsSummary({
       <div className="text-ink-2 text-xs">{enabled ? afterLabel : disabledLabel}</div>
       <div className="flex items-baseline gap-1.5">
         <span className="text-ink-1 text-sm font-semibold tabular-nums">
-          {formatPoints(remainingAfterRedemption)}
+          {formatPointsNumber(remainingAfterRedemption)}
         </span>
         <span className="text-ink-2 text-xs">{remainingSuffix}</span>
       </div>

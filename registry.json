@@ -15,6 +15,11 @@
           "path": "registry/default/components/pay-with-points.tsx",
           "type": "registry:component",
           "target": "components/rye-rewards/pay-with-points.tsx"
+        },
+        {
+          "path": "lib/format.ts",
+          "type": "registry:lib",
+          "target": "lib/format.ts"
         }
       ]
     },
