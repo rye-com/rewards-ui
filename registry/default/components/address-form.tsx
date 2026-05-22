@@ -275,7 +275,7 @@ export interface AddressFormRegionProps {
 function AddressFormRegion({
   cityLabel = "City",
   provinceLabel = "State / Province",
-  postalCodeLabel = "Postal code",
+  postalCodeLabel = "Zip / Postal code",
   countryLabel = "Country",
 }: AddressFormRegionProps) {
   useAddressFormContext("Region");
