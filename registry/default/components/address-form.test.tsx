@@ -56,7 +56,7 @@ describe("<AddressForm />", () => {
       expect(screen.getByLabelText("Apartment, suite, etc.")).toBeInTheDocument();
       expect(screen.getByLabelText("City")).toBeInTheDocument();
       expect(screen.getByLabelText("State / Province")).toBeInTheDocument();
-      expect(screen.getByLabelText("Postal code")).toBeInTheDocument();
+      expect(screen.getByLabelText("Zip / Postal code")).toBeInTheDocument();
       expect(screen.getByLabelText("Country")).toBeInTheDocument();
       expect(screen.getByLabelText("Email")).toBeInTheDocument();
       expect(screen.getByLabelText("Phone")).toBeInTheDocument();
@@ -66,14 +66,14 @@ describe("<AddressForm />", () => {
     it("hydrates inputs from `value`", () => {
       render(<ControlledHarness initial={filled} />);
       expect(screen.getByLabelText<HTMLInputElement>("First name").value).toBe("Nathan");
-      expect(screen.getByLabelText<HTMLInputElement>("Postal code").value).toBe("94105");
+      expect(screen.getByLabelText<HTMLInputElement>("Zip / Postal code").value).toBe("94105");
       expect(screen.getByLabelText<HTMLInputElement>("Email").value).toBe("nathan@example.com");
     });
 
     it("applies proper autoComplete attrs for browser autofill", () => {
       render(<ControlledHarness />);
       expect(screen.getByLabelText("First name")).toHaveAttribute("autocomplete", "given-name");
-      expect(screen.getByLabelText("Postal code")).toHaveAttribute("autocomplete", "postal-code");
+      expect(screen.getByLabelText("Zip / Postal code")).toHaveAttribute("autocomplete", "postal-code");
       expect(screen.getByLabelText("Country")).toHaveAttribute("autocomplete", "country");
       expect(screen.getByLabelText("Email")).toHaveAttribute("autocomplete", "email");
     });
@@ -82,9 +82,9 @@ describe("<AddressForm />", () => {
   describe("editing", () => {
     it("calls onChange with the merged Buyer when a field changes", () => {
       render(<ControlledHarness initial={filled} />);
-      fireEvent.change(screen.getByLabelText("Postal code"), { target: { value: "94110" } });
+      fireEvent.change(screen.getByLabelText("Zip / Postal code"), { target: { value: "94110" } });
       // Re-render driven by ControlledHarness's state — input reflects the new value.
-      expect(screen.getByLabelText<HTMLInputElement>("Postal code").value).toBe("94110");
+      expect(screen.getByLabelText<HTMLInputElement>("Zip / Postal code").value).toBe("94110");
     });
   });
 
@@ -98,7 +98,7 @@ describe("<AddressForm />", () => {
           }}
         />,
       );
-      const postal = screen.getByLabelText("Postal code");
+      const postal = screen.getByLabelText("Zip / Postal code");
       expect(postal).toHaveAttribute("aria-invalid", "true");
       expect(screen.getByText("ZIP doesn't look right")).toBeInTheDocument();
       const email = screen.getByLabelText("Email");
