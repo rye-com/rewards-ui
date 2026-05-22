@@ -148,13 +148,18 @@ interface FieldProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "
   label: React.ReactNode;
   /** Span the input over `cols` columns when nested inside a grid. */
   cols?: 1 | 2;
+  /** Map stored value → display value (e.g. digits → "(555) 123-4567"). */
+  format?: (stored: string) => string;
+  /** Map typed display value → stored value. Pair with `format`. */
+  parse?: (displayed: string) => string;
 }
 
-function Field({ name, label, cols = 1, className, ...inputProps }: FieldProps) {
+function Field({ name, label, cols = 1, format, parse, className, ...inputProps }: FieldProps) {
   const { value, setField, errors, disabled, idPrefix } = useAddressFormContext("Field");
   const inputId = `${idPrefix}-${name}`;
   const errorId = `${inputId}-error`;
   const error = errors[name];
+  const stored = value[name] ?? "";
   return (
     <div className={cn(cols === 2 && "col-span-2")}>
       <label
@@ -166,8 +171,8 @@ function Field({ name, label, cols = 1, className, ...inputProps }: FieldProps) 
       <input
         id={inputId}
         name={name}
-        value={value[name] ?? ""}
-        onChange={(e) => setField(name, e.target.value)}
+        value={format ? format(stored) : stored}
+        onChange={(e) => setField(name, parse ? parse(e.target.value) : e.target.value)}
         disabled={disabled}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? errorId : undefined}
@@ -505,6 +510,7 @@ function AddressFormContact({
         type="email"
         inputMode="email"
         autoComplete="email"
+        placeholder="you@example.com"
         required
         aria-required="true"
       />
@@ -514,11 +520,34 @@ function AddressFormContact({
         type="tel"
         inputMode="tel"
         autoComplete="tel"
+        placeholder="(555) 123-4567"
+        format={formatUsPhone}
+        parse={onlyDigits}
         required
         aria-required="true"
       />
     </div>
   );
+}
+
+// Display digit-only stored phone as `(XXX) XXX-XXXX` while typing.
+// Buyer.phone stays as digits so partners hand a clean value to Rye.
+function formatUsPhone(digits: string): string {
+  const d = digits.replace(/\D/g, "").slice(0, 10);
+  if (d.length === 0) {
+    return "";
+  }
+  if (d.length <= 3) {
+    return `(${d}`;
+  }
+  if (d.length <= 6) {
+    return `(${d.slice(0, 3)}) ${d.slice(3)}`;
+  }
+  return `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`;
+}
+
+function onlyDigits(value: string): string {
+  return value.replace(/\D/g, "");
 }
 
 AddressFormContact.displayName = "AddressForm.Contact";
