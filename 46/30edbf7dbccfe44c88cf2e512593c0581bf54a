@@ -1,0 +1,21 @@
+registry/default/components/address-form.tsx
+  s_7408ddb1134fd1::t_c98ae398d4d4a7 151-154,157,162,174-175
+  s_7408ddb1134fd1::t_17e82a5d15f770 513,523-525,533-536,546-550
+  s_7408ddb1134fd1::t_599bce336d9f1f 537-545
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.0",
+  "base_commit_sha": "4630edbf7dbccfe44c88cf2e512593c0581bf54a",
+  "prompts": {},
+  "sessions": {
+    "s_7408ddb1134fd1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2ff07c0a-b5f6-4f11-b457-cb773ddc6f0b",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Victor Tsyan <victor@rye.com>"
+    }
+  }
+}
