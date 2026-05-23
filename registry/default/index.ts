@@ -8,6 +8,16 @@ export {
 
 export { VariantSelector, type VariantSelectorProps } from "./components/variant-selector";
 
+export {
+  AddressForm,
+  type AddressFormAddressProps,
+  type AddressFormContactProps,
+  type AddressFormNameProps,
+  type AddressFormProps,
+  type AddressFormRegionProps,
+  type AddressFormSubmitProps,
+} from "./components/address-form";
+
 export { PayWithPoints, type PayWithPointsProps } from "./components/pay-with-points";
 
 export {
