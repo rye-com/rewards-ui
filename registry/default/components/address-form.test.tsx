@@ -73,7 +73,10 @@ describe("<AddressForm />", () => {
     it("applies proper autoComplete attrs for browser autofill", () => {
       render(<ControlledHarness />);
       expect(screen.getByLabelText("First name")).toHaveAttribute("autocomplete", "given-name");
-      expect(screen.getByLabelText("Zip / Postal code")).toHaveAttribute("autocomplete", "postal-code");
+      expect(screen.getByLabelText("Zip / Postal code")).toHaveAttribute(
+        "autocomplete",
+        "postal-code",
+      );
       expect(screen.getByLabelText("Country")).toHaveAttribute("autocomplete", "country");
       expect(screen.getByLabelText("Email")).toHaveAttribute("autocomplete", "email");
     });
